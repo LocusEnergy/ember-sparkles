@@ -1,17 +1,18 @@
-{{ember-d3-helpers/invoke (pipe
-  (d3-select-all 'rect')
-  (d3-data data)
-  (d3-enter (pipe (d3-append 'rect')))
-  ) (ember-sparkles/d3-select element)
-}}
+{{#if d3el}}
+  {{ember-d3-helpers/invoke (pipe
+    (d3-select-all 'rect')
+    (d3-data data)
+    (d3-enter (pipe (d3-append 'rect')))
+    ) d3el
+  }}
+{{/if}}
+
+
 
 
 
 {{!--
-
 (d3-enter (pipe ))
 (d3-exit (pipe ))
 (d3-update (pipe ))
-
-
 --}}

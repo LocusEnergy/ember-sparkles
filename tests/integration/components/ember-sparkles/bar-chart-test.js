@@ -6,7 +6,8 @@ moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember 
 });
 
 test('it renders', function(assert) {
-  this.render(hbs`<svg>{{ember-sparkles/bar-chart}}</svg>`);
+  this.set('data', []);
+  this.render(hbs`<svg>{{ember-sparkles/bar-chart data=data}}</svg>`);
   assert.equal(this.$().text().trim(), '');
 });
 

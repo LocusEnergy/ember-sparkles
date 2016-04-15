@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import d3 from 'npm:d3';
 
-export function emberSparklesD3Select([ element ]) {
+export function emberSparklesD3Select(element) {
+  console.log('element', element);
   return d3.select(element);
 }
 

@@ -43,6 +43,7 @@
   ],
   "dependencies": {
     "d3": "^3.5.16",
+    "d3-scale": "^0.6.4",
     "ember-browserify": "^1.1.8",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.0.3",
