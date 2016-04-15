@@ -27,6 +27,8 @@ test('it accepts data argument', function(assert) {
       {{ember-sparkles/bar-chart data=data xScale=(time-scale xDomain xRange) yScale=(linear-scale yDomain yRange)}}
     </svg>`
   );
+
+  stop()
   assert.equal(this.$('rect').length, 3, 'there are 3 <rect> elements');
   // there are 3 bars
   // bar 1 has height 20 at date 2010/10/11, bar 2 has height 15 at date... , bar 3 has height 25 at date

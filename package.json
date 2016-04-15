@@ -43,12 +43,10 @@
   ],
   "dependencies": {
     "d3": "^3.5.16",
-    "d3-scale": "^0.6.4",
     "ember-browserify": "^1.1.8",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.0.3",
-    "ember-d3-helpers": "0.0.0",
-    "ember-d3-scale": "0.1.1"
+    "ember-d3-helpers": "0.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
