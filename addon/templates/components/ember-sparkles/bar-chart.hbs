@@ -1,13 +1,24 @@
+
 {{#if d3el}}
   {{ember-d3-helpers/invoke (pipe
     (d3-select-all 'rect')
     (d3-data data)
-    (d3-enter (pipe (d3-append 'rect') (d3-attr x=(pipe (d3-get '0')))))
+    (d3-enter (pipe (d3-append 'rect')
+      (d3-attr x=(pipe (d3-get '0') xScale))
+    ))
     ) d3el
   }}
 {{/if}}
 
 
+{{!--
+
+this doesn't work yet -- need `invoke` somehow??
+
+(d3-enter (pipe (d3-append 'rect')
+  (d3-attr x=(pipe (d3-get '0') xScale))
+  (d3-attr y=(pipe (d3-get '1') xScale))
+)) --}}
 
 
 
