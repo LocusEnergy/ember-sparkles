@@ -3,6 +3,7 @@ import layout from '../../templates/components/ember-sparkles/bar-chart';
 
 export default Ember.Component.extend({
   layout,
+  tagName: 'g',
   classNames: ['ember-sparkles--bar-chart'],
 
   didInsertElement() {

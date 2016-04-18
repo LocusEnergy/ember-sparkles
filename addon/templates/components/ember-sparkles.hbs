@@ -1,7 +1,9 @@
-<g transform="translate({{left}},{{top}})">
+<g transform="translate({{margin.left}},{{margin.top}})">
 
   {{yield (hash
     bar-chart=(component 'ember-sparkles/bar-chart')
+    width=width
+    height=height
   )}}
 
 </g>

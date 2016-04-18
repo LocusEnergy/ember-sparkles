@@ -19,9 +19,9 @@ test('it renders an SVG element', function(assert) {
   assert.ok(this.exists('circle'), 'circle is rendered from block');
 });
 
-test('it can take a margin argument', function(assert) {
+test('it has sensible defaults for SVG dimensions and margins', function(assert) {
   this.render(hbs`
-    {{#ember-sparkles top=20 right=10 bottom=20 left=10 width=960 height=500 }}
+    {{#ember-sparkles}}
       <circle></circle>
     {{/ember-sparkles}}
   `);
@@ -31,6 +31,25 @@ test('it can take a margin argument', function(assert) {
   assert.equal(this.$('svg').attr('height'), 500, 'svg has height attribute of 500');
   assert.equal(this.$('svg').attr('viewbox'), '0 0 960 500', 'svg has viewbox attribute');
   assert.equal(this.$('g').attr('transform'), 'translate(10,20)', 'g has transform attribute');
+});
+
+test('it can take arguments for width, height, and margins', function(assert) {
+  this.set('margin', {
+    top: 13,
+    right: 10,
+    bottom: 20,
+    left: 7,
+  })
+  this.render(hbs`
+    {{#ember-sparkles width=220 height=100 margin=margin}}
+      <circle></circle>
+    {{/ember-sparkles}}
+  `);
+
+  assert.equal(this.$('svg').attr('width'), 220, 'svg has width attribute of 220');
+  assert.equal(this.$('svg').attr('height'), 100, 'svg has height attribute of 100');
+  assert.equal(this.$('svg').attr('viewbox'), '0 0 220 100', 'svg has viewbox attribute');
+  assert.equal(this.$('g').attr('transform'), 'translate(7,13)', 'g has transform attribute');
 });
 
 

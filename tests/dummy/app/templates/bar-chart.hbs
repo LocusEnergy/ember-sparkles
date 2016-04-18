@@ -1,0 +1,11 @@
+{{#ember-sparkles as |chart|}}
+
+  {{chart.bar-chart
+    data=data
+    xScale=(time-scale xDomain (append 0 chart.width))
+    yScale=(linear-scale yDomain (append 0 chart.height))
+    width=chart.width
+    height=chart.height
+  }}
+
+{{/ember-sparkles}}

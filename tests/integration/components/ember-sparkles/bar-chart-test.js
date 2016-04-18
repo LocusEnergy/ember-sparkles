@@ -24,21 +24,27 @@ test('it accepts data argument', function(assert) {
   this.set('xRange', [0, 100]);
 
   this.set('yDomain', [15, 25]);
-  this.set('yRange', [0, 100]);
+  this.set('yRange', [100, 0]);
 
   this.render(hbs`
     <svg height="100" width="100">
-      {{ember-sparkles/bar-chart data=data xScale=(time-scale xDomain xRange) yScale=(linear-scale yDomain yRange)}}
+      {{ember-sparkles/bar-chart
+        data=data
+        xScale=(time-scale xDomain xRange)
+        yScale=(linear-scale yDomain yRange)
+        width=100
+        height=100
+      }}
     </svg>`
   );
 
   let rect = this.$('rect');
-  let xCoordinates = getAttr(rect, 'x');
-  let yCoordinates = getAttr(rect, 'y');
 
   assert.equal(rect.length, 3, 'there are 3 <rect> elements');
-  assert.deepEqual(xCoordinates, ['0', '50', '100'], 'each rectangle has an x coordinate, and they evenly split the range');
-  // assert.deepEqual(yCoordinates, ['0', '50', '100'], 'each rectangle has a y coordinate');
+  assert.deepEqual(getAttr(rect, 'x'), ['0', '50', '100'], 'each rectangle has an x coordinate, and they evenly split the range');
+  assert.deepEqual(getAttr(rect, 'y'), ['50', '100', '0'], 'each rectangle has a y coordinate');
+  assert.equal(getAttr(rect, 'width').length, 3, 'each rect has a width attribute');
+  assert.equal(getAttr(rect, 'height').length, 3, 'each rect has a height attribute');
 });
 
 // test that data can be updated
