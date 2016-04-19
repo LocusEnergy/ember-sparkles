@@ -6,10 +6,10 @@ const { computed } = Ember;
 export default Ember.Component.extend({
   layout,
   tagName: 'svg',
-  attributeBindings: ['width', 'height', 'viewBox'],
+  attributeBindings: ['defaultWidth::width', 'defaultHeight::height', 'viewBox'],
 
-  width: 960,
-  height: 500,
+  defaultWidth: 960,
+  defaultHeight: 500,
   margin: {
     top: 20,
     right: 10,
@@ -17,17 +17,17 @@ export default Ember.Component.extend({
     left: 10,
   },
 
-  innerWidth: computed('width', 'margin', function() {
-    return this.get('width') - this.get('margin.left') - this.get('margin.right');
+  width: computed('defaultWidth', 'margin', function() {
+    return this.get('defaultWidth') - this.get('margin.left') - this.get('margin.right');
   }),
 
-  innerHeight: computed('height', 'margin', function() {
-    return this.get('height') - this.get('margin.top') - this.get('margin.bottom');
+  height: computed('defaultHeight', 'margin', function() {
+    return this.get('defaultHeight') - this.get('margin.top') - this.get('margin.bottom');
   }),
 
   viewBox: Ember.computed(function() {
-    let w = this.get('width');
-    let h = this.get('height');
+    let w = this.get('defaultWidth');
+    let h = this.get('defaultHeight');
     return `0 0 ${w} ${h}`;
   })
 });

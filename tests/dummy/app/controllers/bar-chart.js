@@ -1,9 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  data: [ [ new Date('2010-10-11'), 20 ], [ new Date('2010-10-12'), 15 ], [ new Date('2010-10-13'), 25] ],
-
-  xDomain: [new Date('2010-10-11'), new Date('2010-10-13')],
-
-  yDomain: [15, 25]
+  data: [ [ '2016-03-02T00:00:00-05:00', 20 ], [ '2016-03-03T00:00:00-05:00', 15 ], [ '2016-03-04T00:00:00-05:00', 25] ],
+  padding: 0.2
 });
