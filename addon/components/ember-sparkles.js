@@ -3,13 +3,17 @@ import layout from '../templates/components/ember-sparkles';
 
 const { computed } = Ember;
 
+const ASPECT_RATIO = 0.52;
+const DEFAULT_WIDTH = 960;
+const DEFAULT_HEIGHT = 500;
+
 export default Ember.Component.extend({
   layout,
   tagName: 'svg',
-  attributeBindings: ['defaultWidth::width', 'defaultHeight::height', 'viewBox'],
+  attributeBindings: ['defaultWidth:width', 'defaultHeight:height', 'viewBox'],
 
-  defaultWidth: 960,
-  defaultHeight: 500,
+  defaultWidth: DEFAULT_WIDTH,
+  defaultHeight: DEFAULT_HEIGHT,
   margin: {
     top: 20,
     right: 10,
@@ -30,4 +34,6 @@ export default Ember.Component.extend({
     let h = this.get('defaultHeight');
     return `0 0 ${w} ${h}`;
   })
+}).reopenClass({
+  positionalParams: ['defaultWidth', 'defaultHeight', 'margin']
 });

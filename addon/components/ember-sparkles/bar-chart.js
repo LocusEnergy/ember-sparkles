@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { select } from 'd3-selection';
 import layout from '../../templates/components/ember-sparkles/bar-chart';
 
 export default Ember.Component.extend({
@@ -13,6 +14,6 @@ export default Ember.Component.extend({
 
   renderGraph() {
     let [ el ] = this.$().toArray();
-    this.set('d3el', d3.select(el));
+    this.set('d3el', select(el));
   }
 });

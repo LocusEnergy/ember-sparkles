@@ -16,21 +16,32 @@ test('it renders', function(assert) {
 test('it accepts data argument', function(assert) {
   // TODO: use MomentJS objects
   // check if works with D3 date parse function, so can pass strings as dates? maybe this is in d3-scale library?
-  let data = [ [ new Date('2010-10-11'), 20 ], [ new Date('2010-10-12'), 15 ], [ new Date('2010-10-13'), 25] ];
 
+  let first = new Date("2016-03-02T05:00:00.000Z");
+  let last = new Date("2016-03-05T05:00:00.000Z");
+
+  let data = [[ first, 20], [new Date("2016-03-03T05:00:00.000Z"), 15], [new Date("2016-03-04T05:00:00.000Z"), 35], [last, 25] ];
   this.set('data', data);
 
-  this.set('xDomain', [new Date('2010-10-11'), new Date('2010-10-13')]);
+  this.set('xDomain', [first, last]);
   this.set('xRange', [0, 100]);
 
-  this.set('yDomain', [15, 25]);
+  this.set('yDomain', [0, 35]);
   this.set('yRange', [100, 0]);
+
+  this.set('padding', 0);
 
   this.render(hbs`
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
-        xScale=(time-scale xDomain xRange)
+
+        xScale=(band-scale
+          xDomain
+          xRange
+          round=true
+          padding=padding
+        )
         yScale=(linear-scale yDomain yRange)
         width=100
         height=100
@@ -38,9 +49,12 @@ test('it accepts data argument', function(assert) {
     </svg>`
   );
 
+  return stop();
+
   let rect = this.$('rect');
 
   assert.equal(rect.length, 3, 'there are 3 <rect> elements');
+  // assert.equal(getAttr(rect, 'x').length, 3, 'each rect has an x attribute');
   assert.deepEqual(getAttr(rect, 'x'), ['0', '50', '100'], 'each rectangle has an x coordinate, and they evenly split the range');
   assert.deepEqual(getAttr(rect, 'y'), ['50', '100', '0'], 'each rectangle has a y coordinate');
   assert.equal(getAttr(rect, 'width').length, 3, 'each rect has a width attribute');
