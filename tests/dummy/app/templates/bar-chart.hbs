@@ -1,3 +1,5 @@
+<h4>Bar Chart Example</h4>
+
 {{#ember-sparkles 400 200 as |chart|}}
 
   {{#with (ember-sparkles/parse-data data) as |parsedData|}}
@@ -5,7 +7,7 @@
     {{chart.bar-chart
       data=parsedData
       xScale=(band-scale
-        (d3-array 'extent' parsedData (d3-get '0'))
+        (map-by '0' parsedData)
         (append 0 chart.width)
         round=true
         padding=padding
@@ -18,6 +20,5 @@
       height=chart.height
     }}
   {{/with}}
-
 
 {{/ember-sparkles}}

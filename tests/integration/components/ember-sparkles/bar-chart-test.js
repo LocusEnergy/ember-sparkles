@@ -13,22 +13,16 @@ test('it renders', function(assert) {
   assert.equal(this.$().text().trim(), '');
 });
 
-test('it accepts data argument', function(assert) {
-  // TODO: use MomentJS objects
-  // check if works with D3 date parse function, so can pass strings as dates? maybe this is in d3-scale library?
-
-  let first = new Date("2016-03-02T05:00:00.000Z");
-  let last = new Date("2016-03-05T05:00:00.000Z");
-
-  let data = [[ first, 20], [new Date("2016-03-03T05:00:00.000Z"), 15], [new Date("2016-03-04T05:00:00.000Z"), 35], [last, 25] ];
+test('it accepts data and generates rectangles', function(assert) {
+  let data = [ [ '2016-03-02T00:00:00', 9], ['2016-03-03T00:00:00', 42], ['2016-03-04T00:00:00', 65], ['2016-03-05T00:00:00', 17] ];
   this.set('data', data);
 
-  this.set('xDomain', [first, last]);
+  this.set('xDomain', data.map(d => d[0]));
   this.set('xRange', [0, 100]);
 
-  this.set('yDomain', [0, 35]);
+  // set the y domain to a nice even amount so that the y values and heights are easy to infer
+  this.set('yDomain', [0, 100]);
   this.set('yRange', [100, 0]);
-
   this.set('padding', 0);
 
   this.render(hbs`
@@ -39,8 +33,8 @@ test('it accepts data argument', function(assert) {
         xScale=(band-scale
           xDomain
           xRange
-          round=true
           padding=padding
+          round=true
         )
         yScale=(linear-scale yDomain yRange)
         width=100
@@ -49,18 +43,15 @@ test('it accepts data argument', function(assert) {
     </svg>`
   );
 
-  return stop();
-
   let rect = this.$('rect');
-
-  assert.equal(rect.length, 3, 'there are 3 <rect> elements');
-  // assert.equal(getAttr(rect, 'x').length, 3, 'each rect has an x attribute');
-  assert.deepEqual(getAttr(rect, 'x'), ['0', '50', '100'], 'each rectangle has an x coordinate, and they evenly split the range');
-  assert.deepEqual(getAttr(rect, 'y'), ['50', '100', '0'], 'each rectangle has a y coordinate');
-  assert.equal(getAttr(rect, 'width').length, 3, 'each rect has a width attribute');
-  assert.equal(getAttr(rect, 'height').length, 3, 'each rect has a height attribute');
+  assert.equal(rect.length, 4, 'there are 4 <rect> elements');
+  assert.deepEqual(getAttr(rect, 'x'), ['0', '25', '50', '75'], 'each rectangle has an x coordinate, and they are evenly spaced');
+  assert.deepEqual(getAttr(rect, 'y'), ['91', '58', '35', '83'], 'each rectangle has a properly calculated y-coordinate');
+  assert.deepEqual(getAttr(rect, 'width'), ['25', '25', '25', '25'], 'each rect has a width attribute, all width values are equal');
+  assert.deepEqual(getAttr(rect, 'height'), ['9', '42', '65', '17'], 'each rect has a properly calculated height attribute');
 });
 
+
 // test that data can be updated
-// test width of rectangles
-// test height of rectangles
+
+// test multiple series of bar charts

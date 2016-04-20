@@ -2,8 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-sparkles',
-
-  included: function() {
-  }
+  name: 'ember-sparkles'
 };

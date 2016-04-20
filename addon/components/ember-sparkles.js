@@ -3,7 +3,6 @@ import layout from '../templates/components/ember-sparkles';
 
 const { computed } = Ember;
 
-const ASPECT_RATIO = 0.52;
 const DEFAULT_WIDTH = 960;
 const DEFAULT_HEIGHT = 500;
 

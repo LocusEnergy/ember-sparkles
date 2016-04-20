@@ -8,6 +8,8 @@ moduleForComponent('ember-sparkles', 'Integration | Component | ember sparkles',
   }
 });
 
+// TODO: add viewBox if no height / width
+
 test('it renders an SVG element', function(assert) {
   this.render(hbs`
     {{#ember-sparkles}}
@@ -38,7 +40,7 @@ test('it can take positional arguments for width, height, and margins', function
     right: 10,
     bottom: 20,
     left: 7,
-  })
+  });
   this.render(hbs`
     {{#ember-sparkles 220 100 margin}}
       <circle></circle>
@@ -52,9 +54,10 @@ test('it can take positional arguments for width, height, and margins', function
 
 
 test('chart.bar-chart renders', function(assert) {
+  this.set('data', []);
   this.render(hbs`
     {{#ember-sparkles width=960 height=500 as |chart|}}
-      {{chart.bar-chart}}
+      {{chart.bar-chart data=data}}
     {{/ember-sparkles}}
   `);
 

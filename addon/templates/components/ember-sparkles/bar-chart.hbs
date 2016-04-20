@@ -6,9 +6,9 @@
     (d3-enter (pipe
       (d3-append 'rect')
       (d3-attr 'class' 'bar')
-      (d3-attr 'x' (pipe (d3-get '0') (log-return) (debug xScale) (log-return)))
-      (d3-attr 'width' xScale.bandwidth)
+      (d3-attr 'x' (pipe (d3-get '0') xScale))
       (d3-attr 'y' (pipe (d3-get '1') yScale))
+      (d3-attr 'width' xScale.bandwidth)
       (d3-attr 'height' (pipe (d3-get '1') yScale (bar-height height)))
     ))
     ) d3el

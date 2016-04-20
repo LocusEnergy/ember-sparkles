@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LocusEnergy/ember-sparkles.svg?branch=master)](https://travis-ci.org/LocusEnergy/ember-sparkles)
+
 # Ember-sparkles
 
 This README outlines the details of collaborating on this Ember addon.
