@@ -2,7 +2,7 @@
 
 {{#ember-sparkles 400 200 as |chart|}}
 
-  {{#with (ember-sparkles/parse-data data) as |parsedData|}}
+  {{#with (ember-sparkles/parse-data data.data) as |parsedData|}}
 
     {{chart.bar-chart
       data=parsedData
@@ -22,3 +22,6 @@
   {{/with}}
 
 {{/ember-sparkles}}
+
+
+<button {{action 'toggleData'}}>Toggle Data</button>

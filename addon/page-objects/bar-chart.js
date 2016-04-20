@@ -11,5 +11,4 @@ export default class BarChart {
   getAttr(attribute) {
     return this.rect().map((idx, item) => $(item).attr(attribute)).toArray();
   }
-
 }
