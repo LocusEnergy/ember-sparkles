@@ -52,6 +52,8 @@ test('it accepts data and generates rectangles', function(assert) {
 });
 
 
-// test that data can be updated
+// test that data can be updated -- will need d3 v4 API merge!!
+
+// need axes
 
 // test multiple series of bar charts
