@@ -1,7 +1,7 @@
 {
   "name": "ember-sparkles",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Glimmering D3 library for Ember 2.0+",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -15,7 +15,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Zachary Zibrat, Taras Mankovski, Locus Energy",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
@@ -41,7 +41,10 @@
     "loader.js": "^4.0.1"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "d3",
+    "data-visualization",
+    "glimmer"
   ],
   "dependencies": {
     "ember-browserify": "^1.1.8",
