@@ -48,11 +48,17 @@ test('it accepts data and generates rectangles', function(assert) {
     </svg>`
   );
 
+  // check rectangle existence and attributes
   assert.equal(this.chart.rect().length, 4, 'there are 4 <rect> elements');
   assert.deepEqual(this.chart.getAttr('x'), ['0', '25', '50', '75'], 'each rectangle has an x coordinate, and they are evenly spaced');
   assert.deepEqual(this.chart.getAttr('y'), ['91', '58', '35', '83'], 'each rectangle has a properly calculated y-coordinate');
   assert.deepEqual(this.chart.getAttr('width'), ['25', '25', '25', '25'], 'each rectangle has a width attribute, all width values are equal');
   assert.deepEqual(this.chart.getAttr('height'), ['9', '42', '65', '17'], 'each rectangle has a properly calculated height attribute');
+
+  // check axes existence and attributes
+  console.log(this.$('.axis').length)
+  assert.ok(this.$('.axis').length)
+  assert.equal(this.chart.ticks().length, 4, 'there are 4 axes ticks');
 });
 
 test('data can be updated and removed', function(assert) {

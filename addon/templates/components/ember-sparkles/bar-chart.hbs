@@ -1,5 +1,24 @@
 {{#if d3el}}
 
+  {{#with (ember-sparkles/d3-axis xScale position='bottom' tickFormat='%Y-%m-%d') as |xAxis|}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'x axis')
+      (d3-attr 'transform' (concat 'translate(0,' height ')'))
+      (d3-call xAxis)
+      ) d3el
+    }}
+  {{/with}}
+
+  {{#with (ember-sparkles/d3-axis yScale position='left' ticks=10) as |yAxis|}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'y axis')
+      (d3-call yAxis)
+      ) d3el
+    }}
+  {{/with}}
+
   {{#with (compute
     (pipe
       (d3-select-all 'rect')
@@ -23,15 +42,4 @@
     }}
   {{/with}}
 
-
-
 {{/if}}
-
-
-
-
-{{!--
-(d3-enter (pipe ))
-(d3-exit (pipe ))
-(d3-update (pipe ))
---}}

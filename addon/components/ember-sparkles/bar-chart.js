@@ -9,10 +9,10 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, 'renderGraph');
+    Ember.run.scheduleOnce('afterRender', this, 'renderChart');
   },
 
-  renderGraph() {
+  renderChart() {
     let [ el ] = this.$().toArray();
     this.set('d3el', select(el));
   }
