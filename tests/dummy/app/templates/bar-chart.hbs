@@ -15,7 +15,9 @@
       yScale=(linear-scale
         (append 0 (d3-array 'max' parsedData (d3-get '1')))
         (append chart.height 0)
+        nice=true
       )
+      ticks=5
       width=chart.width
       height=chart.height
     }}
