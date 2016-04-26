@@ -4,7 +4,7 @@ import { timeFormat } from 'd3-time-format';
 
 const { String: { capitalize } } = Ember;
 
-export function emberSparklesD3Axis([ scale ], { position, tickFormat, ticks }) {
+export function emberSparklesAxis([ scale ], { position, tickFormat, ticks }) {
   let axisType = `axis${capitalize(position)}`;
   let axisFn = axis[axisType];
 
@@ -18,7 +18,7 @@ export function emberSparklesD3Axis([ scale ], { position, tickFormat, ticks }) 
     result.ticks(ticks);
   }
 
-  return result
+  return result;
 }
 
-export default Ember.Helper.helper(emberSparklesD3Axis);
+export default Ember.Helper.helper(emberSparklesAxis);

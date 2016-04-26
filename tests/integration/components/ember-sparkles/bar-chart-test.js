@@ -1,6 +1,8 @@
+import Ember from 'ember'
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import BarChart from 'ember-sparkles/page-objects/bar-chart';
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember sparkles/bar chart', {
   integration: true,
@@ -9,41 +11,39 @@ moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember 
   }
 });
 
-const HEIGHT = 100;
-
 test('it renders', function(assert) {
   this.set('data', []);
   this.render(hbs`<svg>{{ember-sparkles/bar-chart data=data}}</svg>`);
-  assert.equal(this.$().text().trim(), '');
+  assert.ok(this.$().text().trim(), 'it rendered an x axis');
 });
 
 test('it accepts data and generates rectangles', function(assert) {
   let data = [ [ '2016-03-02T00:00:00', 9], ['2016-03-03T00:00:00', 42], ['2016-03-04T00:00:00', 65], ['2016-03-05T00:00:00', 17] ];
-  this.set('data', data);
 
-  this.set('xDomain', data.map(d => d[0]));
-  this.set('xRange', [0, 100]);
+  this.setProperties({
+    data,
+    xDomain: data.map(d => d[0])
+  });
 
   // set the y domain to a nice even amount so that the y values and heights are easy to infer
-  this.set('yDomain', [0, HEIGHT]);
-  this.set('yRange', [100, 0]);
-  this.set('height', HEIGHT);
-  this.set('barPadding', 0);
-  this.set('ticks', 5);
-
   this.render(hbs`
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
 
-        xScale=(band-scale
+        horizontal-scale=(band-scale
           xDomain
-          xRange
-          padding=barPadding
+          (append 0 100)
+          padding=0
           round=true
         )
-        yScale=(linear-scale yDomain yRange nice=true)
-        ticks=ticks
+        vertical-scale=(linear-scale
+          (append 0 100)
+          (append 100 0)
+          nice=true
+        )
+        tick-format='%Y-%m-%d'
+        ticks=5
         width=100
         height=100
       }}
@@ -62,34 +62,37 @@ test('it accepts data and generates rectangles', function(assert) {
   assert.ok(this.$('.y.axis').length);
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
+
+
 });
 
 test('data can be updated and removed', function(assert) {
   let data = [ [ '2016-03-02T00:00:00', 9], ['2016-03-03T00:00:00', 42], ['2016-03-04T00:00:00', 65], ['2016-03-05T00:00:00', 17] ];
-  this.set('data', data);
-
-  this.set('xDomain', data.map(d => d[0]));
-  this.set('xRange', [0, 100]);
 
   // set the y domain to a nice even amount so that the y values and heights are easy to infer
-  this.set('yDomain', [0, 100]);
-  this.set('yRange', [100, 0]);
-  this.set('barPadding', 0);
-  this.set('ticks', 5);
+  this.setProperties({
+    data,
+    xDomain: data.map(d => d[0])
+  });
 
   this.render(hbs`
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
 
-        xScale=(band-scale
+        horizontal-scale=(band-scale
           xDomain
-          xRange
-          padding=barPadding
+          (append 0 100)
+          padding=0
           round=true
         )
-        yScale=(linear-scale yDomain yRange nice='nice')
-        ticks=ticks
+        vertical-scale=(linear-scale
+          (append 0 100)
+          (append 100 0)
+          nice=true
+        )
+        tick-format='%Y-%m-%d'
+        ticks=5
         width=100
         height=100
       }}
@@ -99,22 +102,23 @@ test('data can be updated and removed', function(assert) {
   assert.deepEqual(this.chart.getAttr('y'), ['91', '58', '35', '83'], 'the y-coordinates correspond to the first dataset');
   assert.deepEqual(this.chart.getAttr('height'), ['9', '42', '65', '17'], 'height attributes correspond to first dataset');
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
-  // assert.equal(this.$('.y.axis .tick').last().text())
+  // TODO: this test needs to be fixed to properly check changing y axis
+  assert.equal(this.$('.y.axis .tick:eq(4)').text(), '100', 'largest tick on y axis is 100');
 
   data = [ [ '2014-09-12T00:00:00', 45], ['2014-09-13T00:00:00', 10], ['2014-09-14T00:00:00', 61], ['2014-09-15T00:00:00', 30], ['2014-09-16T00:00:00', 51] ];
-  this.set('xDomain', data.map(d => d[0]));
-  this.set('data', data);
+
+  this.setProperties({
+    data,
+    xDomain: data.map(d => d[0])
+  });
 
   assert.deepEqual(this.chart.getAttr('y'), ['55', '90', '39', '70', '49'], 'the y-coordinates correspond to the second dataset');
   assert.deepEqual(this.chart.getAttr('height'), ['45', '10', '61', '30', '51'], 'height attributes correspond to second dataset');
   assert.equal(this.$('.x.axis .tick').length, 5, 'there are now 5 ticks on the x axis');
-  // console.log(this.$('.y.axis .tick').last().text())
+  assert.equal(this.$('.y.axis .tick').last().text(), '100', 'largest tick on y axis is 100');
 
   // also want to check that axes labels have changed on update
-  // go over spencer's PR
-  // refine axis pattern
   // transitions
-
 
 });
 

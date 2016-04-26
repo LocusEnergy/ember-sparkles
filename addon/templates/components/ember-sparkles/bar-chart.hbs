@@ -1,11 +1,37 @@
 {{#if d3el}}
 
+  {{#with (hash
+    horizontalScale=(or horizontal-scale (band-scale
+      (append 0 width)
+      (append 0 height)
+    ))
+    verticalScale=(or vertical-scale (linear-scale
+      (append 0 height)
+      (append 0 width)
+    ))
+    tickFormat=(or tick-format '%Y-%m-%d')
+    transition=(or transition (ember-sparkles/transition duration=100 data=data))
+    ) as |options|}}
+
+  {{!-- create x axis --}}
+
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'x axis')
-    (d3-attr 'transform' (concat 'translate(0,' height ')'))
+    (d3-attr 'transform' (i 'translate(0,${h})' h=height))
     ) d3el
   }}
+
+  {{!-- select and call x axis function on d3 selection --}}
+
+  {{#with (ember-sparkles/axis options.horizontalScale position='bottom' tickFormat=options.tickFormat) as |axis|}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-select-all '.x.axis')
+      (d3-transition options.transition)
+      (d3-call axis)
+      ) d3el
+    }}
+  {{/with}}
 
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
@@ -13,45 +39,46 @@
     ) d3el
   }}
 
-
-  {{#with (ember-sparkles/d3-axis xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+  {{#with (ember-sparkles/axis options.verticalScale position='left' ticks=ticks) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
-      (d3-select '.x.axis')
+      (d3-select-all '.y.axis')
+      (d3-transition options.transition)
       (d3-call axis)
       ) d3el
     }}
   {{/with}}
-
-  {{#with (ember-sparkles/d3-axis yScale position='left' ticks=ticks) as |axis|}}
-    {{ember-d3-helpers/invoke (pipe
-      (d3-select '.y.axis')
-      (d3-call axis)
-      ) d3el
-    }}
-  {{/with}}
-
 
   {{#with (compute
     (pipe
       (d3-select-all 'rect')
-      (d3-data data (d3-get '0'))
+      (d3-data data (d3-get hKey))
     ) d3el) as |bars|}}
+
+    {{!-- something is wrong with horiz scale --}}
 
     {{ember-d3-helpers/invoke (pipe
       (d3-enter (pipe
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
-        (d3-attr 'x' (pipe (d3-get '0') xScale))
-        (d3-attr 'y' (pipe (d3-get '1') yScale))
-        (d3-attr 'width' xScale.bandwidth)
-        (d3-attr 'height' (pipe (d3-get '1') yScale (bar-height height)))
+        (d3-attr 'y' height)
+        (d3-attr 'x' (pipe (d3-get hKey) horizontal-scale))
+        (d3-attr 'width' horizontal-scale.bandwidth)
+        (d3-transition options.transition)
+        (d3-attr 'y' (pipe (d3-get vKey) options.verticalScale))
+        (d3-attr 'height' (pipe (d3-get vKey) options.verticalScale (bar-height height)))
       ))) bars
     }}
 
     {{ember-d3-helpers/invoke (pipe
-      (d3-exit (pipe (d3-remove)))
-      ) bars
+      (d3-exit (pipe
+        (d3-transition options.transition)
+        (d3-attr 'height' 0)
+        (d3-attr 'y' height)
+        (d3-remove))
+      )) bars
     }}
   {{/with}}
+
+{{/with}}
 
 {{/if}}
