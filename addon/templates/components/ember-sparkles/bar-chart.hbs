@@ -63,8 +63,8 @@
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
         (d3-attr 'y' height)
-        (d3-attr 'x' (pipe options.inputAccessor horizontal-scale))
-        (d3-attr 'width' horizontal-scale.bandwidth)
+        (d3-attr 'x' (pipe options.inputAccessor options.horizontalScale))
+        (d3-attr 'width' options.horizontalScale.bandwidth)
         (d3-transition options.transition)
         (d3-attr 'y' (pipe options.outputAccessor options.verticalScale))
         (d3-attr 'height' (pipe options.outputAccessor options.verticalScale (bar-height height)))
@@ -75,8 +75,8 @@
     {{ember-d3-helpers/invoke (pipe
       (pipe
         (d3-transition options.transition)
-        (d3-attr 'x' (pipe options.inputAccessor horizontal-scale))
-        (d3-attr 'width' horizontal-scale.bandwidth)
+        (d3-attr 'x' (pipe options.inputAccessor options.horizontalScale))
+        (d3-attr 'width' options.horizontalScale.bandwidth)
         (d3-attr 'y' (pipe options.outputAccessor options.verticalScale))
         (d3-attr 'height' (pipe options.outputAccessor options.verticalScale (bar-height height)))
       )) bars
