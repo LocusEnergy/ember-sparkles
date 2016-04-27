@@ -14,7 +14,7 @@ moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember 
 test('it renders', function(assert) {
   this.set('data', []);
   this.render(hbs`<svg>{{ember-sparkles/bar-chart data=data}}</svg>`);
-  assert.ok(this.$().text().trim(), 'it rendered an x axis');
+  assert.ok(this.$('.ember-sparkles--bar-chart').length);
 });
 
 test('it accepts data and generates rectangles', function(assert) {
@@ -30,6 +30,8 @@ test('it accepts data and generates rectangles', function(assert) {
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
+        input-accessor=(d3-get '0')
+        output-accessor=(d3-get '1')
 
         horizontal-scale=(band-scale
           xDomain
@@ -46,9 +48,11 @@ test('it accepts data and generates rectangles', function(assert) {
         ticks=5
         width=100
         height=100
+        with-transition=false
       }}
     </svg>`
   );
+
 
   // check rectangle existence and attributes
   assert.equal(this.chart.rect().length, 4, 'there are 4 <rect> elements');
@@ -79,6 +83,8 @@ test('data can be updated and removed', function(assert) {
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
+        input-accessor=(d3-get '0')
+        output-accessor=(d3-get '1')
 
         horizontal-scale=(band-scale
           xDomain
@@ -95,6 +101,7 @@ test('data can be updated and removed', function(assert) {
         ticks=5
         width=100
         height=100
+        with-transition=false
       }}
     </svg>`
   );
