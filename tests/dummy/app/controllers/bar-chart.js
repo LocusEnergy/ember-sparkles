@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import { letterData } from 'dummy/utils/fixture-data';
+import { timeseriesData } from 'dummy/utils/fixture-data';
 
 export default Ember.Controller.extend({
   padding: 0.02,
   dataIdx: 1,
-  barData: new Ember.A(letterData),
+  barData: new Ember.A(timeseriesData),
 
   // will need to update this property when we handle multiple series
   data: Ember.computed('barData', 'dataIdx', function() {

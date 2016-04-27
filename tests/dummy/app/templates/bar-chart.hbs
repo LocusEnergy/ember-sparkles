@@ -2,13 +2,11 @@
 
 {{#ember-sparkles 500 300 as |chart|}}
 
-  {{!-- {{#with (ember-sparkles/parse-data data horizontalKey='letter' verticalKey='value') as |parsedData|}} --}}
+  {{#with (ember-sparkles/parse-data data horizontalKey='ts' verticalKey='value') as |parsedData|}}
     {{chart.bar-chart
       data=data
-      horizontalKey='letter'
-      verticalKey='value'
       horizontal-scale=(band-scale
-        (map-by 'letter' data)
+        (map-by 'ts' data)
         (append 0 chart.width)
         round=true
         padding=padding
@@ -23,7 +21,7 @@
       width=chart.width
       height=chart.height
     }}
-  {{!-- {{/with}} --}}
+  {{/with}}
 
 {{/ember-sparkles}}
 

@@ -11,7 +11,9 @@
       (append 0 width)
     ))
     tickFormat=(or tick-format '%Y-%m-%d')
-    transition=(or transition (ember-sparkles/transition duration=100 data=data))
+    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
+    inputAccessor=(or input-accessor (d3-get 'ts'))
+    outputAccessor=(or output-accessor (d3-get 'value'))
     ) as |options|}}
 
   {{!-- create x axis --}}
@@ -25,7 +27,7 @@
 
   {{!-- select and call x axis function on d3 selection --}}
 
-  {{#with (ember-sparkles/axis options.horizontalScale position='bottom') as |axis|}}
+  {{#with (ember-sparkles/axis options.horizontalScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (d3-transition options.transition)
@@ -52,7 +54,7 @@
   {{#with (compute
     (pipe
       (d3-select-all 'rect')
-      (d3-data data (d3-get horizontalKey))
+      (d3-data data)
     ) d3el) as |bars|}}
 
     {{!-- enter --}}
@@ -61,11 +63,11 @@
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
         (d3-attr 'y' height)
-        (d3-attr 'x' (pipe (d3-get horizontalKey) horizontal-scale))
+        (d3-attr 'x' (pipe options.inputAccessor horizontal-scale))
         (d3-attr 'width' horizontal-scale.bandwidth)
         (d3-transition options.transition)
-        (d3-attr 'y' (pipe (d3-get verticalKey) options.verticalScale))
-        (d3-attr 'height' (pipe (d3-get verticalKey) options.verticalScale (bar-height height)))
+        (d3-attr 'y' (pipe options.outputAccessor options.verticalScale))
+        (d3-attr 'height' (pipe options.outputAccessor options.verticalScale (bar-height height)))
       ))) bars
     }}
 
@@ -73,10 +75,10 @@
     {{ember-d3-helpers/invoke (pipe
       (pipe
         (d3-transition options.transition)
-        (d3-attr 'x' (pipe (d3-get horizontalKey) horizontal-scale))
+        (d3-attr 'x' (pipe options.inputAccessor horizontal-scale))
         (d3-attr 'width' horizontal-scale.bandwidth)
-        (d3-attr 'y' (pipe (d3-get verticalKey) options.verticalScale))
-        (d3-attr 'height' (pipe (d3-get verticalKey) options.verticalScale (bar-height height)))
+        (d3-attr 'y' (pipe options.outputAccessor options.verticalScale))
+        (d3-attr 'height' (pipe options.outputAccessor options.verticalScale (bar-height height)))
       )) bars
     }}
 
