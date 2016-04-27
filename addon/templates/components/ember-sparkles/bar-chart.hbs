@@ -3,19 +3,19 @@
   {{!-- the transition property is bound to data because otherwise transitions are lost when data changes --}}
 
   {{#with (hash
-    horizontalScale=(or horizontal-scale (band-scale
+    inputAccessor=(or input-accessor (d3-get 'ts'))
+    outputAccessor=(or output-accessor (d3-get 'value'))
+    xScale=(or x-scale (band-scale
       (append 0 width)
       (append 0 height)
     ))
-    verticalScale=(or vertical-scale (linear-scale
+    yScale=(or y-scale (linear-scale
       (append 0 height)
       (append 0 width)
     ))
     tickFormat=(or tick-format '%Y-%m-%d')
 
     transition=(or transition (ember-sparkles/transition duration=1000 data=data))
-    inputAccessor=(or input-accessor (d3-get 'ts'))
-    outputAccessor=(or output-accessor (d3-get 'value'))
     ) as |options|}}
 
   {{!-- create x axis --}}
@@ -29,7 +29,7 @@
 
   {{!-- select and call x axis function on d3 selection --}}
 
-  {{#with (ember-sparkles/axis options.horizontalScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+  {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (if with-transition (d3-transition options.transition) (d3-noop))
@@ -44,7 +44,7 @@
     ) d3el
   }}
 
-  {{#with (ember-sparkles/axis options.verticalScale position='left' ticks=ticks) as |axis|}}
+  {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.y.axis')
       (if with-transition (d3-transition options.transition) (d3-noop))
@@ -71,10 +71,10 @@
       (d3-merge bars)
         (if with-transition (d3-transition options.transition) (d3-noop))
         (d3-style 'opacity' 1)
-        (d3-attr 'x' (pipe options.inputAccessor options.horizontalScale))
-        (d3-attr 'width' options.horizontalScale.bandwidth)
-        (d3-attr 'y' (pipe options.outputAccessor options.verticalScale))
-        (d3-attr 'height' (pipe options.outputAccessor options.verticalScale (bar-height height)))
+        (d3-attr 'x' (pipe options.inputAccessor options.xScale))
+        (d3-attr 'width' options.xScale.bandwidth)
+        (d3-attr 'y' (pipe options.outputAccessor options.yScale))
+        (d3-attr 'height' (pipe options.outputAccessor options.yScale (bar-height height)))
       ))) bars
     }}
 
@@ -82,7 +82,7 @@
     {{ember-d3-helpers/invoke (pipe
       (d3-exit (pipe
         (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-attr 'fill' 'green')
+        (d3-attr 'fill' 'purple')
         (d3-style 'opacity' 0)
         (d3-attr 'height' 0)
         (d3-attr 'y' height)

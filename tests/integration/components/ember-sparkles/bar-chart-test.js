@@ -18,7 +18,12 @@ test('it renders', function(assert) {
 });
 
 test('it accepts data and generates rectangles', function(assert) {
-  let data = [ [ '2016-03-02T00:00:00', 9], ['2016-03-03T00:00:00', 42], ['2016-03-04T00:00:00', 65], ['2016-03-05T00:00:00', 17] ];
+  let data = [
+    [ new Date('2016-03-02T00:00:00-08:00'), 9 ],
+    [ new Date('2016-03-03T00:00:00-08:00'), 42 ],
+    [ new Date('2016-03-04T00:00:00-08:00'), 65 ],
+    [ new Date('2016-03-05T00:00:00-08:00'), 17 ]
+  ];
 
   this.setProperties({
     data,
@@ -33,13 +38,13 @@ test('it accepts data and generates rectangles', function(assert) {
         input-accessor=(d3-get '0')
         output-accessor=(d3-get '1')
 
-        horizontal-scale=(band-scale
+        x-scale=(band-scale
           xDomain
           (append 0 100)
           padding=0
           round=true
         )
-        vertical-scale=(linear-scale
+        y-scale=(linear-scale
           (append 0 100)
           (append 100 0)
           nice=true
@@ -66,14 +71,20 @@ test('it accepts data and generates rectangles', function(assert) {
   assert.ok(this.$('.y.axis').length);
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
-
-
+  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'tick on x axis is formatted with correct value');
 });
 
 test('data can be updated and removed', function(assert) {
-  let data = [ [ '2016-03-02T00:00:00', 9], ['2016-03-03T00:00:00', 42], ['2016-03-04T00:00:00', 65], ['2016-03-05T00:00:00', 17] ];
 
-  // set the y domain to a nice even amount so that the y values and heights are easy to infer
+  // choose values that are even factors of 5, with a max of 50,
+  // because the chart height is 100, the resultant heights will be twice the original value and easy to infer
+  let data = [
+    [ new Date('2016-03-02T00:00:00-08:00'), 5 ],
+    [ new Date('2016-03-03T00:00:00-08:00'), 50 ],
+    [ new Date('2016-03-04T00:00:00-08:00'), 30 ],
+    [ new Date('2016-03-05T00:00:00-08:00'), 15 ]
+  ];
+
   this.setProperties({
     data,
     xDomain: data.map(d => d[0])
@@ -85,15 +96,14 @@ test('data can be updated and removed', function(assert) {
         data=data
         input-accessor=(d3-get '0')
         output-accessor=(d3-get '1')
-
-        horizontal-scale=(band-scale
+        x-scale=(band-scale
           xDomain
           (append 0 100)
           padding=0
           round=true
         )
-        vertical-scale=(linear-scale
-          (append 0 100)
+        y-scale=(linear-scale
+          (append 0 (d3-array 'max' data (d3-get '1')))
           (append 100 0)
           nice=true
         )
@@ -106,13 +116,19 @@ test('data can be updated and removed', function(assert) {
     </svg>`
   );
 
-  assert.deepEqual(this.chart.getAttr('y'), ['91', '58', '35', '83'], 'the y-coordinates correspond to the first dataset');
-  assert.deepEqual(this.chart.getAttr('height'), ['9', '42', '65', '17'], 'height attributes correspond to first dataset');
+  assert.deepEqual(this.chart.getAttr('y'), ['90', '0', '40', '70'], 'the y-coordinates correspond to the first dataset');
+  assert.deepEqual(this.chart.getAttr('height'), ['10', '100', '60', '30'], 'height attributes correspond to first dataset');
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
-  // TODO: this test needs to be fixed to properly check changing y axis
-  assert.equal(this.$('.y.axis .tick:eq(4)').text(), '100', 'largest tick on y axis is 100');
+  assert.equal(this.$('.y.axis .tick').last().text(), '50', 'largest tick on y axis is the maximum y value');
+  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'tick on x axis is formatted with correct value');
 
-  data = [ [ '2014-09-12T00:00:00', 45], ['2014-09-13T00:00:00', 10], ['2014-09-14T00:00:00', 61], ['2014-09-15T00:00:00', 30], ['2014-09-16T00:00:00', 51] ];
+  data = [
+    [ new Date('2014-09-12T00:00:00-08:00'), 45 ],
+    [ new Date('2014-09-13T00:00:00-08:00'), 10 ],
+    [ new Date('2014-09-14T00:00:00-08:00'), 61 ],
+    [ new Date('2014-09-15T00:00:00-08:00'), 30 ],
+    [ new Date('2014-09-16T00:00:00-08:00'), 51 ]
+  ];
 
   this.setProperties({
     data,
@@ -123,10 +139,7 @@ test('data can be updated and removed', function(assert) {
   assert.deepEqual(this.chart.getAttr('height'), ['45', '10', '61', '30', '51'], 'height attributes correspond to second dataset');
   assert.equal(this.$('.x.axis .tick').length, 5, 'there are now 5 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').last().text(), '100', 'largest tick on y axis is 100');
-
-  // also want to check that axes labels have changed on update
-  // transitions
-
+  assert.equal(this.$('.x.axis .tick').first().text(), '2014-09-12', 'tick on x axis is formatted with correct value');
 });
 
 
