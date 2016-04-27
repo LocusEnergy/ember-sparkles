@@ -2,19 +2,19 @@
 
 {{#ember-sparkles 500 300 as |chart|}}
 
-  {{!-- {{#with (ember-sparkles/parse-data data.data hKey='letter' vKey='value') as |parsedData|}} --}}
+  {{!-- {{#with (ember-sparkles/parse-data data horizontalKey='letter' verticalKey='value') as |parsedData|}} --}}
     {{chart.bar-chart
-      data=data.data
-      hKey='letter'
-      vKey='value'
+      data=data
+      horizontalKey='letter'
+      verticalKey='value'
       horizontal-scale=(band-scale
-        (map-by 'letter' data.data)
+        (map-by 'letter' data)
         (append 0 chart.width)
         round=true
         padding=padding
       )
       vertical-scale=(linear-scale
-        (append 0 (d3-array 'max' data.data (d3-get 'value')))
+        (append 0 (d3-array 'max' data (d3-get 'value')))
         (append chart.height 0)
         nice=true
       )

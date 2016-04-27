@@ -1,5 +1,6 @@
 {{#if d3el}}
 
+
   {{#with (hash
     horizontalScale=(or horizontal-scale (band-scale
       (append 0 width)
@@ -24,7 +25,7 @@
 
   {{!-- select and call x axis function on d3 selection --}}
 
-  {{#with (ember-sparkles/axis options.horizontalScale position='bottom' tickFormat=options.tickFormat) as |axis|}}
+  {{#with (ember-sparkles/axis options.horizontalScale position='bottom') as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (d3-transition options.transition)
@@ -51,24 +52,35 @@
   {{#with (compute
     (pipe
       (d3-select-all 'rect')
-      (d3-data data (d3-get hKey))
+      (d3-data data (d3-get horizontalKey))
     ) d3el) as |bars|}}
 
-    {{!-- something is wrong with horiz scale --}}
-
+    {{!-- enter --}}
     {{ember-d3-helpers/invoke (pipe
       (d3-enter (pipe
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
         (d3-attr 'y' height)
-        (d3-attr 'x' (pipe (d3-get hKey) horizontal-scale))
+        (d3-attr 'x' (pipe (d3-get horizontalKey) horizontal-scale))
         (d3-attr 'width' horizontal-scale.bandwidth)
         (d3-transition options.transition)
-        (d3-attr 'y' (pipe (d3-get vKey) options.verticalScale))
-        (d3-attr 'height' (pipe (d3-get vKey) options.verticalScale (bar-height height)))
+        (d3-attr 'y' (pipe (d3-get verticalKey) options.verticalScale))
+        (d3-attr 'height' (pipe (d3-get verticalKey) options.verticalScale (bar-height height)))
       ))) bars
     }}
 
+    {{!-- update --}}
+    {{ember-d3-helpers/invoke (pipe
+      (pipe
+        (d3-transition options.transition)
+        (d3-attr 'x' (pipe (d3-get horizontalKey) horizontal-scale))
+        (d3-attr 'width' horizontal-scale.bandwidth)
+        (d3-attr 'y' (pipe (d3-get verticalKey) options.verticalScale))
+        (d3-attr 'height' (pipe (d3-get verticalKey) options.verticalScale (bar-height height)))
+      )) bars
+    }}
+
+    {{!-- exit --}}
     {{ember-d3-helpers/invoke (pipe
       (d3-exit (pipe
         (d3-transition options.transition)

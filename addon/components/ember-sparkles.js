@@ -15,9 +15,9 @@ export default Ember.Component.extend({
   defaultHeight: DEFAULT_HEIGHT,
   margin: {
     top: 20,
-    right: 20,
+    right: 25,
     bottom: 20,
-    left: 30,
+    left: 25,
   },
 
   width: computed('defaultWidth', 'margin', function() {
