@@ -1,6 +1,6 @@
 {{#if d3el}}
 
-  {{!-- the transition property is bound to data because otherwise transitions are lost when data changes --}}
+  {{!-- the transition property is bound to data because otherwise the transition function is overwritten when data changes --}}
 
   {{#with (hash
     inputAccessor=(or input-accessor (d3-get 'ts'))
@@ -27,7 +27,7 @@
     ) d3el
   }}
 
-  {{!-- select and call x axis function on d3 selection --}}
+  {{!-- select / call x axis function on d3 selection --}}
 
   {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
     {{ember-d3-helpers/invoke (pipe
@@ -38,11 +38,15 @@
     }}
   {{/with}}
 
+  {{!-- create y axis --}}
+
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'y axis')
     ) d3el
   }}
+
+  {{!-- select / call y axis function on d3 selection --}}
 
   {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
@@ -66,7 +70,7 @@
         (d3-attr 'class' 'bar')
         (d3-attr 'y' height)
         (d3-attr 'x' width)
-        (d3-attr 'fill' 'steelblue')
+        (d3-style 'fill' 'steelblue')
         (d3-style 'opacity' 0)
       (d3-merge bars)
         (if with-transition (d3-transition options.transition) (d3-noop))
@@ -82,7 +86,7 @@
     {{ember-d3-helpers/invoke (pipe
       (d3-exit (pipe
         (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-attr 'fill' 'purple')
+        (d3-style 'fill' 'purple')
         (d3-style 'opacity' 0)
         (d3-attr 'height' 0)
         (d3-attr 'y' height)

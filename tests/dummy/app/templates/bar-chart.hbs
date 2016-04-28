@@ -1,6 +1,6 @@
 <h4>Bar Chart Example</h4>
 
-{{#ember-sparkles 500 300 as |chart|}}
+{{#ember-sparkles 800 300 margin as |chart|}}
 
   {{#with (ember-sparkles/parse-data data horizontalKey='ts' verticalKey='value') as |parsedData|}}
     {{chart.bar-chart

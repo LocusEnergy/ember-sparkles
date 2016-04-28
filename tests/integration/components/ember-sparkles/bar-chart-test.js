@@ -148,6 +148,3 @@ test('data can be updated and removed', function(assert) {
   assert.equal(this.$('.y.axis .tick').last().text(), '100', 'largest tick on y axis is 100');
   assert.equal(this.$('.x.axis .tick').first().text(), '2014-09-12', 'tick on x axis is formatted with correct value');
 });
-
-
-// test multiple series of bar charts
