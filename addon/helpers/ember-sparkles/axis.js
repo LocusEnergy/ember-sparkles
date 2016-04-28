@@ -11,7 +11,7 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks }) {
   let result = axisFn().scale(scale);
 
   if (tickFormat) {
-    result.tickFormat(timeFormat(tickFormat))
+    result.tickFormat(timeFormat(tickFormat));
   }
 
   if (ticks) {

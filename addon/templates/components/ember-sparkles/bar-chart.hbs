@@ -7,11 +7,11 @@
     outputAccessor=(or output-accessor (d3-get 'value'))
     xScale=(or x-scale (band-scale
       (append 0 width)
-      (append 0 height)
+      (append 0 width)
     ))
     yScale=(or y-scale (linear-scale
       (append 0 height)
-      (append 0 width)
+      (append height 0)
     ))
     tickFormat=(or tick-format '%Y-%m-%d')
 

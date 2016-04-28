@@ -74,7 +74,7 @@ export const letterData = [
       }
     ]
   }
-]
+];
 
 export const timeseriesData = [
   {
@@ -152,4 +152,4 @@ export const timeseriesData = [
       }
     ]
   }
-]
+];

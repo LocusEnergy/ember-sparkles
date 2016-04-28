@@ -1,8 +1,6 @@
-import Ember from 'ember'
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import BarChart from 'ember-sparkles/page-objects/bar-chart';
-import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember sparkles/bar chart', {
   integration: true,
@@ -13,7 +11,16 @@ moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember 
 
 test('it renders', function(assert) {
   this.set('data', []);
-  this.render(hbs`<svg>{{ember-sparkles/bar-chart data=data}}</svg>`);
+  this.render(hbs`
+    <svg>
+      {{ember-sparkles/bar-chart
+        data=data
+        with-transition=false
+        height=1
+        width=1
+      }}
+    </svg>
+  `);
   assert.ok(this.$('.ember-sparkles--bar-chart').length);
 });
 

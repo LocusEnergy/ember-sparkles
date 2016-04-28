@@ -31,7 +31,7 @@ test('it has sensible defaults for SVG dimensions and margins', function(assert)
   assert.ok(this.exists('g'), 'g element exists');
   assert.equal(this.$('svg').attr('width'), 960, 'svg has width attribute of 960');
   assert.equal(this.$('svg').attr('height'), 500, 'svg has height attribute of 500');
-  assert.equal(this.$('g').attr('transform'), 'translate(10,20)', 'g has transform attribute');
+  assert.equal(this.$('g').attr('transform'), 'translate(25,20)', 'g has transform attribute');
 });
 
 test('it can take positional arguments for width, height, and margins', function(assert) {
@@ -57,7 +57,12 @@ test('chart.bar-chart renders', function(assert) {
   this.set('data', []);
   this.render(hbs`
     {{#ember-sparkles width=960 height=500 as |chart|}}
-      {{chart.bar-chart data=data}}
+      {{chart.bar-chart
+        data=data
+        with-transition=false
+        height=1
+        width=1
+      }}
     {{/ember-sparkles}}
   `);
 
