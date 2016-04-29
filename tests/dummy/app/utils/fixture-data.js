@@ -239,7 +239,7 @@ export const groupedTimeseriesDataOne = [
 
 export const groupedTimeseriesDataTwo = [
   {
-    ts: '2014-09-12T00:00:00',
+    ts: '2014-09-10T00:00:00',
     Wh_sum: [
       {
         name: 'series 1',
@@ -264,7 +264,7 @@ export const groupedTimeseriesDataTwo = [
       },
       {
         name: 'series 2',
-        value: 89
+        value: 120
       },
       {
         name: 'series 3',

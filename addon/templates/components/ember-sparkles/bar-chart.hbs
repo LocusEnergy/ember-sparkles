@@ -61,7 +61,7 @@
     (pipe
       (d3-select-all 'rect')
       (d3-data data)
-    ) d3el) as |bars|}}
+    ) d3el) as |rect|}}
 
     {{!-- enter / merge --}}
     {{ember-d3-helpers/invoke (pipe
@@ -72,15 +72,15 @@
         (d3-attr 'x' width)
         (d3-style 'fill' 'steelblue')
         (d3-style 'opacity' 0)
-      (d3-merge bars)
+      (d3-merge rect)
         (if with-transition (d3-transition options.transition) (d3-noop))
         (d3-style 'opacity' 1)
         (d3-attr 'x' (pipe options.inputAccessor options.xScale))
         (d3-attr 'width' options.xScale.bandwidth)
         (d3-attr 'y' (pipe options.outputAccessor options.yScale))
         (d3-attr 'height' (pipe options.outputAccessor options.yScale (bar-height height)))
-      ))) bars
-    }}
+      ))
+    ) rect}}
 
     {{!-- exit --}}
     {{ember-d3-helpers/invoke (pipe
@@ -91,7 +91,7 @@
         (d3-attr 'height' 0)
         (d3-attr 'y' height)
         (d3-remove))
-      )) bars
+      )) rect
     }}
   {{/with}}
 

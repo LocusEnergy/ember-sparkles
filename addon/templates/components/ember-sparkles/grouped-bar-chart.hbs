@@ -30,7 +30,7 @@
     colorScale=(or color-scale (cat-color-scale '10'))
     tickFormat=(or tick-format '%Y-%m-%d')
 
-    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
+    transition=(or transition (ember-sparkles/transition duration=600 data=data))
     ) as |options|}}
 
 
@@ -73,29 +73,69 @@
       }}
     {{/with}}
 
-    {{#with (pipe
-      (d3-append 'rect')
-      (d3-attr 'width' options.groupScale.bandwidth)
-      (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
-      (d3-attr 'y' (pipe options.valueAccessor options.yScale))
-      (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-      (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
-    ) as |onEnter|}}
-
-      {{ember-d3-helpers/invoke (pipe
+    {{!-- bind data to groups --}}
+    {{#with (compute
+      (pipe
         (d3-select-all '.group')
         (d3-data data)
-        (pipe
+      ) d3el) as |group|}}
+
+      {{!-- enter / merge groups --}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-enter (pipe
+          (d3-append 'g')
+          (d3-attr 'class' 'group')
+        (d3-merge group)
+          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
+        ))
+      ) group}}
+
+      {{!-- exit groups --}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-exit (pipe (d3-remove)))
+      ) group}}
+
+      {{!-- bind data to rects --}}
+      {{#with (compute (pipe
+          (d3-select-all 'rect')
+          (d3-data options.outputAccessor)
+      ) group) as |rect|}}
+
+        {{!-- enter / merge rects --}}
+        {{ember-d3-helpers/invoke (pipe
           (d3-enter (pipe
-            (d3-append 'g')
-            (d3-attr 'class' 'group')
-            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
-            (d3-select-all 'rect')
-            (d3-data options.outputAccessor)
-            (d3-enter onEnter)
+            (d3-append 'rect')
+            (d3-attr 'y' height)
+            (d3-attr 'x' width)
+            (d3-style 'opacity' 0)
+          (d3-merge rect)
+            (if with-transition (d3-transition options.transition) (d3-noop))
+            (d3-style 'opacity' 1)
+            (d3-attr 'width' options.groupScale.bandwidth)
+            (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
+            (d3-attr 'y' (pipe options.valueAccessor options.yScale))
+            (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
+            (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
           ))
-        )) d3el}}
+        ) rect}}
+
+
+        {{!-- exit rects --}}
+        {{ember-d3-helpers/invoke (pipe
+          (d3-exit (pipe
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-style 'fill' 'purple')
+          (d3-style 'opacity' 0)
+          (d3-attr 'height' 0)
+          (d3-attr 'y' height)
+          (d3-remove)))
+        ) rect}}
+
+
+      {{/with}}
+
     {{/with}}
+    {{!-- end with group --}}
 
 
   {{/with}}
