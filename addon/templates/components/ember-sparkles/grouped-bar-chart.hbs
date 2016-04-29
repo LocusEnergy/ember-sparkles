@@ -1,4 +1,4 @@
-{{!-- TODO: translate-x, outputAccessor -> valueAccessor; major / minor scale??, invoke -> null  --}}
+{{!-- TODO: translate-x, major / minor scale??, invoke -> null  --}}
 {{!--  if data is in right format, then default scales just get set up automatically --}}
 {{!-- add legend  --}}
 {{!-- legend test: should be able to turn off / on with a property --}}
@@ -11,8 +11,8 @@
 {{#if d3el}}
   {{#with (hash
     inputAccessor=(or input-accessor (d3-get 'ts'))
-    outputAccessor=(or output-accessor (d3-get 'value'))
-    valueAccessor=(d3-get 'Wh_sum')
+    valueAccessor=(or output-accessor (d3-get 'value'))
+    outputAccessor=(d3-get 'Wh_sum')
     groupAccessor=(d3-get 'name')
     xScale=(or x-scale (band-scale
       (append 0 width)
@@ -21,6 +21,7 @@
     groupScale=(band-scale
       (map-by 'name' (get (get data '0') 'Wh_sum'))
       (append 0 (compute x-scale.bandwidth))
+      padding=0.05
     )
     yScale=(or y-scale (linear-scale
       (append 0 height)
@@ -76,8 +77,8 @@
       (d3-append 'rect')
       (d3-attr 'width' options.groupScale.bandwidth)
       (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
-      (d3-attr 'y' (pipe options.outputAccessor options.yScale))
-      (d3-attr 'height' (pipe options.outputAccessor options.yScale (bar-height height)))
+      (d3-attr 'y' (pipe options.valueAccessor options.yScale))
+      (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
       (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
     ) as |onEnter|}}
 
@@ -90,7 +91,7 @@
             (d3-attr 'class' 'group')
             (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
             (d3-select-all 'rect')
-            (d3-data options.valueAccessor)
+            (d3-data options.outputAccessor)
             (d3-enter onEnter)
           ))
         )) d3el}}

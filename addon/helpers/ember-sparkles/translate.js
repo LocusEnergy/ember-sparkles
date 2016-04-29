@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export function emberSparklesTranslate([ ]) {
   return function(horizontal) {
-    return `translate(${horizontal},0)`
+    return `translate(${horizontal},0)`;
   };
 }
 

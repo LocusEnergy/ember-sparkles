@@ -1,5 +1,5 @@
 export default function dateify(collection) {
-  return collection.map(({ ts, value }) => {
-    return { ts: new Date(ts), value };
+  return collection.map(c => {
+    return { ...c, ts: new Date(c.ts) };
   });
 }

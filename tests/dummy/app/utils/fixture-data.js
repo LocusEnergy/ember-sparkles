@@ -149,7 +149,7 @@ export const timeseriesData = [
   SEPTEMBER_MANY_DATAPOINTS
 ];
 
-export const parallelTimeseriesData = [
+export const groupedTimeseriesDataOne = [
   {
     ts: '2014-09-12T00:00:00',
     Wh_sum: [
@@ -189,15 +189,15 @@ export const parallelTimeseriesData = [
     Wh_sum: [
       {
         name: 'series 1',
-        value: 5
+        value: 50
       },
       {
         name: 'series 2',
-        value: 45
+        value: 20
       },
       {
         name: 'series 3',
-        value: 38
+        value: 90
       }
     ]
   },
@@ -206,15 +206,15 @@ export const parallelTimeseriesData = [
     Wh_sum: [
       {
         name: 'series 1',
-        value: 51
+        value: 48
       },
       {
         name: 'series 2',
-        value: 21
+        value: 81
       },
       {
         name: 'series 3',
-        value: 64
+        value: 34
       }
     ]
   },
@@ -223,15 +223,103 @@ export const parallelTimeseriesData = [
     Wh_sum: [
       {
         name: 'series 1',
-        value: 1
+        value: 38
       },
       {
         name: 'series 2',
-        value: 39
+        value: 48
       },
       {
         name: 'series 3',
-        value: 75
+        value: 72
+      }
+    ]
+  }
+];
+
+export const groupedTimeseriesDataTwo = [
+  {
+    ts: '2014-09-12T00:00:00',
+    Wh_sum: [
+      {
+        name: 'series 1',
+        value: 23
+      },
+      {
+        name: 'series 2',
+        value: 11
+      },
+      {
+        name: 'series 3',
+        value: 3
+      }
+    ]
+  },
+  {
+    ts: '2014-09-13T00:00:00',
+    Wh_sum: [
+      {
+        name: 'series 1',
+        value: 3
+      },
+      {
+        name: 'series 2',
+        value: 89
+      },
+      {
+        name: 'series 3',
+        value: 19
+      }
+    ]
+  },
+  {
+    ts: '2014-09-14T00:00:00',
+    Wh_sum: [
+      {
+        name: 'series 1',
+        value: 81
+      },
+      {
+        name: 'series 2',
+        value: 11
+      },
+      {
+        name: 'series 3',
+        value: 68
+      }
+    ]
+  },
+  {
+    ts: '2014-09-15T00:00:00',
+    Wh_sum: [
+      {
+        name: 'series 1',
+        value: 30
+      },
+      {
+        name: 'series 2',
+        value: 70
+      },
+      {
+        name: 'series 3',
+        value: 40
+      }
+    ]
+  },
+  {
+    ts: '2014-09-17T00:00:00',
+    Wh_sum: [
+      {
+        name: 'series 1',
+        value: 89
+      },
+      {
+        name: 'series 2',
+        value: 4
+      },
+      {
+        name: 'series 3',
+        value: 55
       }
     ]
   }
