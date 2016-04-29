@@ -80,7 +80,6 @@
       {{ember-d3-helpers/invoke (pipe
           (log-debug)
           (d3-select-all 'rect')
-          (log-debug)
           (d3-data (pipe (d3-get 'Wh_sum')))
         (d3-enter (pipe
           (d3-append 'rect')
