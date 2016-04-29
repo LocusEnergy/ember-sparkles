@@ -1,27 +1,25 @@
 <h4>Bar Chart Example</h4>
 
+  {{log data}}
+
 {{#ember-sparkles 800 300 margin as |chart|}}
 
-  {{#with (ember-sparkles/parse-data data horizontalKey='ts' verticalKey='value') as |parsedData|}}
-    {{chart.bar-chart
-      data=parsedData
-      x-scale=(band-scale
-        (map-by 'ts' parsedData)
-        (append 0 chart.width)
-        round=true
-        padding=padding
-      )
-      y-scale=(linear-scale
-        (append 0 (d3-array 'max' parsedData (d3-get 'value')))
-        (append chart.height 0)
-        nice=true
-      )
-      ticks=5
-      tick-format='%Y-%m-%d'
-      width=chart.width
-      height=chart.height
-    }}
-  {{/with}}
+  {{chart.bar-chart
+    data=data
+    x-scale=(band-scale
+      (map-by 'ts' data)
+      (append 0 chart.width)
+      round=true
+      padding=padding
+    )
+    y-scale=(linear-scale
+      (append 0 (d3-array 'max' data (d3-get 'value')))
+      (append chart.height 0)
+      nice=true
+    )
+    ticks=5
+    tick-format='%Y-%m-%d'
+  }}
 
 {{/ember-sparkles}}
 

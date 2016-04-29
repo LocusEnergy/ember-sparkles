@@ -1,10 +1,16 @@
 import Ember from 'ember';
+import dateify from 'dummy/utils/dateify';
 import { timeseriesData } from 'dummy/utils/fixture-data';
+
+let dateified = timeseriesData.map(t => {
+  t.data = dateify(t.data);
+  return t
+});
 
 export default Ember.Controller.extend({
   padding: 0.02,
   dataIdx: 1,
-  barData: new Ember.A(timeseriesData),
+  barData: new Ember.A(dateified),
   margin: {
     top: 20,
     right: 25,

@@ -1,0 +1,101 @@
+{{!-- TODO: setup domain for groupScale --}}
+
+{{#if d3el}}
+  {{#with (hash
+    inputAccessor=(or input-accessor (d3-get 'ts'))
+    outputAccessor=(or output-accessor (d3-get 'value'))
+    xScale=(or x-scale (band-scale
+      (append 0 width)
+      (append 0 width)
+    ))
+    groupScale=(band-scale
+      (map-by 'name' (get (get data '0') 'Wh_sum'))
+      (append 0 xScale.bandwidth)
+    )
+    yScale=(or y-scale (linear-scale
+      (append 0 height)
+      (append height 0)
+    ))
+    colorScale=(or color-scale (cat-color-scale '20'))
+    tickFormat=(or tick-format '%Y-%m-%d')
+
+    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
+    ) as |options|}}
+
+
+    {{!-- create x axis --}}
+
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'x axis')
+      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+      ) d3el
+    }}
+
+    {{!-- select / call x axis function on d3 selection --}}
+
+    {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-select-all '.x.axis')
+        (if with-transition (d3-transition options.transition) (d3-noop))
+        (d3-call axis)
+        ) d3el
+      }}
+    {{/with}}
+
+    {{!-- create y axis --}}
+
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'y axis')
+      ) d3el
+    }}
+
+    {{!-- select / call y axis function on d3 selection --}}
+
+    {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-select-all '.y.axis')
+        (if with-transition (d3-transition options.transition) (d3-noop))
+        (d3-call axis)
+        ) d3el
+      }}
+    {{/with}}
+
+    {{#with (compute
+      (pipe
+        (d3-select-all '.group')
+        (d3-data data)
+      ) d3el) as |group|}}
+
+      {{!-- set up groupings as <g> elements --}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-enter (pipe
+          (d3-append 'g')
+          (d3-attr 'class' 'group')
+          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
+      ))) group}}
+
+      {{!-- set up individual <rect> elements within each group --}}
+      {{ember-d3-helpers/invoke (pipe
+          (log-debug)
+          (d3-select-all 'rect')
+          (log-debug)
+          (d3-data (pipe (d3-get 'Wh_sum')))
+        (d3-enter (pipe
+          (d3-append 'rect')
+          (d3-attr 'width' options.groupScale.bandwidth)
+          (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
+          (d3-attr 'y' (pipe options.outputAccessor options.yScale))
+          (d3-attr 'height' (pipe options.outputAccessor options.yScale (bar-height height)))
+          (d3-style (pipe (d3-get 'name') options.colorScale))
+        ))
+      ) group}}
+
+    {{/with}}
+
+
+
+  {{/with}}
+
+{{/if}}

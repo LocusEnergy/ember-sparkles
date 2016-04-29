@@ -1,0 +1,32 @@
+<h4>Grouped Bar Chart Example</h4>
+
+{{!-- {{log (d3-array 'max' data (pipe
+  (pipe (d3-get 'value') )
+  (d3-get 'Wh_sum')
+  (log-debug)
+  (d3-array 'max')
+))}} --}}
+{{!-- {{log (compute (pipe (d3-get 'value')) (map-by 'Wh_sum' data))}} --}}
+
+
+{{#ember-sparkles 800 300 margin as |chart|}}
+  {{chart.grouped-bar-chart
+    data=data
+    x-scale=(band-scale
+      (map-by 'ts' data)
+      (append 0 chart.width)
+      round=true
+      padding=1
+    )
+    y-scale=(linear-scale
+      (append 0 yMax)
+      (append chart.height 0)
+      nice=true
+    )
+
+    color-scale=(cat-color-scale '20')
+
+    ticks=5
+    tick-format='%Y-%m-%d'
+  }}
+{{/ember-sparkles}}

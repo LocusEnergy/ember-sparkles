@@ -35,6 +35,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-interpolate-helper": "0.1.1",
     "ember-load-initializers": "^0.5.1",
+    "ember-lodash": "0.0.7",
     "ember-math-helpers": "0.0.4",
     "ember-resolver": "^2.0.3",
     "ember-try": "^0.2.2",
@@ -47,7 +48,7 @@
     "glimmer"
   ],
   "dependencies": {
-    "ember-composable-helpers": "0.21.1",
+    "ember-composable-helpers": "0.23.1",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-d3-shape": "0.8.1",
     "ember-cli-htmlbars": "^1.0.3",
