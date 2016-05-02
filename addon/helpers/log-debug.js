@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-export function logDebug([ value ]/*, hash*/) {
+export function logDebug([ value ], { msg }) {
   return function(value) {
     // debugger
-    console.log('value: ', value)
+    console.log(`${msg}: `, value)
     return value
   }
 }

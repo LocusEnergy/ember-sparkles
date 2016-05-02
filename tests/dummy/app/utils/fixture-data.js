@@ -273,23 +273,6 @@ export const groupedTimeseriesDataTwo = [
     ]
   },
   {
-    ts: '2014-09-14T00:00:00',
-    Wh_sum: [
-      {
-        name: 'series 1',
-        value: 81
-      },
-      {
-        name: 'series 2',
-        value: 11
-      },
-      {
-        name: 'series 3',
-        value: 68
-      }
-    ]
-  },
-  {
     ts: '2014-09-15T00:00:00',
     Wh_sum: [
       {

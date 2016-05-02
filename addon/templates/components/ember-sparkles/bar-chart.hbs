@@ -57,11 +57,10 @@
     }}
   {{/with}}
 
-  {{#with (compute
-    (pipe
-      (d3-select-all 'rect')
-      (d3-data data)
-    ) d3el) as |rect|}}
+  {{#with (compute (pipe
+    (d3-select-all 'rect')
+    (d3-data data)
+  ) d3el) as |rect|}}
 
     {{!-- enter / merge --}}
     {{ember-d3-helpers/invoke (pipe
