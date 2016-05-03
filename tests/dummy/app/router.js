@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('bar-chart');
   this.route('grouped-bar-chart');
+  this.route('line-chart');
 });
 
 export default Router;

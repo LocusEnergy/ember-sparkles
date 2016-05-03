@@ -7,7 +7,7 @@
 {{!-- write tests for grouped bar chart  --}}
 {{!-- add line series example --}}
 {{!--  --}}
-
+{{!--
 {{#if d3el}}
   {{#with (hash
     inputAccessor=(or input-accessor (d3-get 'ts'))
@@ -30,85 +30,62 @@
     colorScale=(or color-scale (cat-color-scale '10'))
     tickFormat=(or tick-format '%Y-%m-%d')
 
-    transition=(or transition (ember-sparkles/transition duration=600 data=data))
+    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
     ) as |options|}}
 
 
-    {{!-- create x axis --}}
 
-    {{ember-d3-helpers/invoke (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'x axis')
-      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
-      ) d3el
-    }}
-
-    {{!-- select / call x axis function on d3 selection --}}
-
-    {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
       {{ember-d3-helpers/invoke (pipe
-        (d3-select-all '.x.axis')
-        (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-call axis)
+        (d3-append 'g')
+        (d3-attr 'class' 'x axis')
+        (d3-attr 'transform' (i 'translate(0,${h})' h=height))
         ) d3el
       }}
-    {{/with}}
-
-    {{!-- create y axis --}}
-
-    {{ember-d3-helpers/invoke (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'y axis')
-      ) d3el
-    }}
-
-    {{!-- select / call y axis function on d3 selection --}}
-
-    {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
-      {{ember-d3-helpers/invoke (pipe
-        (d3-select-all '.y.axis')
-        (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-call axis)
-        ) d3el
-      }}
-    {{/with}}
-
-    {{!-- bind data to groups --}}
-    {{#with (compute (pipe
-        (d3-select-all '.group')
-        (d3-data data)
-      ) d3el) as |group|}}
-
-      {{!-- enter / merge groups --}}
-      {{ember-d3-helpers/invoke (pipe
-        (d3-enter (pipe
-          (d3-append 'g')
-          (d3-attr 'class' 'group')
-        (d3-merge group)
-          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
-        ))
-      ) group}}
-
-      {{!-- exit groups --}}
-      {{ember-d3-helpers/invoke (pipe
-        (d3-exit (pipe (d3-remove)))
-      ) group}}
-
-      {{!-- bind data to rects --}}
-      {{#with (compute (pipe
-        (d3-select-all 'rect')
-        (d3-data options.outputAccessor)
-        (d3-attr 'y' height)
-        (d3-attr 'x' width)
-        (d3-style 'opacity' 0)
-      ) group) as |rect|}}
 
 
-        {{!-- enter / merge rects --}}
+      {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
         {{ember-d3-helpers/invoke (pipe
-          (d3-enter (pipe
+          (d3-select-all '.x.axis')
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-call axis)
+          ) d3el
+        }}
+      {{/with}}
+
+
+      {{ember-d3-helpers/invoke (pipe
+        (d3-append 'g')
+        (d3-attr 'class' 'y axis')
+        ) d3el
+      }}
+
+
+      {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
+        {{ember-d3-helpers/invoke (pipe
+          (d3-select-all '.y.axis')
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-call axis)
+          ) d3el
+        }}
+      {{/with}}
+
+      {{#d3-data-join d3el '.group' data
+        enter=(pipe
+          (d3-append 'g')
+          (d3-classed 'group' true)
+          (d3-classed 'enter' true)
+        )
+        merge=(pipe
+          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate)))
+        )
+        exit=(pipe (d3-remove))
+        as |group|}}
+
+        {{d3-data-join group.enter 'rect' options.outputAccessor
+          enter=(pipe
             (d3-append 'rect')
-          (d3-merge rect)
+          )
+          merge=(pipe
             (if with-transition (d3-transition options.transition) (d3-noop))
             (d3-style 'opacity' 1)
             (d3-attr 'width' options.groupScale.bandwidth)
@@ -116,28 +93,20 @@
             (d3-attr 'y' (pipe options.valueAccessor options.yScale))
             (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
             (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
-          ))
-        ) rect}}
+          )
+          exit=(pipe
+            (if with-transition (d3-transition options.transition) (d3-noop))
+            (d3-style 'fill' 'purple')
+            (d3-style 'opacity' 0)
+            (d3-attr 'height' 0)
+            (d3-attr 'y' height)
+            (d3-remove)
+          )
+        }}
 
-
-        {{!-- exit rects --}}
-        {{ember-d3-helpers/invoke (pipe
-          (d3-exit (pipe
-          (if with-transition (d3-transition options.transition) (d3-noop))
-          (d3-style 'fill' 'purple')
-          (d3-style 'opacity' 0)
-          (d3-attr 'height' 0)
-          (d3-attr 'y' height)
-          (d3-remove)))
-        ) rect}}
-
-
-      {{/with}}
-
-    {{/with}}
-    {{!-- end with group --}}
+    {{/d3-data-join}}
 
 
   {{/with}}
 
-{{/if}}
+{{/if}} --}}
