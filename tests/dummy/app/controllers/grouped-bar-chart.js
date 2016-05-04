@@ -16,10 +16,12 @@ export default Ember.Controller.extend({
   },
   dataIdx: 0,
   barData: dataCollection,
+
   data: Ember.computed('dataIdx', 'barData', function() {
     let idx = this.get('dataIdx');
     return this.get('barData').objectAt(idx);
   }),
+
   yMax: Ember.computed('data', function() {
     let data = this.get('data');
     return max(data, function(d) {

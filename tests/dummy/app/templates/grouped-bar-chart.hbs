@@ -1,8 +1,7 @@
-<h4>Grouped Bar Chart Example</h4>
-
-{{#ember-sparkles 800 300 margin as |chart|}}
+{{#ember-sparkles 800 400 margin as |chart|}}
   {{chart.grouped-bar-chart
     data=data
+
     x-scale=(band-scale
       (map-by 'ts' data)
       (append 0 chart.width)

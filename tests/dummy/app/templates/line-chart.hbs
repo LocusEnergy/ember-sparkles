@@ -1,0 +1,24 @@
+
+{{#ember-sparkles 800 400 as |chart|}}
+
+  {{chart.line-chart
+    data=timeseriesData
+    x-scale=(time-scale
+      domain
+      (append 0 chart.width)
+    )
+
+    y-scale=(linear-scale
+      range
+      (append chart.height 0)
+      nice=true
+    )
+
+    ticks=5
+    tick-format='%Y-%m-%d'
+  }}
+
+{{/ember-sparkles}}
+
+
+<button {{action 'toggleData'}}>Toggle Data</button>

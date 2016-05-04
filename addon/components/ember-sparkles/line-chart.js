@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import { select } from 'd3-selection';
-import layout from '../../templates/components/ember-sparkles/standard-basic';
+import layout from '../../templates/components/ember-sparkles/line-chart';
 
 export default Ember.Component.extend({
   layout,
   tagName: 'g',
-  classNames: ['ember-sparkles--standard-basic'],
+  classNames: ['ember-sparkles--line-chart'],
 
   'with-transition': true,
 
