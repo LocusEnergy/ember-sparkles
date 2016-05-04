@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { select } from 'd3-selection';
 import layout from '../../templates/components/ember-sparkles/grouped-bar-chart';
 
+import { transition } from 'd3-transition';
 import { scaleBand, scaleCategory20b } from 'd3-scale';
 
 
@@ -24,36 +25,53 @@ export default Ember.Component.extend({
   },
 
   didRender() {
-    let data = this.get('data');
-    let xScale = this.get('x-scale');
-    let yScale = this.get('y-scale');
-    let height = this.get('height')
+    if (false) {
+      let data = this.get('data');
+      let xScale = this.get('x-scale');
+      let yScale = this.get('y-scale');
+      let height = this.get('height')
 
-    let domain = data[0]['Wh_sum'].map(({ name }) => name);
-    let groupScale = scaleBand().domain(domain).range([ 0, xScale.bandwidth() ])
-    let colorScale = scaleCategory20b().domain(domain)
+      let domain = data[0]['Wh_sum'].map(({ name }) => name);
+      let groupScale = scaleBand().domain(domain).range([ 0, xScale.bandwidth() ])
+      let colorScale = scaleCategory20b().domain(domain)
 
-    let [ el ] = this.$().toArray();
+      let [ el ] = this.$().toArray();
 
-    let group = select(el).selectAll('.group').data(data);
+      let t = transition().duration(400);
 
-    let rect = group.enter().append('g')
-      .attr('class', 'group')
-      .attr('transform', ({ ts }) => `translate(${xScale(ts)},0)`)
-      .selectAll('rect').data(({ Wh_sum }) => Wh_sum)
+      let group = select(el).selectAll('.rect-group').data(data);
 
-    console.log(rect)
+      let rect = group.enter()
+        .append('g')
+        .classed('rect-group', true)
+      .merge(group)
+        .attr('transform', ({ ts }) => `translate(${xScale(ts)},0)`)
+        .selectAll('rect').data(({ Wh_sum }) => Wh_sum)
 
-    rect.enter().append('rect')
-      .attr('width', groupScale.bandwidth())
-      .attr('x', ({ name }) => groupScale(name))
-      .attr('y', ({ value }) => yScale(value))
-      .attr('height', ({ value }) => height - yScale(value))
-      .style('fill', ({ name }) => colorScale(name))
+      group.exit().remove()
 
-    rect.exit().remove()
+      rect.enter().append('rect')
+        .attr('x', 0)
+        .attr('y', height)
+        .attr('height', 0)
+        .attr('opacity', 0)
+      .merge(rect).transition(t)
+        .attr('width', groupScale.bandwidth())
+        .attr('x', ({ name }) => groupScale(name))
+        .attr('y', ({ value }) => yScale(value))
+        .attr('height', ({ value }) => height - yScale(value))
+        .style('fill', ({ name }) => colorScale(name))
+        .attr('opacity', 1)
 
-    group.exit().remove()
+
+      rect.exit().transition(t)
+        .attr('opacity', 0)
+        .attr('y', height)
+        .remove()
+
+    }
+
+
 
   }
 });

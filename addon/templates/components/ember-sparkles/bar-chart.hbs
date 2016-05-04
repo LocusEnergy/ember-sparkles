@@ -15,7 +15,7 @@
     ))
     tickFormat=(or tick-format '%Y-%m-%d')
 
-    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
+    transition=(or transition (ember-sparkles/transition duration=600 data=data))
     ) as |options|}}
 
   {{!-- create x axis --}}
@@ -57,7 +57,7 @@
     }}
   {{/with}}
 
-  {{d3-data-join d3el 'rect' data
+  {{d3-data-join d3el 'rect' data=data
     enter=(pipe
       (d3-append 'rect')
       (d3-attr 'class' 'bar')
