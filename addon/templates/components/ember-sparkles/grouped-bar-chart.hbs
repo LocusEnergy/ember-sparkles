@@ -65,50 +65,44 @@
         }}
       {{/with}}
 
-      {{#d3-data-join d3el '.rect-group' data
-        enter=(pipe
-          (d3-append 'g')
-          (d3-classed 'rect-group' true)
-          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
-          (log-debug msg='enter rect-group')
-        )
-
-        update=(pipe
-          (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
-        )
-
-        exit=(pipe
-          (d3-remove)
-        )
-        as |rect|}}
-        {{log rect}}
-        {{d3-data-join rect 'rect' options.outputAccessor
+      {{ember-d3-helpers/invoke 
+        (d3-join '.rect-group' data
           enter=(pipe
-            (log-debug)
-            (d3-append 'rect')
-            (d3-attr 'width' options.groupScale.bandwidth)
-            (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
-            (d3-attr 'y' (pipe options.valueAccessor options.yScale))
-            (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-            (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
+            (d3-append 'g')
+            (d3-classed 'rect-group' true)
+            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
+            (d3-join 'rect' options.outputAccessor
+              enter=(pipe
+                (d3-append 'rect')
+                (d3-attr 'height' 0)
+                (if with-transition (d3-transition options.transition) (d3-noop))
+                (d3-attr 'width' options.groupScale.bandwidth)
+                (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
+                (d3-attr 'y' (pipe options.valueAccessor options.yScale))
+                (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
+                (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
+              )
+            )
           )
 
           update=(pipe
-            (d3-attr 'width' options.groupScale.bandwidth)
-            (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
-            (d3-attr 'y' (pipe options.valueAccessor options.yScale))
-            (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-            (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
+            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
+            (d3-join 'rect' options.outputAccessor
+              update=(pipe
+                (if with-transition (d3-transition options.transition) (d3-noop))
+                (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
+                (d3-attr 'y' (pipe options.valueAccessor options.yScale))
+                (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
+              )
+            )
           )
 
           exit=(pipe
             (d3-remove)
           )
-        }}
-
-    {{/d3-data-join}}
-
-
+        )
+      d3el }}
+      
   {{/with}}
 
 {{/if}}

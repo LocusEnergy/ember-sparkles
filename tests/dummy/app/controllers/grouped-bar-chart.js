@@ -25,8 +25,8 @@ export default Ember.Controller.extend({
   yMax: Ember.computed('data', function() {
     let data = this.get('data');
     return max(data, function(d) {
-      return max(d['Wh_sum'], (t) => t.value)
-    })
+      return max(d['Wh_sum'], (t) => t.value);
+    });
   }),
 
   actions: {
