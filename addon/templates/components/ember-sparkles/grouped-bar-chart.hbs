@@ -30,7 +30,7 @@
     colorScale=(or color-scale (cat-color-scale '10'))
     tickFormat=(or tick-format '%Y-%m-%d')
 
-    transition=(or transition (ember-sparkles/transition duration=3000 data=data))
+    transition=(or transition (ember-sparkles/transition duration=1000 data=data))
     ) as |options|}}
 
       {{ember-d3-helpers/invoke (pipe
@@ -65,7 +65,7 @@
         }}
       {{/with}}
 
-      {{ember-d3-helpers/invoke 
+      {{ember-d3-helpers/invoke
         (d3-join '.rect-group' data
           enter=(pipe
             (d3-append 'g')
@@ -90,12 +90,13 @@
               update=(pipe
                 (if with-transition (d3-transition options.transition) (d3-noop))
                 (d3-attr 'x' (pipe (d3-get 'name') options.groupScale))
+                (d3-attr 'width' options.groupScale.bandwidth)
                 (d3-attr 'y' (pipe options.valueAccessor options.yScale))
                 (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
               )
             )
             (if with-transition (d3-transition options.transition) (d3-noop))
-            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))     
+            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
           )
 
           exit=(pipe
@@ -111,7 +112,7 @@
           )
         )
       d3el }}
-      
+
   {{/with}}
 
 {{/if}}
