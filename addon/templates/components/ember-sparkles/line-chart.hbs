@@ -2,6 +2,7 @@
   {{#with (hash
     inputAccessor=(or input-accessor (d3-get 'ts'))
     outputAccessor=(or output-accessor (d3-get 'Wh_sum'))
+    groupAccessor=(d3-get 'id')
     xScale=(or x-scale (time-scale
       (append 0 width)
       (append 0 width)
@@ -55,22 +56,39 @@
       }}
     {{/with}}
 
-    {{d3-data-join d3el 'path' data (d3-get 'id')
-      enter=(pipe
-        (d3-append 'path')
-        (d3-attr class='d3-line')
-      )
 
-      merge=(pipe
-        (d3-attr 'd' (pipe
-          (d3-get 'data' (d3-line options.xScale options.yScale xAccessor=(d3-get 'ts') yAccessor=(d3-get 'Wh_sum')))
-        ))
-        (d3-style stroke=(pipe (d3-get 'id') options.colorScale))
-      )
+    {{ember-d3-helpers/invoke
+      (d3-join '.line' data
 
-      exit=(pipe
-        (d3-remove)
-      )
+        enter=(pipe
+          (d3-append 'path')
+          (d3-attr 'class' 'line')
+          (d3-attr 'd' (pipe
+            (d3-get 'data')
+            (d3-line options.xScale options.yScale xAccessor=(d3-get 'ts') yAccessor=(d3-get 'Wh_sum'))
+          ))
+          (d3-style 'stroke' (pipe (d3-get 'id') options.colorScale))
+          (d3-style 'fill' 'none')
+          (d3-style 'stroke-width' '1.5px')
+        )
+
+        update=(pipe
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-attr 'class' 'line')
+          (d3-attr 'd' (pipe
+            (d3-get 'data')
+            (d3-line options.xScale options.yScale xAccessor=(d3-get 'ts') yAccessor=(d3-get 'Wh_sum'))
+          ))
+          (d3-style 'stroke' (pipe (d3-get 'id') options.colorScale))
+        )
+
+        exit=(pipe
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-style 'opacity' 0)
+          (d3-remove)
+        )
+
+      ) d3el
     }}
 
 

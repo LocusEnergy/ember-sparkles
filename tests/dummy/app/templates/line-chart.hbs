@@ -1,8 +1,8 @@
 
-{{#ember-sparkles 800 400 as |chart|}}
+{{#ember-sparkles 800 400 margin as |chart|}}
 
   {{chart.line-chart
-    data=timeseriesData
+    data=data
     x-scale=(time-scale
       domain
       (append 0 chart.width)
@@ -11,7 +11,6 @@
     y-scale=(linear-scale
       range
       (append chart.height 0)
-      nice=true
     )
 
     ticks=5

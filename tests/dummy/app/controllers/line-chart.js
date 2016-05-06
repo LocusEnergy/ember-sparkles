@@ -1,32 +1,29 @@
 import Ember from 'ember';
 import _ from 'lodash/lodash';
-import { dailyData, weeklyDataA, weeklyDataB } from 'dummy/utils/timeseries-data';
-import dateify from 'dummy/utils/dateify';
 import { extent, min, max } from 'd3-array';
 
-const timeseries = [
-  {
-    id: 'ts_1',
-    data: dateify(dailyData),
-    datatype: 'Wh_sum',
-    interval: 'daily'
-  },
-  {
-    id: 'ts_2',
-    data: dateify(weeklyDataA),
-    datatype: 'Wh_sum',
-    interval: 'weekly'
-  },
-  {
-    id: 'ts_1',
-    data: dateify(weeklyDataB),
-    datatype: 'Wh_sum',
-    interval: 'weekly'
-  }
-];
+let generateData = function() {
+  let end = moment('2015-03-14');
+  let numDays = _.random(10, 90);
+  let start = end.clone().subtract('days', numDays);
+  let dateRange = moment.range(start, end);
+  let series = ['series 1', 'series 2', 'series 3', 'series 4', 'series 5', 'series 6', 'series 7', 'series 8', 'series 9', 'series 10', 'series 11', 'series 12'];
+  let valueType = 'Wh_sum';
+  let seriesSample = _.sample(series, _.random(2, _.size(series)));
 
-let filterTimeseries = function(interval) {
-  return _.filter(timeseries, 'interval', interval);
+  return seriesSample.map(seriesName => {
+    return {
+      id: seriesName,
+      datatype: valueType,
+      data: dateRange.toArray('days').map(d => {
+        return {
+          ts: d.toDate(),
+          [valueType]: _.random(10, 1000)
+        }
+      })
+    }
+  });
+
 }
 
 export default Ember.Controller.extend({
@@ -34,10 +31,12 @@ export default Ember.Controller.extend({
     top: 20,
     right: 25,
     bottom: 20,
-    left: 95,
+    left: 45,
   },
 
-  timeseriesData: filterTimeseries('weekly'),
+  init() {
+    this.set('timeseriesData', generateData());
+  },
 
   domain: Ember.computed('timeseriesData', function() {
     let domains = this.get('timeseriesData').map(({ data }) => extent(data, ({ ts }) => ts));
@@ -58,12 +57,7 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleData() {
-      let { length } = this.get('timeseriesData');
-      if (length === 1) {
-        this.set('timeseriesData', _.filter(timeseries, 'interval', 'weekly'));
-      } else {
-        this.set('timeseriesData', _.filter(timeseries, 'interval', 'daily'));
-      }
+      this.set('timeseriesData', generateData());
     }
   }
 });
