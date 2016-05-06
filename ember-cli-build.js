@@ -7,6 +7,10 @@ module.exports = function(defaults) {
     // Add options here
   });
 
+
+  app.import('bower_components/moment/moment.js');
+  app.import('bower_components/moment-range/dist/moment-range.js');
+
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`
