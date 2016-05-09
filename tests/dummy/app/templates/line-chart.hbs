@@ -2,7 +2,7 @@
 {{#ember-sparkles 800 400 margin as |chart|}}
 
   {{chart.line-chart
-    data=data
+    data=timeseriesData
     x-scale=(time-scale
       domain
       (append 0 chart.width)

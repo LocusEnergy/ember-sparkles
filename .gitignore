@@ -19,4 +19,4 @@ testem.log
 /.vscode
 .vscodeignore 
 jsconfig.json
-
+/typings
