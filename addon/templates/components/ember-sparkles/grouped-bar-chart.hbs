@@ -31,8 +31,9 @@
       (append 0 height)
       (append height 0)
     ))
+    groupDomain=(map-by 'name' (sort-by 'name' (get (get data '0') 'Wh_sum')))
     colorScale=(cat-color-scale '20c'
-
+      (map-by 'name' (sort-by 'name' (get (get data '0') 'Wh_sum')))
     )
     tickFormat=(or tick-format '%Y-%m-%d')
 
@@ -54,7 +55,7 @@
           ) d3el
         }}
       {{/with}}
-
+      
 
       {{ember-d3-helpers/invoke (pipe
         (d3-append 'g')
@@ -148,8 +149,70 @@
           )
         )
       d3el }}
+      
+      {{#with (compute 
+        (pipe 
+          (d3-append 'g')
+          (d3-attr 'class' 'legend')
+          (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+        ) 
+      
+      d3el) as |legend|}}
+      
+        {{ember-d3-helpers/invoke 
+          (d3-join 'rect' options.groupDomain
+            enter=(pipe
+              (d3-append 'rect')
+              (d3-attr 'transform' transformLegend)
+              (d3-attr 'width' 14)
+              (d3-attr 'height' 14)
+              (d3-style 'fill' options.colorScale)
+              (d3-attr 'opacity' 0)
+              (if with-transition (d3-transition options.transition) (d3-noop))
+              (d3-attr 'opacity' 1)
+            )
+            
+            update=(pipe
+              (d3-style 'fill' options.colorScale)
+            )
+            
+            exit=(pipe
+              (d3-remove)
+            )
+          ) 
+        legend }}
+        
+        {{ember-d3-helpers/invoke 
+          (d3-join 'text' options.groupDomain
+            enter=(pipe
+              (d3-append 'text')
+              (d3-attr 'opacity' 0)
+              (d3-attr 'dx' '-3.8em')
+              (d3-attr 'dy' '1em')
+              (d3-style 'font-size' '10px')
+              (if with-transition (d3-transition options.transition) (d3-noop))
+              (d3-text (d3-get))
+              (d3-attr 'transform' transformLegend)
+              (d3-attr 'opacity' 1)
+            )
+            
+            update=(pipe
+              (d3-text (d3-get))
+            )
+            
+            exit=(pipe
+              (if with-transition (d3-transition options.transition) (d3-noop))
+              (d3-attr 'opacity' 0)
+              (d3-remove)
+            )
+          ) 
+        legend }}
+        
+      {{/with}}
+      
+      {{!--{{log (invoke options.colorScale (map-by 'name' (sort-by 'name' (get (get data '0') 'Wh_sum'))))}}--}}
 
-      {{ember-d3-helpers/invoke
+      {{!--{{ember-d3-helpers/invoke
         (d3-join '.legend' (map-by 'name' (sort-by 'name' (get (get data '0') 'Wh_sum')))
           enter=(pipe
             (d3-append 'g')
@@ -171,12 +234,7 @@
           )
 
           update=(pipe
-            (d3-call (pipe
-              (d3-select-all 'text')
-              (d3-text (d3-get))
-            ))
-            (d3-select-all 'rect')
-            (d3-style 'fill' options.colorScale)
+            
           )
 
           exit=(pipe
@@ -184,7 +242,7 @@
           )
         )
 
-      d3el }}
+      d3el }}--}}
 
   {{/with}}
 
