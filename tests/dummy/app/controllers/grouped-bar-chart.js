@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import _ from 'lodash/lodash';
-import { max } from 'd3-array';
 
 let generateData = function() {
   let end = moment('2015-03-14');
@@ -35,12 +34,12 @@ export default Ember.Controller.extend({
   },
 
   init() {
-    this.set('data', generateData());
+    this.set('barData', generateData());
   },
 
   actions: {
     toggleData() {
-      this.set('data', generateData());
+      this.set('barData', generateData());
     }
   }
 

@@ -6,14 +6,20 @@ moduleForComponent('ember-sparkles/grouped-bar-chart', 'Integration | Component 
 });
 
 test('it renders', function(assert) {
-  this.set('data', []);
+  this.set('data', [{ 'a': 1 }]);
   this.render(hbs`
     <svg>
       {{ember-sparkles/grouped-bar-chart
         data=data
         with-transition=false
+        
         height=1
         width=1
+        
+        input-key=''
+        output-key='a'
+        group-key=''
+        value-key=''
       }}
     </svg>
   `);

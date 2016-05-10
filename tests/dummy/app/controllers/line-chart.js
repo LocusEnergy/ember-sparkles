@@ -7,7 +7,7 @@ let generateData = function() {
   let numDays = _.random(10, 50);
   let start = end.clone().subtract('days', numDays);
   let dateRange = moment.range(start, end);
-  let series = _.range(10)
+  let series = _.range(4)
   let valueType = 'Wh_sum';
   let seriesSample = _.sample(series, _.random(2, _.size(series)));
 

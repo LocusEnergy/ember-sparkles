@@ -25,27 +25,6 @@ export default Ember.Component.extend({
   // callback to position legend
   transformLegend(d, i) {
     return `translate(0,${i * 20})`;
-  },
-
-  // these properties are dependent on the data being in standard format
-  yMax: computed('data', function() {
-    let data = this.get('data');
-    let outputKey = this.get('output-key');
-    let valueKey = this.get('value-key'); 
-    return max(data, ({ [outputKey]: o }) => max(o, ({ [valueKey]: v }) => v));
-  }),
-  
-  groupDomain: computed('data', function() {
-    let [ firstGroup ] = this.get('data');
-    let outputKey = this.get('output-key');
-    let groupKey = this.get('group-key');   
-    let sortByGroup = function(a, b) {
-      let aGroup = a[groupKey];
-      let bGroup = b[groupKey];
-      return aGroup > bGroup;
-    } 
-    let values = firstGroup[outputKey].sort(sortByGroup);
-    return values.map(({ [groupKey]: g }) => g);
-  })
+  }
 
 });

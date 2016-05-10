@@ -1,132 +1,101 @@
 {{#if d3el}}
-  {{#with (hash
-    inputAccessor=(d3-get input-key)
-    valueAccessor=(d3-get value-key)
-    outputAccessor=(d3-get output-key)
-    groupAccessor=(d3-get group-key)
-    
-    xScale=(or x-scale (band-scale
-      (ember-sparkles/map data (d3-get input-key))
-      (append 0 width)
-      round=true
-      padding=padding
-    ))
-    yScale=(or y-scale (linear-scale
-      (append 0 yMax)
-      (append height 0)
-      nice=true
-    ))
-    colorScale=(cat-color-scale '20c'
-      groupDomain
-    )
-    tickFormat=(or tick-format '%Y-%m-%d')
+    {{!-- x axis --}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'x axis')
+      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+      ) d3el
+    }}
 
-    transition=(or transition (ember-sparkles/transition duration=400 data=data))
-    ) as |options|}}
+    {{#with (ember-sparkles/axis xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-select-all '.x.axis')
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-call axis)
+        ) d3el
+      }}
+    {{/with}}
     
+    {{!-- y axis --}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'y axis')
+      ) d3el
+    }}
+
+    {{#with (ember-sparkles/axis yScale position='left' ticks=ticks) as |axis|}}
+      {{ember-d3-helpers/invoke (pipe
+        (d3-select-all '.y.axis')
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-call axis)
+        ) d3el
+      }}
+    {{/with}}
     
     {{#with (band-scale
       groupDomain
-      (append 0 (compute options.xScale.bandwidth))
+      (append 0 (compute xScale.bandwidth))
       padding=groupPadding
     ) as |groupScale|}}
-
-      {{ember-d3-helpers/invoke (pipe
-        (d3-append 'g')
-        (d3-attr 'class' 'x axis')
-        (d3-attr 'transform' (i 'translate(0,${h})' h=height))
-        ) d3el
-      }}
-
-      {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
-        {{ember-d3-helpers/invoke (pipe
-          (d3-select-all '.x.axis')
-          (if with-transition (d3-transition options.transition) (d3-noop))
-          (d3-call axis)
-          ) d3el
-        }}
-      {{/with}}
+    
+    {{#with (hash
+      enterRect=(pipe
+        (d3-append 'rect')
+        (d3-attr 'width' 0)
+        (d3-attr 'height' 0)
+        (d3-attr 'x' (pipe groupAccessor groupScale))
+        (d3-attr 'y' height)
+        (d3-style 'fill' 'red')
+        (d3-style 'opacity' 0)
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'y' (pipe valueAccessor yScale))
+        (d3-attr 'width' groupScale.bandwidth)
+        (d3-attr 'height' (pipe valueAccessor yScale (bar-height height)))
+        (d3-style 'fill' (pipe groupAccessor colorScale))
+        (d3-style 'opacity' 1)
+      )
+    
+    ) as |renderOptions|}}
       
-      {{ember-d3-helpers/invoke (pipe
-        (d3-append 'g')
-        (d3-attr 'class' 'y axis')
-        ) d3el
-      }}
 
-      {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
-        {{ember-d3-helpers/invoke (pipe
-          (d3-select-all '.y.axis')
-          (if with-transition (d3-transition options.transition) (d3-noop))
-          (d3-call axis)
-          ) d3el
-        }}
-      {{/with}}
-
-      {{ember-d3-helpers/invoke
+      
+      {{ember-d3-helpers/dev-null (compute
         (d3-join '.rect-group' data
           enter=(pipe
             (d3-append 'g')
             (d3-classed 'rect-group' true)
-            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
+            (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
 
-            (d3-join 'rect' options.outputAccessor
-              enter=(pipe
-                (d3-append 'rect')
-                (d3-attr 'width' 0)
-                (d3-attr 'y' height)
-                (d3-attr 'height' 0)
-                (d3-style 'fill' 'red')
-                (d3-style 'opacity' 0)
-                (d3-attr 'x' (pipe (d3-get 'name') groupScale))
-                (if with-transition (d3-transition options.transition) (d3-noop))
-                (d3-style 'opacity' 1)
-                (d3-attr 'y' (pipe options.valueAccessor options.yScale))
-                (d3-attr 'width' groupScale.bandwidth)
-                (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-                (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
-              )
+            (d3-join 'rect' outputAccessor
+              enter=renderOptions.enterRect
             )
           )
 
           update=(pipe
-            (d3-join 'rect' options.outputAccessor
-              enter=(pipe
-                (d3-append 'rect')
-                (d3-attr 'width' 0)
-                (d3-attr 'y' height)
-                (d3-attr 'height' 0)
-                (d3-style 'fill' 'red')
-                (d3-style 'opacity' 0)
-                (d3-attr 'x' (pipe (d3-get 'name') groupScale))
-                (if with-transition (d3-transition options.transition) (d3-noop))
-                (d3-style 'opacity' 1)
-                (d3-attr 'y' (pipe options.valueAccessor options.yScale))
-                (d3-attr 'width' groupScale.bandwidth)
-                (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-                (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
-              )
+            (d3-join 'rect' outputAccessor
+              enter=renderOptions.enterRect
               update=(pipe
-                (if with-transition (d3-transition options.transition) (d3-noop))
-                (d3-style 'opacity' 1)
-                (d3-attr 'x' (pipe (d3-get 'name') groupScale))
-                (d3-attr 'y' (pipe options.valueAccessor options.yScale))
+                (if with-transition (d3-transition transition) (d3-noop))
                 (d3-attr 'width' groupScale.bandwidth)
-                (d3-attr 'height' (pipe options.valueAccessor options.yScale (bar-height height)))
-                (d3-style 'fill' (pipe (d3-get 'name') options.colorScale))
+                (d3-attr 'height' (pipe valueAccessor yScale (bar-height height)))
+                (d3-attr 'x' (pipe groupAccessor groupScale))
+                (d3-attr 'y' (pipe valueAccessor yScale))
+                (d3-style 'fill' (pipe groupAccessor colorScale))
+                (d3-style 'opacity' 1)
 
               )
               exit=(pipe
                 (d3-remove)
               )
             )
-            (if with-transition (d3-transition options.transition) (d3-noop))
-            (d3-attr 'transform' (pipe options.inputAccessor options.xScale (ember-sparkles/translate-x)))
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
           )
 
           exit=(pipe
-            (d3-join 'rect' options.outputAccessor
+            (d3-join 'rect' outputAccessor
               update=(pipe
-                (if with-transition (d3-transition options.transition) (d3-noop))
+                (if with-transition (d3-transition transition) (d3-noop))
                 (d3-attr 'y' height)
                 (d3-attr 'height' 0)
                 (d3-style 'fill' 'green')
@@ -134,79 +103,80 @@
                 (d3-remove)
               )
             )
-            (if with-transition (d3-transition options.transition) (d3-noop))
+            (if with-transition (d3-transition transition) (d3-noop))
             (d3-remove)
           )
         )
-      d3el }}
+      d3el)}}
+      
+    {{/with}}
       
     {{/with}}
     
-    {{#with (compute 
-        (pipe 
-          (d3-append 'g')
-          (d3-attr 'class' 'legend')
-          (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+    {{!-- legend --}}
+  {{#with (compute 
+      (pipe 
+        (d3-append 'g')
+        (d3-attr 'class' 'legend')
+        (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+      ) 
+    
+      d3el
+    ) as |legend|}}
+    
+      {{ember-d3-helpers/invoke 
+        (d3-join 'rect' groupDomain
+          enter=(pipe
+            (d3-append 'rect')
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-attr 'width' 14)
+            (d3-attr 'height' 14)
+            (d3-style 'fill' colorScale)
+            (d3-attr 'opacity' 0)
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+          
+          update=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-style 'fill' colorScale)
+          )
+          
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-remove)
+          )
         ) 
+      legend }}
       
-        d3el
-      ) as |legend|}}
+      {{ember-d3-helpers/invoke 
+        (d3-join 'text' groupDomain
+          enter=(pipe
+            (d3-append 'text')
+            (d3-attr 'opacity' 0)
+            (d3-attr 'dx' '-3.8em')
+            (d3-attr 'dy' '1em')
+            (d3-style 'font-size' '10px')
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-text (d3-get))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+          
+          update=(pipe
+            (d3-text (d3-get))
+          )
+          
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'opacity' 0)
+            (d3-remove)
+          )
+        ) 
+      legend }}
       
-        {{ember-d3-helpers/invoke 
-          (d3-join 'rect' groupDomain
-            enter=(pipe
-              (d3-append 'rect')
-              (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-              (d3-attr 'width' 14)
-              (d3-attr 'height' 14)
-              (d3-style 'fill' options.colorScale)
-              (d3-attr 'opacity' 0)
-              (if with-transition (d3-transition options.transition) (d3-noop))
-              (d3-attr 'transform' transformLegend)
-              (d3-attr 'opacity' 1)
-            )
-            
-            update=(pipe
-              (if with-transition (d3-transition options.transition) (d3-noop))
-              (d3-style 'fill' options.colorScale)
-            )
-            
-            exit=(pipe
-              (if with-transition (d3-transition options.transition) (d3-noop))
-              (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-              (d3-remove)
-            )
-          ) 
-        legend }}
-        
-        {{ember-d3-helpers/invoke 
-          (d3-join 'text' groupDomain
-            enter=(pipe
-              (d3-append 'text')
-              (d3-attr 'opacity' 0)
-              (d3-attr 'dx' '-3.8em')
-              (d3-attr 'dy' '1em')
-              (d3-style 'font-size' '10px')
-              (if with-transition (d3-transition options.transition) (d3-noop))
-              (d3-text (d3-get))
-              (d3-attr 'transform' transformLegend)
-              (d3-attr 'opacity' 1)
-            )
-            
-            update=(pipe
-              (d3-text (d3-get))
-            )
-            
-            exit=(pipe
-              (if with-transition (d3-transition options.transition) (d3-noop))
-              (d3-attr 'opacity' 0)
-              (d3-remove)
-            )
-          ) 
-        legend }}
-        
-      {{/with}}
-
     {{/with}}
 
 {{/if}}

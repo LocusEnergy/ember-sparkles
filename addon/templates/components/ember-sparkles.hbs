@@ -5,11 +5,39 @@
       width=width height=height
     )
     grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
-      width=width height=height
+      width=width 
+      height=height
+      
+      inputAccessor=(d3-get sparkled.inputKey)
+      valueAccessor=(d3-get sparkled.valueKey)
+      outputAccessor=(d3-get sparkled.outputKey)
+      groupAccessor=(d3-get sparkled.groupKey)
+      
+      xScale=(or x-scale (band-scale
+        (ember-sparkles/map sparkled.data (d3-get sparkled.inputKey))
+        (append 0 width)
+        round=true
+        padding=padding
+      ))
+      
+      yScale=(or y-scale (linear-scale
+        (append 0 sparkled.yMax)
+        (append height 0)
+        nice=true
+      ))
+      
+      groupDomain=sparkled.groupDomain
+      data=sparkled.data
+
+      colorScale=(cat-color-scale '20c' sparkled.groupDomain)
+      tickFormat=(or tick-format '%Y-%m-%d')
+      transition=(or transition (ember-sparkles/transition duration=800 data=sparkled.data))
     )
+
     line-chart=(component 'ember-sparkles/line-chart'
       width=width height=height
     )
+
     width=width
     height=height
   )}}
