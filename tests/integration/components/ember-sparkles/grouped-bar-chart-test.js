@@ -22,3 +22,15 @@ test('it renders', function(assert) {
 
 // give it 2 series
 // should plot both
+
+//  TODO: major / minor scale??, invoke -> null  --}}
+  // if data is in right format, then default scales just get set up automatically --}}
+//  add legend  --}}
+//  legend test: should be able to turn off / on with a property --}}
+
+//  TODO: setup domain for groupScale with map helper --}}
+//  write tests for grouped bar chart  --}}
+//  add line series example --}}
+
+//  check that update keeps things in order  --}}
+//  check that legend is also in order --}}

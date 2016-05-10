@@ -16,7 +16,7 @@ let generateData = function() {
     let seriesData = seriesSample.map(s => {
       return {
         name: s,
-        value: _.random(10, 350)
+        value: _.random(10, 1050)
       }
     })
     return {
@@ -38,13 +38,6 @@ export default Ember.Controller.extend({
   init() {
     this.set('data', generateData());
   },
-
-  yMax: Ember.computed('data', function() {
-    let data = this.get('data');
-    return max(data, function(d) {
-      return max(d['Wh_sum'], (t) => t.value);
-    });
-  }),
 
   actions: {
     toggleData() {

@@ -1,21 +1,17 @@
 {{#ember-sparkles 800 400 margin as |chart|}}
   {{chart.grouped-bar-chart
     data=data
-
-    x-scale=(band-scale
-      (map-by 'ts' data)
-      (append 0 chart.width)
-      round=true
-      padding=padding
-    )
-    y-scale=(linear-scale
-      (append 0 yMax)
-      (append chart.height 0)
-      nice=true
-    )
+    
+    input-key='ts'
+    output-key='Wh_sum'
+    group-key='name'
+    value-key='value'
 
     ticks=5
     tick-format='%Y-%m-%d'
+    
+    padding=0.2
+    groupPadding=0.05
   }}
 {{/ember-sparkles}}
 
