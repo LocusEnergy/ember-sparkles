@@ -27,7 +27,6 @@ let generateData = function() {
 }
 
 export default Ember.Controller.extend({
-  padding: 0.2,
   margin: {
     top: 20,
     right: 25,
