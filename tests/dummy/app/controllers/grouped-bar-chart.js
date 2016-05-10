@@ -33,6 +33,10 @@ export default Ember.Controller.extend({
     left: 45,
   },
 
+  groupSortFunction({ name: a }, { name: b }) {
+    return a > b;
+  },
+
   init() {
     this.set('barData', generateData());
   },

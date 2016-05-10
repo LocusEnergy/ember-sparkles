@@ -13,18 +13,18 @@
       outputAccessor=(d3-get sparkled.outputKey)
       groupAccessor=(d3-get sparkled.groupKey)
       
-      xScale=(or x-scale (band-scale
+      xScale=(band-scale
         (ember-sparkles/map sparkled.data (d3-get sparkled.inputKey))
         (append 0 width)
         round=true
         padding=padding
-      ))
+      )
       
-      yScale=(or y-scale (linear-scale
-        (append 0 sparkled.yMax)
+      yScale=(linear-scale
+        (append 0 sparkled.outputMax)
         (append height 0)
         nice=true
-      ))
+      )
       
       groupDomain=sparkled.groupDomain
       data=sparkled.data

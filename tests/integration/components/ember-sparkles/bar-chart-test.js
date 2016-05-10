@@ -74,11 +74,11 @@ test('it accepts data and generates rectangles', function(assert) {
   assert.deepEqual(this.chart.getAttr('height'), ['9', '42', '65', '17'], 'each rectangle has a properly calculated height attribute');
 
   // check axes existence and attributes
-  assert.ok(this.$('.x.axis').length);
-  assert.ok(this.$('.y.axis').length);
+  assert.ok(this.$('.x.axis').length, 'x axis renders');
+  assert.ok(this.$('.y.axis').length, 'y axis renders');
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
-  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'tick on x axis is formatted with correct value');
+  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'ticks on x axis are formatted correctly');
 });
 
 test('data can be updated and removed', function(assert) {
