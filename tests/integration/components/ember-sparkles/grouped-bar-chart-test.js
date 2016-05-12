@@ -32,7 +32,7 @@ test('it renders', function(assert) {
   assert.ok(this.$('.ember-sparkles--grouped-bar-chart').length);
 });
 
-test('it accepts data and generates rectangles', function(assert) {
+test('accepts data and dynamically generates rectangles and legend', function(assert) {
   let data = [
     {
       ts: new Date('2001-03-14T00:00:00-08:00'),
@@ -168,7 +168,16 @@ test('it accepts data and generates rectangles', function(assert) {
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
   assert.equal(this.$('.x.axis .tick').first().text(), '2001-03-14', 'ticks on x axis are formatted correctly');
-
+  
+  
+  // check legend existence and attributes
+  assert.ok(this.$('.legend').length, 'legend renders');
+  assert.equal(this.$('.legend rect').length, 3, 'there are 3 rectangles in the legend');
+  assert.equal(this.$('.legend text').length, 3, 'there are 3 text elements in the legend');
+  assert.deepEqual(this.$('.legend rect').toArray().map(r => $(r).css('fill')), colorSequence, 'legend rectangles have correct colors');
+  assert.deepEqual(this.$('.legend text').text(), 'series 1series 2series 3', 'legend has correct text');
+  
+  // check deletion of data
   data.pop();
   
     this.setProperties({
@@ -178,6 +187,7 @@ test('it accepts data and generates rectangles', function(assert) {
   
   assert.equal(this.chart.groups().length, 3, 'after removing a data group, there are now 3 groups of rectangles');
   
+  // check updating data
   data.push( {
     ts: new Date('2001-03-18T00:00:00-08:00'),
     watts: [
@@ -219,9 +229,8 @@ test('it accepts data and generates rectangles', function(assert) {
     xDomain: data.map(({ ts }) => ts)
   });
   
-  assert.equal(this.chart.groups().length, 5, 'after data update, there are now 5 groups of rectangles');
-  
   xSequence = ['0', '8', '16'];
+  assert.equal(this.chart.groups().length, 5, 'after data update, there are now 5 groups of rectangles');
   assert.deepEqual(this.chart.rect('attr', 'x'), [xSequence, xSequence, xSequence, xSequence, xSequence], 'each rectangle has correct x-coordinate after update');
   assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['98', '59', '10'], ['10', '30', '87']], 'each rectangle has correct y-coordinate after update');  
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['2', '41', '90'], ['90', '70', '13']], 'each rectangle has correct height after update');
@@ -234,5 +243,4 @@ test('it accepts data and generates rectangles', function(assert) {
 // test('it generates a dynamic legend')
 
 
-//  check that update keeps things in order  --}}
 //  check that legend is also in order --}}

@@ -16,14 +16,5 @@ export default class GroupedBarChart {
       return rects.map(g => g.map((idx, r) => $(r)[method](property)).toArray());
     }
   }
-  
-  
 
-  getAttr(attribute) {
-    return this.rect().map((idx, item) => $(item).attr(attribute)).toArray();
-  }
-
-  ticks() {
-    return this.$('.tick');
-  }
 }
