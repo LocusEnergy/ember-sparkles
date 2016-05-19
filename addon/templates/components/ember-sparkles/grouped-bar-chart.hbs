@@ -15,14 +15,14 @@
       ) d3el
     }}
   {{/with}}
-    
+
   {{!-- y axis --}}
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'y axis')
     ) d3el
   }}
-  
+
   {{#with (ember-sparkles/axis yScale position='left' ticks=ticks) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.y.axis')
@@ -31,13 +31,13 @@
       ) d3el
     }}
   {{/with}}
-    
+
   {{#with (band-scale
     groupDomain
     (append 0 (compute xScale.bandwidth))
     padding=groupPadding
   ) as |groupScale|}}
-  
+
     {{#with (hash
       enterRect=(pipe
         (d3-append 'rect')
@@ -48,7 +48,7 @@
         (d3-style 'fill' 'red')
         (d3-style 'opacity' 0)
       )
-      
+
       updateRect=(pipe
         (if with-transition (d3-transition transition) (d3-noop))
         (d3-attr 'width' groupScale.bandwidth)
@@ -58,7 +58,7 @@
         (d3-style 'fill' (pipe groupAccessor colorScale))
         (d3-style 'opacity' 1)
       )
-      
+
       exitRect=(pipe
         (if with-transition (d3-transition transition) (d3-noop))
         (d3-attr 'y' height)
@@ -67,14 +67,14 @@
         (d3-style 'opacity' 0)
         (d3-remove)
       )
-    
+
     ) as |renderOptions|}}
-    
+
       {{ember-d3-helpers/dev-null (compute
         (d3-join '.rect-group' data
           enter=(pipe
             (d3-append 'g')
-            (d3-classed 'rect-group' true)
+            (d3-attr 'class' 'rect-group')
             (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
             (d3-join 'rect' outputAccessor
               enter=(pipe renderOptions.enterRect renderOptions.updateRect)
@@ -101,23 +101,23 @@
           )
         )
       d3el)}}
-      
+
     {{/with}}
-    
+
   {{/with}}
-    
+
   {{!-- legend --}}
-  {{#with (compute 
-    (pipe 
+  {{#with (compute
+    (pipe
       (d3-append 'g')
       (d3-attr 'class' 'legend')
       (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-    ) 
-  
+    )
+
     d3el
   ) as |legend|}}
-    
-    {{ember-d3-helpers/invoke 
+
+    {{ember-d3-helpers/invoke
       (d3-join 'rect' groupDomain
         enter=(pipe
           (d3-append 'rect')
@@ -130,21 +130,21 @@
           (d3-attr 'transform' transformLegend)
           (d3-attr 'opacity' 1)
         )
-        
+
         update=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-style 'fill' colorScale)
         )
-        
+
         exit=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
           (d3-remove)
         )
-      ) 
+      )
     legend }}
-      
-    {{ember-d3-helpers/invoke 
+
+    {{ember-d3-helpers/invoke
       (d3-join 'text' groupDomain
         enter=(pipe
           (d3-append 'text')
@@ -157,19 +157,19 @@
           (d3-attr 'transform' transformLegend)
           (d3-attr 'opacity' 1)
         )
-        
+
         update=(pipe
           (d3-text (d3-get))
         )
-        
+
         exit=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'opacity' 0)
           (d3-remove)
         )
-      ) 
+      )
     legend }}
-      
+
   {{/with}}
 
 {{/if}}

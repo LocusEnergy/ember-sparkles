@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import dateify from 'dummy/utils/dateify';
 import { timeseriesData } from 'dummy/utils/fixture-data';
+import { max } from 'd3-array';
 
 let dateified = timeseriesData.map(t => {
   t.data = dateify(t.data);
@@ -24,6 +25,11 @@ export default Ember.Controller.extend({
     let idx = this.get('dataIdx');
     let result = b.filterBy('id', idx);
     return result[0].data;
+  }),
+
+  outputMax: Ember.computed('data', function() {
+    let data = this.get('data');
+    return max(data, ({ value }) => value);
   }),
 
   actions: {

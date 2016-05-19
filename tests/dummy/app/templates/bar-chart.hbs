@@ -1,20 +1,27 @@
-{{#ember-sparkles 800 400 margin as |chart|}}
+{{#ember-sparkles 800 400 margin
+  as |chart|}}
 
   {{chart.bar-chart
     data=data
-    x-scale=(band-scale
-      (map-by 'ts' data)
+    inputAccessor=(d3-get 'ts')
+    outputAccessor=(d3-get 'value')
+    ticks=5
+    tick-format='%Y-%m-%d'
+
+    xScale=(band-scale
+      (ember-sparkles/map data (d3-get 'ts'))
       (append 0 chart.width)
       round=true
-      padding=padding
+      padding=0.02
     )
-    y-scale=(linear-scale
-      (append 0 (d3-array 'max' data (d3-get 'value')))
+
+    yScale=(linear-scale
+      (append 0 outputMax)
       (append chart.height 0)
       nice=true
     )
-    ticks=5
-    tick-format='%Y-%m-%d'
+
+    transition=(or transition (ember-sparkles/transition duration=800 data=data))
   }}
 
 {{/ember-sparkles}}

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { select } from 'd3-selection';
-import { max } from 'd3-array';
 import layout from '../../templates/components/ember-sparkles/grouped-bar-chart';
 
 const { computed } = Ember;

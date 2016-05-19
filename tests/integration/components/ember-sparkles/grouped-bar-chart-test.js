@@ -237,10 +237,3 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');  
   
 });
-
-
-
-// test('it generates a dynamic legend')
-
-
-//  check that legend is also in order --}}

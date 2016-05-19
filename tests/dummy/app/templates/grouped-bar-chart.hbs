@@ -1,19 +1,18 @@
-{{#ember-sparkles 800 400 margin 
-  sparkled=(data-sparkler 
+{{#ember-sparkles 800 400 margin
+  sparkled=(data-sparkler
     data=barData
     inputKey='ts'
     outputKey='Wh_sum'
     groupKey='name'
     valueKey='value'
     sortFn=groupSortFunction
-  ) 
+  )
   padding=0.2
   as |chart|}}
 
   {{chart.grouped-bar-chart
     ticks=5
     tick-format='%Y-%m-%d'
-    padding=0.2
     groupPadding=0.05
   }}
 {{/ember-sparkles}}

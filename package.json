@@ -54,7 +54,7 @@
     "ember-cli-babel": "^5.1.6",
     "ember-cli-d3-shape": "0.8.1",
     "ember-cli-htmlbars": "^1.0.3",
-    "ember-d3-helpers": "0.0.1",
+    "ember-d3-helpers": "0.1.0",
     "ember-truth-helpers": "1.2.0"
   },
   "ember-addon": {
