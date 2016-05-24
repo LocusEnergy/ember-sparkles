@@ -18,6 +18,9 @@ test('it renders', function(assert) {
         with-transition=false
         height=1
         width=1
+
+        xScale=(band-scale)
+        yScale=(linear-scale)
       }}
     </svg>
   `);
@@ -42,16 +45,16 @@ test('it accepts data and generates rectangles', function(assert) {
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
-        input-accessor=(d3-get '0')
-        output-accessor=(d3-get '1')
+        inputAccessor=(d3-get '0')
+        outputAccessor=(d3-get '1')
 
-        x-scale=(band-scale
+        xScale=(band-scale
           xDomain
           (append 0 100)
           padding=0
           round=true
         )
-        y-scale=(linear-scale
+        yScale=(linear-scale
           (append 0 100)
           (append 100 0)
           nice=true
