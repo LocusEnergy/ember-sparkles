@@ -1,5 +1,3 @@
-{{log }}
-
 {{#if d3el}}
 
   {{!-- create x axis --}}
@@ -13,7 +11,7 @@
 
   {{!-- select / call x axis function on d3 selection --}}
 
-  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat=(or tick-format '%Y-%m-%d')) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (if with-transition (d3-transition transition) (d3-noop))
@@ -27,6 +25,12 @@
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'y axis')
+    (d3-append 'text')
+    (d3-attr 'transform' 'rotate(-90)')
+    (d3-attr 'y' 6)
+    (d3-attr 'dy' '0.7em')
+    (d3-style 'text-anchor' 'end')
+    (d3-text y-label)
     ) d3el
   }}
 

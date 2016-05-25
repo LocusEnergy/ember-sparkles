@@ -7,7 +7,7 @@
     ) d3el
   }}
 
-  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
+  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat=(or tick-format '%Y-%m-%d')) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (if with-transition (d3-transition transition) (d3-noop))
@@ -20,6 +20,12 @@
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'y axis')
+    (d3-append 'text')
+    (d3-attr 'transform' 'rotate(-90)')
+    (d3-attr 'y' (or vertical-label-y 6))
+    (d3-attr 'x' (or vertical-label-x 0))
+    (d3-style 'text-anchor' 'end')
+    (d3-text y-label)
     ) d3el
   }}
 
@@ -107,69 +113,71 @@
   {{/with}}
 
   {{!-- legend --}}
-  {{#with (compute
-    (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'legend')
-      (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-    )
-
-    d3el
-  ) as |legend|}}
-
-    {{ember-d3-helpers/invoke
-      (d3-join 'rect' groupDomain
-        enter=(pipe
-          (d3-append 'rect')
-          (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-          (d3-attr 'width' 14)
-          (d3-attr 'height' 14)
-          (d3-style 'fill' colorScale)
-          (d3-attr 'opacity' 0)
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' transformLegend)
-          (d3-attr 'opacity' 1)
-        )
-
-        update=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'fill' colorScale)
-        )
-
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-          (d3-remove)
-        )
+  {{#if with-legend}}
+    {{#with (compute
+      (pipe
+        (d3-append 'g')
+        (d3-attr 'class' 'legend')
+        (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
       )
-    legend }}
 
-    {{ember-d3-helpers/invoke
-      (d3-join 'text' groupDomain
-        enter=(pipe
-          (d3-append 'text')
-          (d3-attr 'opacity' 0)
-          (d3-attr 'dx' '-3.8em')
-          (d3-attr 'dy' '1em')
-          (d3-style 'font-size' '10px')
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text (d3-get))
-          (d3-attr 'transform' transformLegend)
-          (d3-attr 'opacity' 1)
+      d3el
+    ) as |legend|}}
+
+      {{ember-d3-helpers/invoke
+        (d3-join 'rect' groupDomain
+          enter=(pipe
+            (d3-append 'rect')
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-attr 'width' 14)
+            (d3-attr 'height' 14)
+            (d3-style 'fill' colorScale)
+            (d3-attr 'opacity' 0)
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+
+          update=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-style 'fill' colorScale)
+          )
+
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-remove)
+          )
         )
+      legend }}
 
-        update=(pipe
-          (d3-text (d3-get))
+      {{ember-d3-helpers/invoke
+        (d3-join 'text' groupDomain
+          enter=(pipe
+            (d3-append 'text')
+            (d3-attr 'opacity' 0)
+            (d3-attr 'dx' '-3.8em')
+            (d3-attr 'dy' '1em')
+            (d3-style 'font-size' '10px')
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-text (d3-get))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+
+          update=(pipe
+            (d3-text (d3-get))
+          )
+
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'opacity' 0)
+            (d3-remove)
+          )
         )
+      legend }}
 
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'opacity' 0)
-          (d3-remove)
-        )
-      )
-    legend }}
-
-  {{/with}}
+    {{/with}}
+  {{/if}}
 
 {{/if}}

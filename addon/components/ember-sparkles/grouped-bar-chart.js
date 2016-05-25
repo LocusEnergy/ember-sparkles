@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   classNames: ['ember-sparkles--grouped-bar-chart'],
 
   'with-transition': true,
+  'with-legend': true,
 
   didInsertElement() {
     this._super(...arguments);
@@ -20,7 +21,7 @@ export default Ember.Component.extend({
     let [ el ] = this.$().toArray();
     this.set('d3el', select(el));
   },
-  
+
   // callback to position legend
   transformLegend(d, i) {
     return `translate(0,${i * 20})`;
