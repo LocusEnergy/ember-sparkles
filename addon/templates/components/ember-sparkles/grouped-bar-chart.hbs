@@ -22,8 +22,8 @@
     (d3-attr 'class' 'y axis')
     (d3-append 'text')
     (d3-attr 'transform' 'rotate(-90)')
-    (d3-attr 'y' (or vertical-label-y 6))
-    (d3-attr 'x' (or vertical-label-x 0))
+    (d3-attr 'y' (or vertical-label-dy 6))
+    (d3-attr 'x' (or vertical-label-dx 0))
     (d3-style 'text-anchor' 'end')
     (d3-text y-label)
     ) d3el
