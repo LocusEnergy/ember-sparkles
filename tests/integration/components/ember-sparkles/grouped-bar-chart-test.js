@@ -13,7 +13,7 @@ moduleForComponent('ember-sparkles/grouped-bar-chart', 'Integration | Component 
 test('it renders', function(assert) {
   this.set('data', []);
   this.set('groupDomain', []);
- 
+
   this.render(hbs`
     <svg>
       {{ember-sparkles/grouped-bar-chart
@@ -37,7 +37,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
     {
       ts: new Date('2001-03-14T00:00:00-08:00'),
       watts: [
-        { 
+        {
           name: 'series 1',
           value: 10
         },
@@ -54,7 +54,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
     {
       ts: new Date('2001-03-15T00:00:00-08:00'),
       watts: [
-        { 
+        {
           name: 'series 1',
           value: 34
         },
@@ -71,7 +71,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
     {
       ts: new Date('2001-03-16T00:00:00-08:00'),
       watts: [
-        { 
+        {
           name: 'series 1',
           value: 0
         },
@@ -88,7 +88,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
     {
       ts: new Date('2001-03-17T00:00:00-08:00'),
       watts: [
-        { 
+        {
           name: 'series 1',
           value: 89
         },
@@ -103,14 +103,14 @@ test('accepts data and dynamically generates rectangles and legend', function(as
       ]
     }
   ];
-  
+
   let xDomain =  data.map(({ ts }) => ts);
   let groupDomain = ['series 1', 'series 2', 'series 3'];
   let colorRange = ['#ff0000', '#00ff00', '#0000ff'];
   let colorScale = scaleOrdinal().domain(groupDomain).range(colorRange);
-  
+
   this.setProperties({ data, xDomain, groupDomain, colorScale });
-  
+
   this.render(hbs`
     <svg height="100" width="120">
       {{ember-sparkles/grouped-bar-chart
@@ -119,12 +119,12 @@ test('accepts data and dynamically generates rectangles and legend', function(as
         with-transition=false
         data=data
         groupDomain=groupDomain
-        
+
         inputAccessor=(d3-get 'ts')
         outputAccessor=(d3-get 'watts')
         valueAccessor=(d3-get 'value')
         groupAccessor=(d3-get 'name')
-        
+
         xScale=(band-scale
           xDomain
           (append 0 120)
@@ -142,7 +142,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
       }}
     </svg>
   `);
-  
+
   let groups = this.chart.groups();
   let transforms = groups.map((idx, g) => $(g).attr('transform')).toArray();
   let rects = this.chart.rect();
@@ -156,11 +156,11 @@ test('accepts data and dynamically generates rectangles and legend', function(as
 
   let xSequence = ['0', '10', '20'];
   assert.deepEqual(this.chart.rect('attr', 'x'), [xSequence, xSequence, xSequence, xSequence], 'each rectangle has correct x-coordinate');
-  assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['11', '13', '98']], 'each rectangle has correct y-coordinate');  
+  assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['11', '13', '98']], 'each rectangle has correct y-coordinate');
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['89', '87', '2']], 'each rectangle has correct height');
 
   let colorSequence = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
-  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence], 'each group has a unique fill color that maintains the order given by the color scale\'s specified range');  
+  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence], 'each group has a unique fill color that maintains the order given by the color scale\'s specified range');
 
   // check axes existence and attributes
   assert.ok(this.$('.x.axis').length, 'x axis renders');
@@ -168,30 +168,30 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
   assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
   assert.equal(this.$('.x.axis .tick').first().text(), '2001-03-14', 'ticks on x axis are formatted correctly');
-  
-  
+
+
   // check legend existence and attributes
   assert.ok(this.$('.legend').length, 'legend renders');
   assert.equal(this.$('.legend rect').length, 3, 'there are 3 rectangles in the legend');
   assert.equal(this.$('.legend text').length, 3, 'there are 3 text elements in the legend');
   assert.deepEqual(this.$('.legend rect').toArray().map(r => $(r).css('fill')), colorSequence, 'legend rectangles have correct colors');
   assert.deepEqual(this.$('.legend text').text(), 'series 1series 2series 3', 'legend has correct text');
-  
+
   // check deletion of data
   data.pop();
-  
+
     this.setProperties({
     data,
     xDomain: data.map(({ ts }) => ts)
   });
-  
+
   assert.equal(this.chart.groups().length, 3, 'after removing a data group, there are now 3 groups of rectangles');
-  
+
   // check updating data
   data.push( {
     ts: new Date('2001-03-18T00:00:00-08:00'),
     watts: [
-      { 
+      {
         name: 'series 1',
         value: 2
       },
@@ -204,12 +204,12 @@ test('accepts data and dynamically generates rectangles and legend', function(as
         value: 90
       }
     ]
-  })
-  
+  });
+
   data.push({
     ts: new Date('2001-03-19T00:00:00-08:00'),
     watts: [
-      { 
+      {
         name: 'series 1',
         value: 90
       },
@@ -223,17 +223,17 @@ test('accepts data and dynamically generates rectangles and legend', function(as
       }
     ]
   });
-  
+
   this.setProperties({
     data,
     xDomain: data.map(({ ts }) => ts)
   });
-  
+
   xSequence = ['0', '8', '16'];
   assert.equal(this.chart.groups().length, 5, 'after data update, there are now 5 groups of rectangles');
   assert.deepEqual(this.chart.rect('attr', 'x'), [xSequence, xSequence, xSequence, xSequence, xSequence], 'each rectangle has correct x-coordinate after update');
-  assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['98', '59', '10'], ['10', '30', '87']], 'each rectangle has correct y-coordinate after update');  
+  assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['98', '59', '10'], ['10', '30', '87']], 'each rectangle has correct y-coordinate after update');
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['2', '41', '90'], ['90', '70', '13']], 'each rectangle has correct height after update');
-  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');  
-  
+  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');
+
 });

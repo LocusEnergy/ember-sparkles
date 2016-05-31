@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 import Ember from 'ember';
 import { max } from 'd3-array';
 

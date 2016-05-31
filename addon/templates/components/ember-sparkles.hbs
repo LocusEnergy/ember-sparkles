@@ -2,13 +2,13 @@
 
   {{yield (hash
     bar-chart=(component 'ember-sparkles/bar-chart'
-      width=width
-      height=height
+      width=innerWidth
+      height=innerHeight
       tickFormat=(or tick-format '%Y-%m-%d')
     )
     grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
-      width=width
-      height=height
+      width=innerWidth
+      height=innerHeight
 
       inputAccessor=(d3-get sparkled.inputKey)
       valueAccessor=(d3-get sparkled.valueKey)
@@ -17,14 +17,14 @@
 
       xScale=(band-scale
         (ember-sparkles/map sparkled.data (d3-get sparkled.inputKey))
-        (append 0 width)
+        (append 0 innerWidth)
         round=true
         padding=padding
       )
 
       yScale=(linear-scale
         (append 0 sparkled.outputMax)
-        (append height 0)
+        (append innerHeight 0)
       )
 
       groupDomain=sparkled.groupDomain
@@ -36,11 +36,11 @@
     )
 
     line-chart=(component 'ember-sparkles/line-chart'
-      width=width height=height
+      width=innerWidth height=innerHeight
     )
 
-    width=width
-    height=height
+    width=innerWidth
+    height=innerHeight
     sparkled=sparkled
   )}}
 

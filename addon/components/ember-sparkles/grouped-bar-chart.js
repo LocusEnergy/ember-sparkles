@@ -2,8 +2,6 @@ import Ember from 'ember';
 import { select } from 'd3-selection';
 import layout from '../../templates/components/ember-sparkles/grouped-bar-chart';
 
-const { computed } = Ember;
-
 export default Ember.Component.extend({
   layout,
   tagName: 'g',

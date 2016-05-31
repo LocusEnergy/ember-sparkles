@@ -5,7 +5,7 @@ import { max } from 'd3-array';
 
 let dateified = timeseriesData.map(t => {
   t.data = dateify(t.data);
-  return t
+  return t;
 });
 
 export default Ember.Controller.extend({

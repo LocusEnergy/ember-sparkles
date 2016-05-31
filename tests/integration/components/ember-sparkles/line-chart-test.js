@@ -6,19 +6,14 @@ moduleForComponent('ember-sparkles/line-chart', 'Integration | Component | ember
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
-  this.render(hbs`{{ember-sparkles/line-chart}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
+  this.set('data', []);
   this.render(hbs`
-    {{#ember-sparkles/line-chart}}
-      template block text
-    {{/ember-sparkles/line-chart}}
+    <svg>
+      {{ember-sparkles/line-chart
+        data=data
+        with-transition=false
+      }}
+    </svg>
   `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$('.ember-sparkles--line-chart').length);
 });

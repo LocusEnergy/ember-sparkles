@@ -7,11 +7,11 @@ export default class GroupedBarChart {
   groups() {
     return this.$('.rect-group');
   }
-  
+
   rect(method, property) {
     let rects = this.groups().map((idx, g) => $(g).children()).toArray();
     if (!arguments.length) {
-      return rects
+      return rects;
     } else {
       return rects.map(g => g.map((idx, r) => $(r)[method](property)).toArray());
     }

@@ -34,7 +34,7 @@ test('it has sensible defaults for SVG dimensions and margins', function(assert)
   assert.equal(this.$('g').attr('transform'), 'translate(25,20)', 'g has transform attribute');
 });
 
-test('it can take positional arguments for width, height, and margins', function(assert) {
+test('it can take arguments for width, height, and margins', function(assert) {
   this.set('margin', {
     top: 13,
     right: 10,
@@ -42,7 +42,7 @@ test('it can take positional arguments for width, height, and margins', function
     left: 7,
   });
   this.render(hbs`
-    {{#ember-sparkles 220 100 margin}}
+    {{#ember-sparkles width=220 height=100 margin=margin}}
       <circle></circle>
     {{/ember-sparkles}}
   `);
@@ -52,19 +52,12 @@ test('it can take positional arguments for width, height, and margins', function
   assert.equal(this.$('g').attr('transform'), 'translate(7,13)', 'g has transform attribute');
 });
 
-
-test('chart.bar-chart renders', function(assert) {
-  this.set('data', []);
+test('it renders basic SVG elements', function(assert) {
   this.render(hbs`
-    {{#ember-sparkles width=960 height=500 as |chart|}}
-      {{chart.bar-chart
-        data=data
-        with-transition=false
-        height=1
-        width=1
-      }}
+    {{#ember-sparkles}}
+      <circle r='10'></circle>
     {{/ember-sparkles}}
   `);
 
-  assert.ok(this.exists('.ember-sparkles--bar-chart'), 'bar-chart component rendered');
+  assert.ok(this.$('circle').length, 'has <circle> element');
 });

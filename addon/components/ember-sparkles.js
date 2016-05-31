@@ -9,30 +9,22 @@ const DEFAULT_HEIGHT = 500;
 export default Ember.Component.extend({
   layout,
   tagName: 'svg',
-  attributeBindings: ['defaultWidth:width', 'defaultHeight:height', 'viewBox'],
+  attributeBindings: ['width', 'height'],
 
-  defaultWidth: DEFAULT_WIDTH,
-  defaultHeight: DEFAULT_HEIGHT,
+  width: DEFAULT_WIDTH,
+  height: DEFAULT_HEIGHT,
   margin: {
     top: 20,
     right: 25,
     bottom: 30,
-    left: 50,
+    left: 25,
   },
 
-  width: computed('defaultWidth', 'margin', function() {
-    return this.get('defaultWidth') - this.get('margin.left') - this.get('margin.right');
+  innerWidth: computed('width', 'margin', function() {
+    return this.get('width') - this.get('margin.left') - this.get('margin.right');
   }),
 
-  height: computed('defaultHeight', 'margin', function() {
-    return this.get('defaultHeight') - this.get('margin.top') - this.get('margin.bottom');
-  }),
-
-  viewBox: Ember.computed(function() {
-    let w = this.get('defaultWidth');
-    let h = this.get('defaultHeight');
-    return `0 0 ${w} ${h}`;
+  innerHeight: computed('height', 'margin', function() {
+    return this.get('height') - this.get('margin.top') - this.get('margin.bottom');
   })
-}).reopenClass({
-  positionalParams: ['defaultWidth', 'defaultHeight', 'margin']
 });

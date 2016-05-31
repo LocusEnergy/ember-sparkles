@@ -16,14 +16,14 @@ let generateData = function() {
       return {
         name: s,
         value: _.random(10, 1050)
-      }
-    })
+      };
+    });
     return {
       ts: d.toDate(),
       [valueType]: seriesData
     };
   });
-}
+};
 
 export default Ember.Controller.extend({
   margin: {

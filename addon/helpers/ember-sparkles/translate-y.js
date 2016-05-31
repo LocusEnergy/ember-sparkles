@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export function emberSparklesTranslateY(params/*, hash*/) {
+export function emberSparklesTranslateY() {
   return function(y) {
     return `translate(0,${y})`;
   };

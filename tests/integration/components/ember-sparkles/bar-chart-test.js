@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import BarChart from 'ember-sparkles/page-objects/bar-chart';
+import { max } from 'd3-array';
 
 moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember sparkles/bar chart', {
   integration: true,
@@ -97,23 +98,25 @@ test('data can be updated and removed', function(assert) {
 
   this.setProperties({
     data,
-    xDomain: data.map(d => d[0])
+    xDomain: data.map(d => d[0]),
+    yMax: max(data, (d) => d[1])
   });
+
 
   this.render(hbs`
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
-        input-accessor=(d3-get '0')
-        output-accessor=(d3-get '1')
-        x-scale=(band-scale
+        inputAccessor=(d3-get '0')
+        outputAccessor=(d3-get '1')
+        xScale=(band-scale
           xDomain
           (append 0 100)
           padding=0
           round=true
         )
-        y-scale=(linear-scale
-          (append 0 (d3-array 'max' data (d3-get '1')))
+        yScale=(linear-scale
+          (append 0 yMax)
           (append 100 0)
           nice=true
         )
@@ -142,7 +145,8 @@ test('data can be updated and removed', function(assert) {
 
   this.setProperties({
     data,
-    xDomain: data.map(d => d[0])
+    xDomain: data.map(d => d[0]),
+    yMax: max(data, (d) => d[1])
   });
 
   assert.deepEqual(this.chart.getAttr('y'), ['55', '90', '39', '70', '49'], 'the y-coordinates correspond to the second dataset');
