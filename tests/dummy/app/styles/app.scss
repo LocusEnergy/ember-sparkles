@@ -1,6 +1,21 @@
 @import "./normalize";
 @import "./skeleton";
 
+html,body {
+  height: 100%;
+}
+
+#ember-sparkles {
+  height: 100%;
+}
+
+.graphics {
+  height: 100%;
+}
+
+#svg-container {
+  height: 50%;
+}
 
 .axis {
   font: 10px sans-serif;

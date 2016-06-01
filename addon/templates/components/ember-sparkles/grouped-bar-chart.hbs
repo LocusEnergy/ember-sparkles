@@ -3,7 +3,6 @@
   {{ember-d3-helpers/invoke (pipe
     (d3-append 'g')
     (d3-attr 'class' 'x axis')
-    (d3-attr 'transform' (i 'translate(0,${h})' h=height))
     ) d3el
   }}
 
@@ -11,6 +10,7 @@
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
       (d3-call axis)
       ) d3el
     }}
@@ -120,7 +120,6 @@
         (d3-attr 'class' 'legend')
         (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 80)))
       )
-
       d3el
     ) as |legend|}}
 
