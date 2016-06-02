@@ -29,7 +29,7 @@
     ) d3el
   }}
 
-  {{#with (ember-sparkles/axis yScale position='left' ticks=ticks) as |axis|}}
+  {{#with (ember-sparkles/axis yScale position='left' ticks=ticks width=width) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.y.axis')
       (if with-transition (d3-transition transition) (d3-noop))

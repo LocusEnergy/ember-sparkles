@@ -31,3 +31,7 @@ html,body {
 .axis path {
   display: none;
 }
+
+.tick line{
+  opacity: 0.2;
+}
