@@ -26,13 +26,6 @@ let generateData = function() {
 };
 
 export default Ember.Controller.extend({
-  margin: {
-    top: 20,
-    right: 25,
-    bottom: 20,
-    left: 45,
-  },
-
   groupSortFunction({ name: a }, { name: b }) {
     return a > b;
   },

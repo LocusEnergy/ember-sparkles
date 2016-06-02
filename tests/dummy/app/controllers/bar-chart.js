@@ -12,12 +12,6 @@ export default Ember.Controller.extend({
   padding: 0.02,
   dataIdx: 1,
   barData: new Ember.A(dateified),
-  margin: {
-    top: 20,
-    right: 25,
-    bottom: 20,
-    left: 45,
-  },
 
   // will need to update this property when we handle multiple series
   data: Ember.computed('barData', 'dataIdx', function() {

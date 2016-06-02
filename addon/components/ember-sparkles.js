@@ -7,9 +7,6 @@ const { floor } = Math;
 const DEFAULT_WIDTH = 960;
 const DEFAULT_HEIGHT = 500;
 
-
-// TODO: use explicit margin properties instead of hash
-
 export default Ember.Component.extend({
   layout,
   tagName: 'svg',
@@ -20,12 +17,10 @@ export default Ember.Component.extend({
   width: DEFAULT_WIDTH,
   height: DEFAULT_HEIGHT,
 
-  margin: {
-    top: 20,
-    right: 25,
-    bottom: 30,
-    left: 25,
-  },
+  marginTop: 20,
+  marginRight: 25,
+  marginBottom: 30,
+  marginLeft: 25,
 
   resizeService: Ember.inject.service('resize'),
   didInsertElement() {
@@ -39,11 +34,11 @@ export default Ember.Component.extend({
     this.set('height', floor(this.$().innerHeight()))
   },
 
-  innerWidth: computed('width', 'margin', function() {
-    return this.get('width') - this.get('margin.left') - this.get('margin.right');
+  innerWidth: computed('width', 'marginLeft', 'marginRight', function() {
+    return this.get('width') - this.get('marginLeft') - this.get('marginRight');
   }),
 
-  innerHeight: computed('height', 'margin', function() {
-    return this.get('height') - this.get('margin.top') - this.get('margin.bottom');
+  innerHeight: computed('height', 'marginTop', 'marginBottom', function() {
+    return this.get('height') - this.get('marginTop') - this.get('marginBottom');
   })
 });
