@@ -26,12 +26,12 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     Ember.run.scheduleOnce('afterRender', this, 'resize');
-    this.get('resizeService').on('debouncedDidResize', (e) => this.resize());
+    this.get('resizeService').on('debouncedDidResize', () => this.resize());
   },
 
   resize() {
-    this.set('width', floor(this.$().innerWidth()))
-    this.set('height', floor(this.$().innerHeight()))
+    this.set('width', floor(this.$().innerWidth()));
+    this.set('height', floor(this.$().innerHeight()));
   },
 
   innerWidth: computed('width', 'marginLeft', 'marginRight', function() {
