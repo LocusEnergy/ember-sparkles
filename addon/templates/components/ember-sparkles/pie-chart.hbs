@@ -1,3 +1,33 @@
-{{#if d3el}}
+{{!-- {{#if d3el}} --}}
 
-{{/if}}
+
+  {{!-- This is the declaration of arc paths --}}
+
+  {{ember-d3-helpers/invoke (pipe
+      (d3-append 'path')
+      (d3-attr 'd' arc)
+      (d3-style 'fill' )
+    )}}
+
+  {{!-- This is the declaration of the arc texts --}}
+  {{ember-d3-helpers/invoke (pipe
+      (d3-append 'text')
+      (d3-attr 'transform' (i 'translate(${l})' l=labelArc.centroid(d)))
+      (d3-attr 'dy' '.35em')
+      (d3-text (d))
+  )}}
+
+
+  {{!-- declaring the pie --}}
+  {{!-- {{ember-d3-helpers/invoke
+    (d3-join 'pie' data
+      enter=(pipe
+        (d3-append 'pie')
+        (d3-attr 'class' 'arc')
+        ()
+      )
+    )
+  }}
+
+
+{{/if}} --}}

@@ -47,20 +47,20 @@
 
   {{ember-d3-helpers/invoke
     (d3-join 'rect' data
-      enter=(pipe
-        (d3-append 'rect')
-        (d3-attr 'class' 'bar')
-        (d3-attr 'y' height)
-        (d3-attr 'x' width)
-        (d3-style 'fill' 'steelblue')
-        (d3-style 'opacity' 0)
-        (if with-transition (d3-transition transition) (d3-noop))
-        (d3-style 'opacity' 1)
-        (d3-attr 'x' (pipe inputAccessor xScale))
-        (d3-attr 'width' xScale.bandwidth)
-        (d3-attr 'y' (pipe outputAccessor yScale))
-        (d3-attr 'height' (pipe outputAccessor yScale (bar-height height)))
-      )
+    enter=(pipe
+      (d3-append 'rect')
+      (d3-attr 'class' 'bar')
+      (d3-attr 'y' height)
+      (d3-attr 'x' width)
+      (d3-style 'fill' 'steelblue')
+      (d3-style 'opacity' 0)
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-style 'opacity' 1)
+      (d3-attr 'x' (pipe inputAccessor xScale))
+      (d3-attr 'width' xScale.bandwidth)
+      (d3-attr 'y' (pipe outputAccessor yScale))
+      (d3-attr 'height' (pipe outputAccessor yScale (bar-height height)))
+    )
       update=(pipe
         (if with-transition (d3-transition transition) (d3-noop))
         (d3-style 'opacity' 1)

@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   tagName: 'g',
   classNames: ['ember-sparkles--bar-chart'],
 
-  'with-transition': true, 
+  'with-transition': true,
 
   didInsertElement() {
     this._super(...arguments);

@@ -1,14 +1,11 @@
 import Ember from 'ember';
 import layout from '../../templates/components/ember-sparkles/pie-chart';
 
-
-
 export default Ember.Component.extend({
   layout,
-  radius: Math.min(width, height) / 2,
+  radius: Math.min(this.width, this.height) / 2,
   tagName: 'g',
   classNames: ['ember-sparkles--pie-chart'],
-
   'with-transition': true,
 
   didInsertElement() {
@@ -20,5 +17,4 @@ export default Ember.Component.extend({
     let [ el ] = this.$().toArray();
     this.set('d3el', select(el));
   }
-
 });
