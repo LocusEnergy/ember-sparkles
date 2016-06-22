@@ -11,7 +11,14 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, widt
   let result = axisFn().scale(scale);
 
   if (tickFormat) {
-    result.tickFormat(timeFormat(tickFormat));
+
+    // Change to test with npm link to kiosk app:
+
+    if(typeof tickFormat === 'string' || tickFormat instanceof String) {
+      result.tickFormat(timeFormat(tickFormat));
+    } else {
+      result.tickFormat(tickFormat);
+    }
   }
 
   if (ticks) {
