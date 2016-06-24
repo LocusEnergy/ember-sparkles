@@ -1,13 +1,11 @@
-{{!-- {{#if d3el}} --}}
-
+{{#if d3el}}
 
   {{!-- This is the declaration of arc paths --}}
-
   {{ember-d3-helpers/invoke (pipe
       (d3-append 'path')
       (d3-attr 'd' arc)
       (d3-style 'fill' )
-    )}}
+  )}}
 
   {{!-- This is the declaration of the arc texts --}}
   {{ember-d3-helpers/invoke (pipe
@@ -17,17 +15,30 @@
       (d3-text (d))
   )}}
 
+  {{!-- This is the declaration of the variable pie  --}}
 
-  {{!-- declaring the pie --}}
-  {{!-- {{ember-d3-helpers/invoke
-    (d3-join 'pie' data
-      enter=(pipe
-        (d3-append 'pie')
-        (d3-attr 'class' 'arc')
-        ()
-      )
+  {{!-- Write a helper for ember-sparkles/arc --}}
+  {{#with (ember-sparkles/arc radius as |arc|}}
+    {{ember-d3-helpers/invoke (pipe
+      (d3-select-all '.arc')
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'transform' (i 'translate(${width/2},${height/2})' h=height))
+      (d3-call arc)
+      ) d3el
+    }}
+  {{/with}}
+  {{!-- This is the declaration of the variable arc --}}
+
+
+  {{ember-d3-helpers/invoke (d3-join 'pie' data
+    enter=(pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'arc')
+
     )
-  }}
+    update=(pipe())
+    exit=(pipe())
+  )}}
 
 
-{{/if}} --}}
+{{/if}}
