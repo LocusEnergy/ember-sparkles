@@ -1,7 +1,7 @@
 {{#if d3el}}
 
   {{!-- Write a helper for ember-sparkles/arc --}}
-  {{#with (ember-sparkles/arc 'radius' as |arc|}}
+  {{#with (ember-sparkles/arc radius) as |arc|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-append 'path')
       (d3-attr 'd' arc)
@@ -15,7 +15,7 @@
     }}
   {{/with}}
 
-  {{#with (ember-sparkles/arc 'radius' as |labelArc|)}}
+  {{!-- {{#with (ember-sparkles/arc radius) as |labelArc|)}}
     {{ember-d3-helpers/invoke (pipe
       (d3-append 'text')
       (d3-attr 'transform' (i 'translate(${l})' l=(d3-get 'age')))
@@ -23,16 +23,16 @@
       (d3-text (d))
       ) d3el
     }}
-  {{/with}}
+  {{/with}} --}}
   {{!-- This is the declaration of the variable arc --}}
 
-  {{ember-d3-helpers/invoke (d3-join '.arc' (ember-sparkles/pie data valueFn=(pipe (d3-get 'population'))))
+  {{!-- {{ember-d3-helpers/invoke (d3-join '.arc' (ember-sparkles/pie data valueFn=(pipe (d3-get 'population'))))
     enter=(pipe
       (d3-append 'g')
       (d3-attr 'class' 'arc')
       (if with-transition (d3-transition transition) (d3-noop))
       (d3-style 'opacity' 1)
     )
-  ) d3el
-}}
+  ) d3el}} --}}
+
 {{/if}}
