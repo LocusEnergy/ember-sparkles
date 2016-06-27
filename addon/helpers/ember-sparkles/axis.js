@@ -14,10 +14,15 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, widt
 
     // Change to test with npm link to kiosk app:
 
-    if(typeof tickFormat === 'string' || tickFormat instanceof String) {
+    if (typeof tickFormat === 'string' || tickFormat instanceof String) {
       result.tickFormat(timeFormat(tickFormat));
     } else {
-      result.tickFormat(tickFormat);
+      // is function?
+      // if is function - call with argument timeFormat (another function)
+      // closure in application takes "formatter" function arg and processes result with formatter
+
+      // maybe it's *always* a function? hmmmmm - in the app that is
+      result.tickFormat(tickFormat(timeFormat));
     }
   }
 
