@@ -10,15 +10,17 @@ test('it renders', function(assert) {
   // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.render(hbs`{{ember-sparkles/pie-chart}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
+  this.set('data', []);
   // Template block usage:
   this.render(hbs`
-    {{#ember-sparkles/pie-chart}}
-      template block text
-    {{/ember-sparkles/pie-chart}}
+    <svg>
+      {{ember-sparkles/pie-chart
+        data=data
+        with-transition=false
+        height=1
+        width=1
+      }}
+    </svg>
   `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$('.ember-sparkles--pie-chart').length);
 });

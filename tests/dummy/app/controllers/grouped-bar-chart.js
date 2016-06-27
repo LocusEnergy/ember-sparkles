@@ -4,7 +4,7 @@ import _ from 'lodash/lodash';
 let generateData = function() {
   let end = moment('2015-03-14');
   let numDays = _.random(2, 8);
-  let start = end.clone().subtract('days', numDays);
+  let start = end.clone().subtract(numDays, 'days');
   let dateRange = moment.range(start, end);
   let series = ['series 1', 'series 2', 'series 3', 'series 4', 'series 5', 'series 6', 'series 7'];
   let valueType = 'Wh_sum';
