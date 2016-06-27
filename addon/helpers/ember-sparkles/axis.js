@@ -21,7 +21,8 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, widt
       // if is function - call with argument timeFormat (another function)
       // closure in application takes "formatter" function arg and processes result with formatter
 
-      // maybe it's *always* a function? hmmmmm - in the app that is
+      console.log(tickFormat);
+
       result.tickFormat(tickFormat(timeFormat));
     }
   }
