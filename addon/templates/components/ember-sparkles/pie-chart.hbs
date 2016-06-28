@@ -3,9 +3,9 @@
   {{!-- Write a helper for ember-sparkles/arc --}}
   {{#with (hash
     arc=(ember-sparkles/arc radius)
+    labelArc=(ember-sparkles/arc radius true)
     pie=(ember-sparkles/pie valueFn=(pipe (d3-get 'population')))
   ) as |constructors|}}
-
     {{#with (compute
       (d3-join '.arc' (compute constructors.pie data)
         enter=(pipe
@@ -14,7 +14,7 @@
           (d3-attr 'class' 'arc')
           (d3-append 'path')
           (d3-attr 'd' constructors.arc)
-          (d3-style 'fill' 'steelblue')
+          (d3-style 'fill' colorScale)
         )
       ) d3el) as |arcs|}}
     {{/with}}
