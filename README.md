@@ -1,28 +1,27 @@
-[![Build Status](https://travis-ci.org/LocusEnergy/ember-sparkles.svg?branch=master)](https://travis-ci.org/LocusEnergy/ember-sparkles)
+# ember-sparkles
 
-# Ember-sparkles
+[![Build Status](https://travis-ci.org/zigahertz/ember-sparkles.svg)](https://travis-ci.org/zigahertz/ember-sparkles)
+[![npm version](https://badge.fury.io/js/ember-sparkles.svg)](http://badge.fury.io/js/ember-sparkles)
+[![Code Climate](https://codeclimate.com/github/zigahertz/ember-sparkles/badges/gpa.svg)](https://codeclimate.com/github/zigahertz/ember-sparkles)
+[![Test Coverage](https://codeclimate.com/github/zigahertz/ember-sparkles/badges/coverage.svg)](https://codeclimate.com/github/zigahertz/ember-sparkles/coverage)
+[![Dependency Status](https://david-dm.org/zigahertz/ember-sparkles.svg)](https://david-dm.org/zigahertz/ember-sparkles)
 
-This README outlines the details of collaborating on this Ember addon.
+## Features
+
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```
+ember install ember-sparkles
+```
 
-## Running
+## Helpful Links
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+- ### [Live Demo](http://zigahertz/.github.io/ember-sparkles)
 
-## Running Tests
+- ### [Changelog](CHANGELOG.md)
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+## Looking for help?
+If it is a bug [please open an issue on GitHub](http://github.com/zigahertz/ember-sparkles/issues).
 
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+## Usage
