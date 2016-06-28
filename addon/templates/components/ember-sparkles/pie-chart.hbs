@@ -5,10 +5,12 @@
     arc=(ember-sparkles/arc radius)
     pie=(ember-sparkles/pie valueFn=(pipe (d3-get 'population')))
   ) as |constructors|}}
+
     {{#with (compute
       (d3-join '.arc' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'g')
+          (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
           (d3-attr 'class' 'arc')
           (d3-append 'path')
           (d3-attr 'd' constructors.arc)
