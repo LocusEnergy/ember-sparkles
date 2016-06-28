@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { pie } from 'd3-shape';
 
 export function emberSparklesPie([ data ], { valueFn }) {
-  return d3.pie().sort(null).value(valueFn);
+  return pie().sort(null).value(valueFn);
     // .value(function(data) { return data.population });
   // return pie;
 }
