@@ -12,10 +12,10 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, widt
 
   switch(typeof tickFormat) {
     case 'string':
-      result.tickFormat(timeFormat(tickFormat))
+      result.tickFormat(timeFormat(tickFormat));
       break;
     case 'function':
-      result.tickFormat(tickFormat(timeFormat))
+      result.tickFormat(tickFormat(timeFormat));
       break;
   }
 
