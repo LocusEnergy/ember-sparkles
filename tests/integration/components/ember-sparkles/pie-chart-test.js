@@ -13,14 +13,19 @@ test('it renders', function(assert) {
   this.set('data', []);
   // Template block usage:
   this.render(hbs`
-    <svg>
-      {{ember-sparkles/pie-chart
-        data=data
-        with-transition=false
-        height=1
+    {{#ember-sparkles as |chart|}}
+      {{chart.pie-chart
+        data=pieData
         width=1
+        height=1
       }}
-    </svg>
+    {{/ember-sparkles}}
   `);
   assert.ok(this.$('.ember-sparkles--pie-chart').length);
 });
+
+// test('the arcs are the proper angles', function(assert) {
+//   //Pull the populations of each Arc
+//   //Calculate percentages
+//   //Match them to angles to a margin of error of one degree
+// });
