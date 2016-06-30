@@ -4,12 +4,10 @@
     bar-chart=(component 'ember-sparkles/bar-chart'
       width=innerWidth
       height=innerHeight
-      tickFormat=(or tick-format '%Y-%m-%d')
     )
     grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
       width=innerWidth
       height=innerHeight
-
       inputAccessor=(d3-get sparkled.inputKey)
       valueAccessor=(d3-get sparkled.valueKey)
       outputAccessor=(d3-get sparkled.outputKey)
@@ -31,7 +29,6 @@
       data=sparkled.data
 
       colorScale=(cat-color-scale '20c' sparkled.groupDomain)
-      tickFormat=(or tick-format '%Y-%m-%d')
       transition=(or transition (ember-sparkles/transition duration=800 data=sparkled.data))
     )
 
