@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import axis from 'd3-axis';
-import { timeFormat } from 'd3-time-format';
 
 const { String: { capitalize } } = Ember;
 
