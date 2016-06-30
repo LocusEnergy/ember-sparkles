@@ -10,18 +10,7 @@ export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, widt
 
   let result = axisFn().scale(scale);
 
-  switch(typeof tickFormat) {
-    case 'string':
-      result.tickFormat(timeFormat(tickFormat));
-      break;
-    case 'function':
-      result.tickFormat(tickFormat(timeFormat));
-      break;
-  }
-
-  // console.log('axis.js tickFormat - are you undefined?: ', tickFormat);
-  //
-  // result.tickFormat(tickFormat);
+  result.tickFormat(tickFormat);
 
   if (ticks) {
     result.ticks(ticks);

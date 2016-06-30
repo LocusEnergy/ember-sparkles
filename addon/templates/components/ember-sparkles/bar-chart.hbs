@@ -10,7 +10,7 @@
 
   {{!-- select / call x axis function on d3 selection --}}
 
-  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat=tickFormat) as |axis|}}
+  {{#with (ember-sparkles/axis xScale position='bottom' tickFormat=(d3-tick-format (or tick-format '%Y-%m-%d')) as |axis|}}
     {{ember-d3-helpers/invoke (pipe
       (d3-select-all '.x.axis')
       (if with-transition (d3-transition transition) (d3-noop))
