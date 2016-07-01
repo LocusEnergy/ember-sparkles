@@ -1,7 +1,7 @@
 {{#ember-sparkles as |chart|}}
   {{chart.pie-chart
     data=pieData
-    domain=(map-by 'population' pieData)
+    domain=(map-by 'value' pieData)
   }}
 {{/ember-sparkles}}
 

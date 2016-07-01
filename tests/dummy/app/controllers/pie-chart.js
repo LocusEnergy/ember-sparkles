@@ -2,11 +2,15 @@ import Ember from 'ember';
 import _ from 'lodash/lodash';
 
 let generateData = function() {
-  let ages = ['arc 1', 'arc 2', 'arc 3', 'arc 4', 'arc 5', 'arc 6'];
-  return ages.map( age => {
+  let keys = [];
+  let numberOfKeys = _.random(3, 8);
+  for (var i = 1; i < numberOfKeys; i++){
+    keys.push("Arc "+i);
+  }
+  return keys.map( key => {
       return {
-        age,
-        population: _.random(1, 100)
+        key,
+        value: _.random(1, 10000)
       };
   });
 };
