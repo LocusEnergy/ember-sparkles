@@ -5,7 +5,7 @@ module('Unit | Helper | ember sparkles/pie');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   let data = [
     {
       key: 'arc 1',
@@ -22,9 +22,12 @@ test('it works', function(assert) {
   let valueFn = ({ value }) => value;
 
   let pie = emberSparklesPie([], { valueFn });
-  let array = pie(data);
-  let arrayOfAngles = pie(data);
-  console.log(arrayOfAngles[0].startAngle);
-  assert.ok(array);
-  assert.equal(arrayOfAngles.length, 3, 'The Number of Arcs Returned is Correct');
+  let arrayOfArcs = pie(data);
+  let arrayOfAngles = pie(data).map(object => {
+    return (object.endAngle - object.startAngle).toFixed(6);
+  });
+
+  assert.ok(arrayOfArcs);
+  assert.equal(arrayOfArcs.length, 3, 'The Number of Arcs Returned is Correct');
+  assert.deepEqual(arrayOfAngles, ["2.094395", "2.094395", "2.094395"], 'The Arcs are the correct number of radians');
 });
