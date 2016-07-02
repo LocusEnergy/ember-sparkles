@@ -22,12 +22,10 @@ test('it works', function(assert) {
   let valueFn = ({ value }) => value;
 
   let pie = emberSparklesPie([], { valueFn });
-  let arrayOfArcs = pie(data);
-  let arrayOfAngles = pie(data).map(object => {
-    return (object.endAngle - object.startAngle).toFixed(6);
-  });
+  let pieData = pie(data);
+  let arcs = pieData.map(({ startAngle, endAngle }) => (endAngle - startAngle).toFixed(6));
 
-  assert.ok(arrayOfArcs);
-  assert.equal(arrayOfArcs.length, 3, 'The Number of Arcs Returned is Correct');
-  assert.deepEqual(arrayOfAngles, ["2.094395", "2.094395", "2.094395"], 'The Arcs are the correct number of radians');
+  assert.ok(pieData);
+  assert.equal(pieData.length, 3, 'The Number of Arcs Returned is Correct');
+  assert.deepEqual(arcs, ["2.094395", "2.094395", "2.094395"], 'The Arcs are the correct number of radians');
 });
