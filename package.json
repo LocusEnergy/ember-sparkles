@@ -50,7 +50,7 @@
   "dependencies": {
     "ember-composable-helpers": "0.23.1",
     "ember-cli-babel": "^5.1.6",
-    "ember-cli-d3-shape": "0.8.5",
+    "ember-cli-d3-shape": "0.9.0",
     "ember-cli-htmlbars": "^1.0.3",
     "ember-d3-helpers": "0.5.0",
     "ember-math-helpers": "1.0.0",
