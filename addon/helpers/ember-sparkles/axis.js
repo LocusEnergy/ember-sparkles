@@ -3,9 +3,10 @@ import axis from 'd3-axis';
 import { timeFormat } from 'd3-time-format';
 
 const tickFilter = (tickFormat, responsiveSkipIdx) => {
-  return function(d, idx) {
+  let formatter = timeFormat(tickFormat);
+  return (d, idx) => {
     if (idx % responsiveSkipIdx === 0) {
-      return timeFormat(tickFormat)(d);
+      return formatter(d);
     }
   };
 };
