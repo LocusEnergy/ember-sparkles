@@ -2,20 +2,24 @@ import Ember from 'ember';
 import axis from 'd3-axis';
 import { timeFormat } from 'd3-time-format';
 
+const tickFilter = (tickFormat, responsiveSkipIdx) => {
+  return function(d, idx) {
+    if (idx % responsiveSkipIdx === 0) {
+      return timeFormat(tickFormat)(d);
+    }
+  };
+};
+
 const { String: { capitalize } } = Ember;
 
-export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, width, height, filter }) {
+export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, width, height, responsiveSkipIdx=1 }) {
   let axisType = `axis${capitalize(position)}`;
   let axisFn = axis[axisType];
 
   let result = axisFn().scale(scale);
 
-  if (filter) {
-    result.tickValues(scale.domain().filter(filter));
-  }
-
   if (tickFormat) {
-    result.tickFormat(timeFormat(tickFormat));
+    result.tickFormat(tickFilter(tickFormat, responsiveSkipIdx));
   }
 
   if (ticks) {

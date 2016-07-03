@@ -9,7 +9,7 @@
   {{#with (ember-sparkles/axis xScale
     position='bottom'
     tickFormat=(or tick-format '%Y-%m-%d')
-    filter=(tick-filter (or tick-filter-idx 1))
+    responsiveSkipIdx=(or responsive-skip-idx 1)
     ) as |axis|}}
 
     {{ember-d3-helpers/invoke (pipe
