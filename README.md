@@ -17,11 +17,11 @@ ember install ember-sparkles
 
 ## Helpful Links
 
-- ### [Live Demo](http://zigahertz/.github.io/ember-sparkles)
+- ### [Live Demo](http://locusenergy.github.io/ember-sparkles/)
 
 - ### [Changelog](CHANGELOG.md)
 
 ## Looking for help?
-If it is a bug [please open an issue on GitHub](http://github.com/zigahertz/ember-sparkles/issues).
+If it is a bug [please open an issue on GitHub](http://github.com/LocusEnergy/ember-sparkles/issues).
 
 ## Usage
