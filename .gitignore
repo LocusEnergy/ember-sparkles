@@ -20,3 +20,4 @@ testem.log
 .vscodeignore 
 jsconfig.json
 /typings
+lcov.dat
