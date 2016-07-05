@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import Ember from 'ember';
 
 export function logDebug([ value ], { msg }) {

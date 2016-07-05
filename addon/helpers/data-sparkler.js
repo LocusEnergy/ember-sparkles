@@ -12,7 +12,7 @@ let getGroupDomain = function({ data, outputKey, groupKey, sortFn }) {
   return values.map(({ [groupKey]: g }) => g);
 };
 
-export function dataSparkler([], hash) {
+export function dataSparkler([ params ], hash) {
   let outputMax = getOutputMax(hash);
   let groupDomain = getGroupDomain(hash);
   return { outputMax, groupDomain, ...hash };
