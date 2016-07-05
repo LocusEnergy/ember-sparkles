@@ -1,10 +1,8 @@
 # ember-sparkles
 
-[![Build Status](https://travis-ci.org/zigahertz/ember-sparkles.svg)](https://travis-ci.org/zigahertz/ember-sparkles)
+[![Build Status](https://travis-ci.org/LocusEnergy/ember-sparkles.svg?branch=master)](https://travis-ci.org/LocusEnergy/ember-sparkles)
 [![npm version](https://badge.fury.io/js/ember-sparkles.svg)](http://badge.fury.io/js/ember-sparkles)
-[![Code Climate](https://codeclimate.com/github/zigahertz/ember-sparkles/badges/gpa.svg)](https://codeclimate.com/github/zigahertz/ember-sparkles)
-[![Test Coverage](https://codeclimate.com/github/zigahertz/ember-sparkles/badges/coverage.svg)](https://codeclimate.com/github/zigahertz/ember-sparkles/coverage)
-[![Dependency Status](https://david-dm.org/zigahertz/ember-sparkles.svg)](https://david-dm.org/zigahertz/ember-sparkles)
+[![Dependency Status](https://david-dm.org/locusenergy/ember-sparkles.svg)](https://david-dm.org/locusenergy/ember-sparkles)
 
 ## Features
 

@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:zigahertz/ember-sparkles.git"
+    "url": "git@github.com:LocusEnergy/ember-sparkles.git"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "zigahertz <zach.zibrat@locusenergy.com>",
+  "author": "zigahertz <zach.zibrat@locusenergy.com>, embersherpa <taras@embersherpa.com>",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
@@ -68,6 +68,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://zigahertz.github.io/ember-sparkles"
+    "demoURL": "http://locusenergy.github.io/ember-sparkles"
   }
 }
