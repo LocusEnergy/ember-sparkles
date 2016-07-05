@@ -17,7 +17,5 @@ npm-debug.log
 testem.log
 
 /.vscode
-.vscodeignore 
+.vscodeignore
 jsconfig.json
-/typings
-lcov.dat
