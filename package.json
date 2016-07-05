@@ -1,6 +1,6 @@
 {
   "name": "ember-sparkles",
-  "version": "0.4.0",
+  "version": "0.4.4",
   "description": "Glimmering D3 library for Ember 2.0+",
   "directories": {
     "doc": "doc",
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember try:testall"
+    "test": "ember try:each"
   },
   "repository": "https://github.com/LocusEnergy/ember-sparkles",
   "engines": {
@@ -19,26 +19,27 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
-    "ember-ajax": "0.7.1",
-    "ember-cli": "2.4.3",
+    "ember-ajax": "2.0.1",
+    "ember-cli": "^2.7.0-beta.4",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
+    "ember-cli-eslint": "1.6.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
-    "ember-cli-qunit": "^1.4.0",
-    "ember-cli-release": "0.2.8",
+    "ember-cli-qunit": "^2.0.0",
+    "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sass": "5.3.1",
     "ember-cli-sri": "^2.1.0",
+    "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-concurrency": "0.6.3",
-    "ember-data": "^2.4.2",
+    "ember-data": "^2.7.0-beta.1",
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-interpolate-helper": "0.1.1",
     "ember-load-initializers": "^0.5.1",
     "ember-lodash": "0.0.7",
     "ember-resolver": "^2.0.3",
-    "ember-try": "^0.2.2",
     "loader.js": "^4.0.1"
   },
   "keywords": [
@@ -50,9 +51,9 @@
   "dependencies": {
     "ember-composable-helpers": "0.23.1",
     "ember-cli-babel": "^5.1.6",
-    "ember-cli-d3-shape": "0.8.5",
+    "ember-cli-d3-shape": "0.9.0",
     "ember-cli-htmlbars": "^1.0.3",
-    "ember-d3-helpers": "0.5.0",
+    "ember-d3-helpers": "0.5.1",
     "ember-math-helpers": "1.0.0",
     "ember-resize": "0.0.13",
     "ember-truth-helpers": "1.2.0"

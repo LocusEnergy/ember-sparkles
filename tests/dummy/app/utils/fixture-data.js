@@ -138,7 +138,7 @@ export const SEPTEMBER_MANY_DATAPOINTS = {
     {
       ts: '2014-09-29T00:00:00',
       value: 1166
-    },
+    }
   ]
 };
 
