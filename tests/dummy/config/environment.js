@@ -39,8 +39,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // ENV.locationType = 'hash';
-    // ENV.rootURL = '/ember-sparkles/';
+    ENV.locationType = 'hash';
+    ENV.baseURL = '/ember-sparkles/';
   }
 
   return ENV;
