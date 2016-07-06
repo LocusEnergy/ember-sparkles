@@ -15,7 +15,7 @@ ember install ember-sparkles
 
 ## Helpful Links
 
-- ### [Live Demo](http://locusenergy.github.io/ember-sparkles/)
+- ### [Live Demo](https://ember-sparkles.pagefrontapp.com/)
 
 - ### [Changelog](CHANGELOG.md)
 

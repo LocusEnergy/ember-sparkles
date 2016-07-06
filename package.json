@@ -66,6 +66,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://locusenergy.github.io/ember-sparkles"
+    "demoURL": "https://ember-sparkles.pagefrontapp.com"
   }
 }
