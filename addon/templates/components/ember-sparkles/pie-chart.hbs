@@ -1,22 +1,12 @@
 {{#if d3el}}
   {{!-- Write a helper for ember-sparkles/arc --}}
   {{#with (hash
-    arc=(ember-sparkles/arc (sub radius 10) 0)
-    labelArc=(ember-sparkles/arc (sub radius 40) (sub radius 40))
-    pie=(ember-sparkles/pie valueFn=(pipe (d3-get 'value')))
+    arc=(d3-arc (sub radius 10) 0)
+    labelArc=(d3-arc (sub radius 40) (sub radius 40))
+    pie=(d3-pie valueFn=(pipe (d3-get 'value')))
   ) as |constructors|}}
-  {{!-- {{#with (hash
-    enterArc=(pipe
-      (d3-append 'g')
-      (d3-attr '')
-    )
-    updateArc=(pipe
-    )
-    exitArc=(pipe
-    )
-  ) as |renderOptions|}} --}}
 
-    {{ember-d3-helpers/dev-null (compute
+    {{ember-d3-helpers/invoke
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'path')
@@ -34,38 +24,7 @@
         exit=(pipe
           (d3-remove)
         )
-    ) d3el)}}
-
-
-
-    {{!-- {{ember-d3-helpers/dev-null (compute
-      (d3-join 'text' (compute constructors.pie data)
-      (d3-call (pipe
-        (d3-append 'text')
-        (d3-attr 'transform' (ember-sparkles/arc-translate constructors.labelArc.centroid))
-        (d3-text (pipe (d3-get 'data.key')))
-      ))
-        enter=(pipe
-          (d3-call (pipe
-            (d3-append 'path')
-            (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
-            (d3-attr 'd' constructors.arc)
-            (d3-style 'fill' colorScale)
-          ))
-          (d3-call (pipe
-            (d3-append 'text')
-            (d3-attr 'transform' (ember-sparkles/arc-translate constructors.labelArc.centroid))
-            (d3-text (pipe (d3-get 'data.key')))
-          ))
-        )
-        update=(pipe
-          (d3-attr 'd' constructors.arc)
-        )
-        exit=(pipe
-          (d3-remove)
-        )
-      ) d3el)}} --}}
-
+    ) d3el}}
 
   {{/with}}
 

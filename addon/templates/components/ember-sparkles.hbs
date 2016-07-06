@@ -38,18 +38,22 @@
     line-chart=(component 'ember-sparkles/line-chart'
       width=innerWidth height=innerHeight
     )
+
     pie-chart=(component 'ember-sparkles/pie-chart'
       width=innerWidth
       heigth=innerHeight
       centerWidth=(div innerWidth 2)
       centerHeight=(div innerHeight 2)
       colorScale=(cat-color-scale '20' domain)
-      radius=150
+      radius=(div (d3-array 'min' innerWidth innerHeight) 2)
       transition=(or transition (ember-sparkles/transition duration=800 data=data))
     )
+
     width=innerWidth
     height=innerHeight
     sparkled=sparkled
   )}}
+
+  {{!-- radius=(div (d3-array 'min' innerWidth innerHeight) 2) --}}
 
 </g>

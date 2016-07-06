@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | ember sparkles/pie');
 
-// Replace this with your real tests.
 test('it works', function(assert) {
   assert.expect(2);
   let data = [
