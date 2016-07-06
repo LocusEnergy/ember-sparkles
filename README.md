@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/LocusEnergy/ember-sparkles.svg?branch=master)](https://travis-ci.org/LocusEnergy/ember-sparkles)
 [![npm version](https://badge.fury.io/js/ember-sparkles.svg)](http://badge.fury.io/js/ember-sparkles)
 [![Dependency Status](https://david-dm.org/locusenergy/ember-sparkles.svg)](https://david-dm.org/locusenergy/ember-sparkles)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-sparkles.svg)](http://emberobserver.com/addons/ember-sparkles)
 
 ## Features
 
