@@ -1,9 +1,8 @@
 {{#if d3el}}
-
   {{!-- Write a helper for ember-sparkles/arc --}}
   {{#with (hash
-    arc=(ember-sparkles/arc radius)
-    labelArc=(ember-sparkles/arc radius true)
+    arc=(ember-sparkles/arc (sub radius 10) 90)
+    labelArc=(ember-sparkles/arc (sub radius 40) (sub radius 40))
     pie=(ember-sparkles/pie valueFn=(pipe (d3-get 'value')))
   ) as |constructors|}}
   {{!-- {{#with (hash
