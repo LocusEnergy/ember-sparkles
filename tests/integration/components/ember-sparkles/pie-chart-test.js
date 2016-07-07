@@ -16,6 +16,7 @@ test('it renders', function(assert) {
       }}
   </svg>
   `);
+  stop();
   assert.ok(this.$('.ember-sparkles--pie-chart').length);
 });
 
