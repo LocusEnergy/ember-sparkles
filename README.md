@@ -20,7 +20,17 @@ ember install ember-sparkles
 
 - ### [Changelog](CHANGELOG.md)
 
+
+
 ## Looking for help?
 If it is a bug [please open an issue on GitHub](http://github.com/LocusEnergy/ember-sparkles/issues).
 
 ## Usage
+
+
+## Updating the Demo site
+
+```
+ember github-pages:commit --message <some commit message>
+git push origin master
+```

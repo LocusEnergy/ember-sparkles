@@ -2,51 +2,50 @@
 
   {{!-- create x axis --}}
 
-  {{ember-d3-helpers/invoke (pipe
-    (d3-append 'g')
-    (d3-attr 'class' 'x axis')
-    ) d3el
+  {{shhh (compute (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'x axis')
+    ) d3el)
   }}
 
   {{!-- select / call x axis function on d3 selection --}}
 
   {{#with (ember-sparkles/axis xScale position='bottom' tickFormat=(or tick-format '%Y-%m-%d')) as |axis|}}
-    {{ember-d3-helpers/invoke (pipe
-      (d3-select-all '.x.axis')
-      (if with-transition (d3-transition transition) (d3-noop))
-      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
-      (d3-call axis)
-      ) d3el
+    {{shhh (compute (pipe
+        (d3-select-all '.x.axis')
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+        (d3-call axis)
+      ) d3el)
     }}
   {{/with}}
 
   {{!-- create y axis --}}
 
-  {{ember-d3-helpers/invoke (pipe
-    (d3-append 'g')
-    (d3-attr 'class' 'y axis')
-    (d3-append 'text')
-    (d3-attr 'transform' 'rotate(-90)')
-    (d3-attr 'y' 6)
-    (d3-attr 'dy' '0.7em')
-    (d3-style 'text-anchor' 'end')
-    (d3-text y-label)
-    ) d3el
+  {{shhh (compute (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'y axis')
+      (d3-append 'text')
+      (d3-attr 'transform' 'rotate(-90)')
+      (d3-attr 'y' 6)
+      (d3-attr 'dy' '0.7em')
+      (d3-style 'text-anchor' 'end')
+      (d3-text y-label)
+    ) d3el)
   }}
 
   {{!-- select / call y axis function on d3 selection --}}
 
   {{#with (ember-sparkles/axis yScale position='left' ticks=ticks width=width) as |axis|}}
-    {{ember-d3-helpers/invoke (pipe
-      (d3-select-all '.y.axis')
-      (if with-transition (d3-transition transition) (d3-noop))
-      (d3-call axis)
-      ) d3el
+    {{shhh (compute  (pipe
+        (d3-select-all '.y.axis')
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-call axis)
+      ) d3el)
     }}
   {{/with}}
 
-  {{ember-d3-helpers/invoke
-    (d3-join 'rect' data
+  {{shhh (compute (d3-join 'rect' data
       enter=(pipe
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
@@ -61,23 +60,23 @@
         (d3-attr 'y' (pipe outputAccessor yScale))
         (d3-attr 'height' (pipe outputAccessor yScale (bar-height height)))
       )
-        update=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'opacity' 1)
-          (d3-attr 'x' (pipe inputAccessor xScale))
-          (d3-attr 'width' xScale.bandwidth)
-          (d3-attr 'y' (pipe outputAccessor yScale))
-          (d3-attr 'height' (pipe outputAccessor yScale (bar-height height)))
-        )
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'fill' 'purple')
-          (d3-style 'opacity' 0)
-          (d3-attr 'height' 0)
-          (d3-attr 'y' height)
-          (d3-remove)
-        )
-    ) d3el
+      update=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'opacity' 1)
+        (d3-attr 'x' (pipe inputAccessor xScale))
+        (d3-attr 'width' xScale.bandwidth)
+        (d3-attr 'y' (pipe outputAccessor yScale))
+        (d3-attr 'height' (pipe outputAccessor yScale (bar-height height)))
+      )
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'fill' 'purple')
+        (d3-style 'opacity' 0)
+        (d3-attr 'height' 0)
+        (d3-attr 'y' height)
+        (d3-remove)
+      )
+    ) d3el)
   }}
 
 {{/if}}
