@@ -5,7 +5,7 @@
     labelArc=(d3-arc (sub radius 40) (sub radius 40))
     pie=(d3-pie valueFn=(pipe (d3-get 'value')))
     ) as |constructors|}}
-
+    
     {{shhh
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
@@ -25,6 +25,7 @@
           (d3-remove)
         )
     ) d3el}}
+    {{log (compute constructors.pie data)}}
 
   {{/with}}
 
