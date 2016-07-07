@@ -19,21 +19,21 @@
 
     {{!-- create x axis --}}
 
-    {{ember-d3-helpers/invoke (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'x axis')
-      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
-      ) d3el
+    {{shhh (compute (pipe
+        (d3-append 'g')
+        (d3-attr 'class' 'x axis')
+        (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+      ) d3el)
     }}
 
     {{!-- select / call x axis function on d3 selection --}}
 
     {{#with (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d') as |axis|}}
-      {{ember-d3-helpers/invoke (pipe
-        (d3-select-all '.x.axis')
-        (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-call axis)
-        ) d3el
+      {{shhh (compute (pipe
+          (d3-select-all '.x.axis')
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-call axis)
+        ) d3el)
       }}
     {{/with}}
 
@@ -48,17 +48,16 @@
     {{!-- select / call y axis function on d3 selection --}}
 
     {{#with (ember-sparkles/axis options.yScale position='left' ticks=ticks) as |axis|}}
-      {{ember-d3-helpers/invoke (pipe
-        (d3-select-all '.y.axis')
-        (if with-transition (d3-transition options.transition) (d3-noop))
-        (d3-call axis)
-        ) d3el
+      {{shhh (compute (pipe
+          (d3-select-all '.y.axis')
+          (if with-transition (d3-transition options.transition) (d3-noop))
+          (d3-call axis)
+        ) d3el)
       }}
     {{/with}}
 
 
-    {{ember-d3-helpers/invoke
-      (d3-join '.line' data
+    {{shhh (compute (d3-join '.line' data
 
         enter=(pipe
           (d3-append 'path')
@@ -88,7 +87,7 @@
           (d3-remove)
         )
 
-      ) d3el
+      ) d3el)
     }}
 
 
