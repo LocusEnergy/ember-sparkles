@@ -28,6 +28,7 @@
           (d3-join 'text' (compute constructors.pie data)
             enter=(pipe
               (d3-append 'text')
+              (d3-attr 'class' 'arcTextStyle')
               (d3-attr 'dy' '.35em')
               (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
               (if with-transition (d3-transition transition) (d3-noop))
@@ -36,6 +37,7 @@
             )
             update=(pipe
               (d3-style 'fill' 'black')
+              (d3-attr 'class' 'arcTextStyle')
               (d3-attr 'dy' '.35em')
               (if with-transition (d3-transition transition) (d3-noop))
               (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
