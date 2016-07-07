@@ -45,7 +45,7 @@
       centerWidth=(div innerWidth 2)
       centerHeight=(div innerHeight 2)
       colorScale=(cat-color-scale '20' domain)
-      radius=(div (d3-array 'min' innerWidth innerHeight) 2)
+      radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
       transition=(or transition (ember-sparkles/transition duration=800 data=data))
     )
 
@@ -53,8 +53,4 @@
     height=innerHeight
     sparkled=sparkled
   )}}
-{{log innerWidth}}
-{{log innerHeight}}
-  {{!-- radius=(div (d3-array 'min' innerWidth innerHeight) 2) --}}
-
 </g>
