@@ -6,7 +6,5 @@ module('Unit | Helper | ember sparkles/arc translate');
 let testArc = arc().innerRadius(10).outerRadius(10);
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let result = emberSparklesArcTranslate([testArc.centroid]);
-  console.log(result)
-  assert.ok(testArc);
+  assert.ok(testArc)
 });

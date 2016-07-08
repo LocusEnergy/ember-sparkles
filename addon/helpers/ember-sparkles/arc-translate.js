@@ -9,7 +9,6 @@ export function emberSparklesArcTranslate([ centroid ], { height, width }) {
     let coordinates = [];
     coordinates.push(x);
     coordinates.push(y);
-    console.log(coordinates)
     return `translate(${coordinates})`;
   };
 }
