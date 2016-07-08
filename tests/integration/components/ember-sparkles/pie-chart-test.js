@@ -47,7 +47,7 @@ test('The chart accepts data and generates arcs properly', function(assert) {
 });
 
 test('data can be updated and removed', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   this.set('data', [
     {
       key: 'arc 1',
@@ -70,7 +70,7 @@ test('data can be updated and removed', function(assert) {
       }}
   </svg>
   `);
-
+  assert.equal(this.$('path').length, 3, 'There are intially 3 arcs');
   //Information updated
   this.set('data', [
     {
@@ -87,7 +87,7 @@ test('data can be updated and removed', function(assert) {
       value: 50
     }
   ]);
-  assert.equal(this.$('path').length, 4, 'There are the correct number of arcs');
+  assert.equal(this.$('path').length, 4, 'There are the correct number of arcs after the data is updated');
 
 
 });
