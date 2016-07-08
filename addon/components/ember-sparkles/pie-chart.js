@@ -16,5 +16,9 @@ export default Ember.Component.extend({
   renderChart() {
     let [ el ] = this.$().toArray();
     this.set('d3el', select(el));
+  },
+
+  transformLegend(d, i) {
+    return `translate(0,${i * 20})`;
   }
 });
