@@ -28,7 +28,7 @@
           (d3-remove)
         )
     ) d3el)}}
-
+{{#if with-labels-in-arc}}
     {{shhh (compute
       (d3-join 'text' (compute constructors.pie data)
         enter=(pipe
@@ -36,7 +36,7 @@
           (d3-attr 'class' 'arcTextStyle')
           (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text (d3-get 'data.key'))
+          (d3-text keys)
           (d3-attr 'opacity' 1)
         )
         update=(pipe
@@ -47,27 +47,31 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-remove)
           (d3-attr 'opacity' 0)
-
         )
     ) d3el)}}
+{{/if}}
+    {{!-- The issue is with this line regarding transformations --}}
     {{#with (compute
       (pipe
         (d3-append 'g')
         (d3-attr 'class' 'legend')
+        (d3-attr 'opacity' 0)
         (d3-attr 'transform' (i 'translate(${w}, 18)' w=(sub width 80)))
+        (d3-attr 'opacity' 1)
       )
       d3el
       ) as |legend|}}
-        {{shhh (compute
+
+      {{log legend}}
+        {{!-- {{shhh (compute
           (d3-join 'circle' (compute constructors.pie data)
             enter=(pipe
               (d3-append 'circle')
+              (d3-style 'fill' colorScale)
               (if with-transition (d3-transition transition) (d3-noop))
               (d3-attr 'transform' (i 'translate(${w}, 18)' w=(sub width 18)))
               (d3-attr 'r' 7)
-              (d3-attr 'opacity' 0)
               (d3-attr 'transform' transformLegend)
-              (d3-attr 'opacity' 1)
             )
             update=(pipe
               (if with-transition (d3-transition transition) (d3-noop))
@@ -88,19 +92,20 @@
               (d3-attr 'dy' '.35em')
               (d3-style 'font-size' '10px')
               (if with-transition (d3-transition transition) (d3-noop))
-              (d3-text (d3-get 'data.key'))
+              (d3-text keys)
               (d3-attr 'transform' transformLegend)
             )
             update=(pipe
-              (d3-text (d3-get 'data.key'))
+              (d3-text keys)
             )
             exit=(pipe
               (if with-transition (d3-transition transition) (d3-noop))
               (d3-remove)
+              (d3-attr 'opacity' 0)
             )
           ) legend
-        )}}
-            {{!-- This goes in the enter step of circle, it's also kind of broken(d3-style 'fill' colorScale) --}}
+        )}} --}}
+            {{!-- This goes in the enter step of circle, it's also kind of broken --}}
       {{/with}}
 
   {{/with}}
