@@ -39,12 +39,13 @@
       width=innerWidth height=innerHeight
     )
 
+
     pie-chart=(component 'ember-sparkles/pie-chart'
       width=innerWidth
-      heigth=innerHeight
+      height=innerHeight
       centerWidth=(div innerWidth 2)
       centerHeight=(div innerHeight 2)
-      colorScale=(cat-color-scale '20' domain)
+      colorScale=(cat-color-scale '10' domain)
       keys=(d3-get 'data.key')
       radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
       transition=(or transition (ember-sparkles/transition duration=500 data=data))

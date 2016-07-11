@@ -12,7 +12,7 @@
           (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'd' constructors.arc)
-          (d3-style 'fill' colorScale)
+          (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
           (d3-attr 'opacity' 1)
         )
         update=(pipe
@@ -20,7 +20,7 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
           (d3-attr 'd' constructors.arc)
-          (d3-style 'fill' colorScale)
+          (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
         )
         exit=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
@@ -28,7 +28,8 @@
           (d3-remove)
         )
     ) d3el)}}
-{{#if with-labels-in-arc}}
+
+{{!-- {{#if with-labels-in-arc}}
     {{shhh (compute
       (d3-join 'text' (compute constructors.pie data)
         enter=(pipe
@@ -49,7 +50,28 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}}
-{{/if}}
+{{else}} --}}
+    {{shhh (compute
+      (d3-join 'text' (compute constructors.pie data)
+        enter=(pipe
+          (d3-append 'text')
+          (d3-attr 'class' 'arcTextStyle')
+          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
+          (if with-transition (d3-transition transition) (d3-noop))
+          (d3-text keys)
+          (d3-attr 'opacity' 1)
+        )
+        update=(pipe
+          (if with-transition (d3-transition transition) (d3-noop))
+          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
+        )
+        exit=(pipe
+          (if with-transition (d3-transition transition) (d3-noop))
+          (d3-remove)
+          (d3-attr 'opacity' 0)
+        )
+    ) d3el)}}
+{{!-- {{/if}} --}}
     {{!-- The issue is with this line regarding transformations --}}
     {{#with (compute
       (pipe
@@ -62,9 +84,8 @@
       d3el
       ) as |legend|}}
 
-      {{log legend}}
-        {{!-- {{shhh (compute
-          (d3-join 'circle' (compute constructors.pie data)
+        {{shhh (compute
+          (d3-join 'circle' domain
             enter=(pipe
               (d3-append 'circle')
               (d3-style 'fill' colorScale)
@@ -79,32 +100,34 @@
             )
             exit=(pipe
               (if with-transition (d3-transition transition) (d3-noop))
-              (d3-attr 'transform' (i 'translate(${w},${h})' w=(sub width 18) h=centerHeight))
+              (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
               (d3-remove)
             )
           ) legend
         )}}
+
         {{shhh (compute
-          (d3-join 'text' (compute constructors.pie data)
+          (d3-join 'text' domain
             enter=(pipe
               (d3-append 'text')
               (d3-attr 'dx' '-3.8em')
               (d3-attr 'dy' '.35em')
               (d3-style 'font-size' '10px')
               (if with-transition (d3-transition transition) (d3-noop))
-              (d3-text keys)
+              (d3-text (d3-get))
               (d3-attr 'transform' transformLegend)
             )
             update=(pipe
-              (d3-text keys)
+              (d3-text (d3-get))
             )
             exit=(pipe
               (if with-transition (d3-transition transition) (d3-noop))
-              (d3-remove)
               (d3-attr 'opacity' 0)
+              (d3-remove)
+
             )
           ) legend
-        )}} --}}
+        )}}
             {{!-- This goes in the enter step of circle, it's also kind of broken --}}
       {{/with}}
 

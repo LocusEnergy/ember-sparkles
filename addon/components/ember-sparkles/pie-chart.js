@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   tagName: 'g',
   classNames: ['ember-sparkles--pie-chart'],
   'with-transition': true,
-  'with-labels-in-arc': false, 
+  'with-labels-in-arc': false,
 
   didInsertElement() {
     this._super(...arguments);
