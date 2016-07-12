@@ -46,7 +46,6 @@
       centerWidth=(div innerWidth 2)
       centerHeight=(div innerHeight 2)
       colorScale=(cat-color-scale '20' domain)
-      keys=(d3-get 'data.key')
       radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
       transition=(or transition (ember-sparkles/transition duration=500 data=data))
     )

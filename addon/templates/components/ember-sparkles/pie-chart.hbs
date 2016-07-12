@@ -1,10 +1,9 @@
 {{#if d3el}}
-
   {{#with (hash
     arc=(d3-arc (sub radius 10) 0)
     pie=(d3-pie valueFn=(pipe (d3-get 'value')))
     ) as |constructors|}}
-
+    {{log (ember-sparkles/get-percentage data)}}
     {{shhh (compute
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
@@ -28,7 +27,6 @@
           (d3-remove)
         )
     ) d3el)}}
-
 {{!-- {{#if with-labels-in-arc}} --}}
     {{shhh (compute
       (d3-join '.arcTextStyle' (compute constructors.pie data)
@@ -37,7 +35,7 @@
           (d3-attr 'class' 'arcTextStyle')
           (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text keys)
+          (d3-text)
           (d3-attr 'opacity' 1)
         )
         update=(pipe
