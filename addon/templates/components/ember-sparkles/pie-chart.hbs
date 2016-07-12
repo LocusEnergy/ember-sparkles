@@ -29,9 +29,9 @@
         )
     ) d3el)}}
 
-{{#if with-labels-in-arc}}
+{{!-- {{#if with-labels-in-arc}} --}}
     {{shhh (compute
-      (d3-join 'text' (compute constructors.pie data)
+      (d3-join '.arcTextStyle' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'class' 'arcTextStyle')
@@ -50,7 +50,7 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}}
-{{else}}
+{{!-- {{else}} --}}
 {{#with (compute
   (pipe
     (d3-append 'g')
@@ -61,6 +61,11 @@
   )
   d3el
   ) as |legend|}}
+
+    {{!-- {{with (compute (pipe
+      (d3-select-all '.legend')
+      (if with-transition (d3-transition transition) (d3-noop))
+      ()))}} --}}
 
     {{shhh (compute
       (d3-join 'circle' domain
@@ -126,7 +131,7 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}} --}}
-{{/if}}
+{{!-- {{/if}} --}}
   {{/with}}
     {{!-- The issue is with this line regarding transformations --}}
 
