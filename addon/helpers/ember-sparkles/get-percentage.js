@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export function emberSparklesGetPercentage(data) {
+export function emberSparklesGetPercentage([ data ]) {
   let totalArray = data.map(function(object){
     return object.value;
   });
