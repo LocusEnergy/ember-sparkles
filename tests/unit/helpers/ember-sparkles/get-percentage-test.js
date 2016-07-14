@@ -18,6 +18,6 @@ test('it works', function(assert) {
     }
   ];
   let result = emberSparklesGetPercentage(data);
-  stop();
+  console.log(result);
   assert.ok(result);
 });
