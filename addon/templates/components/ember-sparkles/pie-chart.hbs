@@ -29,7 +29,6 @@
           (d3-remove)
         )
     ) d3el)}}
-
     {{shhh (compute
       (d3-join '.percentage' (compute constructors.pie data)
         enter=(pipe
@@ -50,7 +49,7 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}}
-
+{{log (compute constructors.pie data)}}
 {{#with (compute
   (pipe
     (d3-append 'g')
