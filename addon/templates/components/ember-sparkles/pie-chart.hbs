@@ -42,6 +42,7 @@
         update=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
+          (d3-text (d3-get 'data.percentage'))
         )
         exit=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
