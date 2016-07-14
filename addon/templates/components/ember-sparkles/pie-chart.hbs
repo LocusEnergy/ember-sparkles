@@ -4,27 +4,17 @@
   {{#with (hash
     arc=(d3-arc (sub radius 10) 0)
     pie=(d3-pie valueFn=(pipe (d3-get 'value')))
-    percentages=(ember-sparkles/get-percentage data)
     ) as |constructors|}}
+
     {{shhh (compute
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
-          (d3-call (pipe
-            (d3-append 'path')
-            (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'd' constructors.arc)
-            (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
-            (d3-attr 'opacity' 1)
-          ))
-          (d3-call (pipe
-            (d3-append 'text')
-            (d3-attr 'class' 'percentage')
-            (d3-attr 'opacity' 1)
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
-            (d3-text (d3-get 'data.percentage'))
-          ))
+          (d3-append 'path')
+          (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
+          (if with-transition (d3-transition transition) (d3-noop))
+          (d3-attr 'd' constructors.arc)
+          (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
+          (d3-attr 'opacity' 1)
         )
         update=(pipe
           (d3-style 'fill' 'purple')
@@ -39,16 +29,15 @@
           (d3-remove)
         )
     ) d3el)}}
-{{!-- {{#if with-labels-in-arc}} --}}
-    {{!-- {{shhh (compute
-      (d3-join '.percentage' constructors.percentages
+
+    {{shhh (compute
+      (d3-join '.percentage' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'class' 'percentage')
-          (d3-append 'textPath')
-          (d3-attr 'xlink:href' (d3-get 'key'))
+          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text (d3-get 'percentage'))
+          (d3-text (d3-get 'data.percentage'))
           (d3-attr 'opacity' 1)
         )
         update=(pipe
@@ -60,8 +49,8 @@
           (d3-remove)
           (d3-attr 'opacity' 0)
         )
-    ) d3el)}} --}}
-{{!-- {{else}} --}}
+    ) d3el)}}
+
 {{#with (compute
   (pipe
     (d3-append 'g')
@@ -116,30 +105,7 @@
         )
       ) legend
     )}}
-        {{!-- This goes in the enter step of circle, it's also kind of broken --}}
   {{/with}}
-    {{!-- {{shhh (compute
-      (d3-join 'text' (compute constructors.pie data)
-        enter=(pipe
-          (d3-append 'text')
-          (d3-attr 'class' 'percentage')
-          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text keys)
-          (d3-attr 'opacity' 1)
-        )
-        update=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
-        )
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-remove)
-          (d3-attr 'opacity' 0)
-        )
-    ) d3el)}} --}}
-{{!-- {{/if}} --}}
   {{/with}}
-    {{!-- The issue is with this line regarding transformations --}}
 
 {{/if}}
