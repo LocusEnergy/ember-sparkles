@@ -24,7 +24,8 @@ test('it renders', function(assert) {
 
 test('The chart accepts data and generates arcs properly', function(assert) {
   assert.expect(1);
-  this.set('data', [
+
+  let data = [
     {
       key: 'arc 1',
       value: 50
@@ -35,9 +36,11 @@ test('The chart accepts data and generates arcs properly', function(assert) {
       key: 'arc 3',
       value: 50
     }
-  ]);
-  let domainKeys = data.map(({key})=> (key));
-  this.set('domain', domainKeys);
+  ];
+
+  let domain = data.map(({ key }) => key);
+
+  this.setProperties({ data, domain });
 
   this.render(hbs`
     <svg height="100" width="100">
@@ -58,7 +61,7 @@ test('The chart accepts data and generates arcs properly', function(assert) {
 
 test('data can be updated and removed', function(assert) {
   assert.expect(2);
-  this.set('data', [
+  let data = [
     {
       key: 'arc 1',
       value: 50
@@ -69,10 +72,11 @@ test('data can be updated and removed', function(assert) {
       key: 'arc 3',
       value: 50
     }
-  ]);
+  ];
 
-  let domainKeys = data.map(({key})=> (key));
-  this.set('domain', domainKeys);
+  let domain = data.map(({ key }) => key);
+
+  this.setProperties({ data, domain });
 
   this.render(hbs`
   <svg height="100" width="100">
@@ -90,7 +94,7 @@ test('data can be updated and removed', function(assert) {
   `);
   assert.equal(this.$('path').length, 3, 'There are intially 3 arcs');
   //Information updated
-  this.set('data', [
+  data = [
     {
       key: 'arc 1',
       value: 50
@@ -104,11 +108,11 @@ test('data can be updated and removed', function(assert) {
       key: 'arc 4',
       value: 50
     }
-  ]);
+  ];
+  domain = data.map(({ key }) => key);
 
-  let domainKeys = data.map(({key})=> (key));
-  this.set('domain', domainKeys);
-  
+  this.setProperties({ data, domain });
+
   assert.equal(this.$('path').length, 4, 'There are the correct number of arcs after the data is updated');
 
 
