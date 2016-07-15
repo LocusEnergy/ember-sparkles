@@ -1,11 +1,9 @@
-{{log data}}
-
 {{#if d3el}}
+{{log data}}
   {{#with (hash
     arc=(d3-arc (sub radius 10) 0)
     pie=(d3-pie valueFn=(pipe (d3-get 'value')))
     ) as |constructors|}}
-
     {{shhh (compute
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
@@ -50,7 +48,6 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}}
-{{log (compute constructors.pie data)}}
 {{#with (compute
   (pipe
     (d3-append 'g')
