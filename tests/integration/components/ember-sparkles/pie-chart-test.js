@@ -36,8 +36,8 @@ test('The chart accepts data and generates arcs properly', function(assert) {
       value: 50
     }
   ]);
-
-  this.set('domain', ['arc 1', 'arc 2', 'arc 3']);
+  let domainKeys = data.map(({key})=> (key));
+  this.set('domain', domainKeys);
 
   this.render(hbs`
     <svg height="100" width="100">
@@ -71,7 +71,8 @@ test('data can be updated and removed', function(assert) {
     }
   ]);
 
-  this.set('domain', ['arc 1', 'arc 2', 'arc 3']);
+  let domainKeys = data.map(({key})=> (key));
+  this.set('domain', domainKeys);
 
   this.render(hbs`
   <svg height="100" width="100">
@@ -105,7 +106,9 @@ test('data can be updated and removed', function(assert) {
     }
   ]);
 
-  this.set('domain', ['arc 1', 'arc 2', 'arc 3', 'arc 4']);
+  let domainKeys = data.map(({key})=> (key));
+  this.set('domain', domainKeys);
+  
   assert.equal(this.$('path').length, 4, 'There are the correct number of arcs after the data is updated');
 
 
