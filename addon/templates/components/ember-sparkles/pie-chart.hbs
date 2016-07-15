@@ -1,14 +1,17 @@
 {{#if d3el}}
-{{log data}}
+
   {{#with (hash
     arc=(d3-arc (sub radius 10) 0)
     pie=(d3-pie valueFn=(pipe (d3-get 'value')))
-    ) as |constructors|}}
+    centerWidth=(div width 2)
+    centerHeight=(div height 2)
+  ) as |constructors|}}
+
     {{shhh (compute
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'path')
-          (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
+          (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'd' constructors.arc)
           (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
@@ -17,7 +20,7 @@
         update=(pipe
           (d3-style 'fill' 'purple')
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
+          (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (d3-attr 'd' constructors.arc)
           (d3-style 'fill' (pipe (d3-get 'data.key') colorScale))
         )
@@ -27,19 +30,20 @@
           (d3-remove)
         )
     ) d3el)}}
+
     {{shhh (compute
       (d3-join '.percentage' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'class' 'percentage')
-          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
+          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=constructors.centerHeight width=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-text (d3-get 'data.percentage'))
           (d3-attr 'opacity' 1)
         )
         update=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=centerHeight width=centerWidth))
+          (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=constructors.centerHeight width=constructors.centerWidth))
           (d3-text (d3-get 'data.percentage'))
         )
         exit=(pipe
@@ -48,16 +52,16 @@
           (d3-attr 'opacity' 0)
         )
     ) d3el)}}
-{{#with (compute
-  (pipe
-    (d3-append 'g')
-    (d3-attr 'class' 'legend')
-    (d3-attr 'opacity' 0)
-    (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width (div 99 100))))
-    (d3-attr 'opacity' 1)
-  )
-  d3el
-  ) as |legend|}}
+
+  {{/with}}
+
+  {{#with (compute (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'legend')
+      (d3-attr 'opacity' 0)
+      (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width (div 99 100))))
+      (d3-attr 'opacity' 1)
+  ) d3el) as |legend|}}
 
     {{shhh (compute
       (d3-join 'circle' domain
@@ -78,8 +82,7 @@
           (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
           (d3-remove)
         )
-      ) legend
-    )}}
+    ) legend)}}
 
     {{shhh (compute (d3-join 'text' domain
         enter=(pipe
@@ -100,9 +103,8 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-remove)
         )
-      ) legend
-    )}}
-  {{/with}}
+    ) legend)}}
+
   {{/with}}
 
 {{/if}}

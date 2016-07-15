@@ -36,17 +36,23 @@ test('The chart accepts data and generates arcs properly', function(assert) {
       value: 50
     }
   ]);
+
+
+  this.set('domain', ['arc 1', 'arc 2', 'arc 3']);
+
   this.render(hbs`
-  <svg height="100" width="100">
-    {{ember-sparkles/pie-chart
-        centerHeight=50
-        centerWidth=50
+    <svg height="100" width="100">
+      {{ember-sparkles/pie-chart
+        height=50
+        width=50
+        radius=10
+        colorScale=(cat-color-scale '20' domain)
+        domain=domain
         data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
         with-transition=false
-        domain=(map-by 'key' pieData)
-        with-labels-in-arc=true
+        with-arc-labels=true
       }}
-  </svg>
+    </svg>
   `);
   assert.equal(this.$('path').length, 3, 'There are the correct number of arcs');
 });
