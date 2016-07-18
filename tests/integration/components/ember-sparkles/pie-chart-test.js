@@ -115,5 +115,78 @@ test('data can be updated and removed', function(assert) {
 
   assert.equal(this.$('path').length, 4, 'There are the correct number of arcs after the data is updated');
 
+});
+test('The proper arcs have the proper data', function(assert) {
+  assert.expect(1);
+  let data = [
+    {
+      key: 'arc 1',
+      value: 50
+    },{
+      key: 'arc 2',
+      value: 50
+    }, {
+      key: 'arc 3',
+      value: 50
+    }
+  ];
+
+  let domain = data.map(({ key }) => key);
+
+  this.setProperties({ data, domain });
+
+  this.render(hbs`
+  <svg height="100" width="100">
+    {{ember-sparkles/pie-chart
+      height=50
+      width=50
+      radius=10
+      colorScale=(cat-color-scale '20' domain)
+      domain=domain
+      data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
+      with-transition=false
+      with-arc-labels=true
+      }}
+  </svg>
+  `);
+
+  assert.equal(this.$('path'), 'somethingElse', 'These will not equal');
+
+  //MATCH IT BY COLOR!!! ARC 1 IS ALWAYS THE SAME COLOR AND ARC 2 IS ALWAYS THE SAME COLOR
+  //Create an array of
+  // console.log(this.$('path').text());
+  // console.log(this.$('.percentage').text());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
