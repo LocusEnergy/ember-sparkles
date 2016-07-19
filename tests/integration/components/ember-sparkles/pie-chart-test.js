@@ -154,53 +154,11 @@ test('The proper arcs have the proper data', function(assert) {
       }}
   </svg>
   `);
-
-  this.$("text[data=arc-1]").text()
-  this.$("text[data=arc-2]").text()
-  this.$("text[data=arc-3]").text()
-
   assert.ok(this.$('.arc-1'),'Arc 1 Arc');
   assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
   assert.ok(this.$('.arc-2'),'Arc 2 Arc');
   assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
   assert.ok(this.$('.arc-3'),'Arc 3 Arc');
   assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
-
-  //MATCH IT BY COLOR!!! ARC 1 IS ALWAYS THE SAME COLOR AND ARC 2 IS ALWAYS THE SAME COLOR
-  //Create an array of
-  // console.log(this.$('path').text());
-  // console.log(this.$('.percentage').text());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
