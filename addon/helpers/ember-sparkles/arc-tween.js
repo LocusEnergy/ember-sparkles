@@ -4,8 +4,8 @@ import { interpolate } from 'd3-interpolate';
 
 
 function defaultTweenFn(a) {
-  var i = interpolate(this._current, a);
-  this._current = i(0);
+  var i = interpolate(this.data , a);
+  this.data = i(0);
   return function(t) {
     return arc(i(t));
   };

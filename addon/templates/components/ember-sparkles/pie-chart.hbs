@@ -11,6 +11,7 @@
       (d3-join 'path' (compute constructors.pie data)
         enter=(pipe
           (d3-append 'path')
+          (d3-attr 'class' (pipe (r/get 'data.key') (helper 'dasherize')))
           (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'd' constructors.arc)
@@ -36,6 +37,7 @@
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'class' 'percentage')
+          (d3-attr 'data' (pipe (r/get 'data.key') (helper 'dasherize')))
           (d3-attr 'transform' (ember-sparkles/arc-translate constructors.arc.centroid height=constructors.centerHeight width=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-text (r/get 'data.percentage'))
@@ -83,9 +85,11 @@
         )
     ) legend)}}
 
-    {{shhh (compute (d3-join 'text' domain
+    {{shhh (compute
+      (d3-join '.legend' domain
         enter=(pipe
           (d3-append 'text')
+          (d3-attr 'class' 'legend-text')
           (d3-attr 'opacity' 0)
           (d3-attr 'dx' '-3.8em')
           (d3-attr 'dy' '.35em')
@@ -96,6 +100,7 @@
           (d3-attr 'opacity' 1)
         )
         update=(pipe
+          (if with-transition (d3-transition transition) (d3-noop))
           (d3-text (r/param))
         )
         exit=(pipe
