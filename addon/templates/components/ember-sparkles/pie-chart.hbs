@@ -15,6 +15,7 @@
           (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'd' constructors.arc)
+          (ember-sparkles/attr-tween 'd' arcTweenFn=(ember-sparkles/arc-tween (compute constructors.pie data)))
           (d3-style 'fill' (pipe (r/get 'data.key') colorScale))
           (d3-attr 'opacity' 1)
         )
@@ -23,6 +24,7 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (d3-attr 'd' constructors.arc)
+          (ember-sparkles/attr-tween 'd' arcTweenFn=(ember-sparkles/arc-tween (compute constructors.pie data)))
           (d3-style 'fill' (pipe (r/get 'data.key') colorScale))
         )
         exit=(pipe
