@@ -16,7 +16,7 @@
       groupAccessor=(d3-get sparkled.groupKey)
 
       xScale=(band-scale
-        (ember-sparkles/map sparkled.data (d3-get sparkled.inputKey))
+        (map (r/get sparkled.inputKey) sparkled.data)
         (append 0 innerWidth)
         round=true
         padding=padding
