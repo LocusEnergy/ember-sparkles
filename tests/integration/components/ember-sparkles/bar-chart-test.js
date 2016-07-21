@@ -46,8 +46,8 @@ test('it accepts data and generates rectangles', function(assert) {
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
-        inputAccessor=(d3-get '0')
-        outputAccessor=(d3-get '1')
+        inputAccessor=(r 'object-at' 0)
+        outputAccessor=(r 'object-at' 1)
 
         xScale=(band-scale
           xDomain
@@ -107,8 +107,8 @@ test('data can be updated and removed', function(assert) {
     <svg height="100" width="100">
       {{ember-sparkles/bar-chart
         data=data
-        inputAccessor=(d3-get '0')
-        outputAccessor=(d3-get '1')
+        inputAccessor=(r 'object-at' '0')
+        outputAccessor=(r 'object-at' '1')
         xScale=(band-scale
           xDomain
           (append 0 100)
