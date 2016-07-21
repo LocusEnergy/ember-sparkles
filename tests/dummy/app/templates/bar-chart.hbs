@@ -10,7 +10,7 @@
     y-label='value'
 
     xScale=(band-scale
-      (ember-sparkles/map data (d3-get 'ts'))
+      (map (r/get 'ts') data)
       (append 0 chart.width)
       round=true
       padding=0.02
