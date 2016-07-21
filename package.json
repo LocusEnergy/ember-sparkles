@@ -52,7 +52,7 @@
     "glimmer"
   ],
   "dependencies": {
-    "ember-composable-helpers": "0.23.1",
+    "ember-composable-helpers": "0.27.0",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-d3-shape": "0.9.0",
     "ember-cli-htmlbars": "^1.0.3",
