@@ -5,7 +5,7 @@ import { extent, min, max } from 'd3-array';
 let generateData = function() {
   let end = moment('2015-03-14');
   let numDays = _.random(10, 50);
-  let start = end.clone().subtract('days', numDays);
+  let start = end.clone().subtract(numDays, 'days');
   let dateRange = moment.range(start, end);
   let series = _.range(4);
   let valueType = 'Wh_sum';
