@@ -1,0 +1,38 @@
+@import "./normalize";
+@import "./skeleton";
+@import "./pie-chart";
+
+html,body {
+  height: 100%;
+}
+
+#ember-sparkles {
+  height: 100%;
+}
+
+.graphics {
+  height: 100%;
+}
+
+#svg-container {
+  height: 50%;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis path {
+  display: none;
+}
+
+.tick line{
+  opacity: 0.2;
+}

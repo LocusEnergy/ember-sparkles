@@ -1,0 +1,31 @@
+{{#ember-sparkles
+  as |chart|}}
+
+  {{chart.bar-chart
+    data=data
+    inputAccessor=(r/get 'ts')
+    outputAccessor=(r/get 'value')
+    ticks=5
+    tick-format='%Y-%m-%d'
+    y-label='value'
+
+    xScale=(band-scale
+      (map (r/get 'ts') data)
+      (append 0 chart.width)
+      round=true
+      padding=0.02
+    )
+
+    yScale=(linear-scale
+      (append 0 outputMax)
+      (append chart.height 0)
+      nice=true
+    )
+
+    transition=(or transition (ember-sparkles/transition duration=800 data=data))
+  }}
+
+{{/ember-sparkles}}
+
+
+<button {{action 'toggleData'}}>Toggle Data</button>

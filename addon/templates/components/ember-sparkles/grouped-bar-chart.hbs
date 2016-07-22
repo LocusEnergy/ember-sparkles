@@ -1,0 +1,194 @@
+{{#if d3el}}
+  {{!-- x axis --}}
+  {{shhh (compute (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'x axis')
+    ) d3el)
+  }}
+
+  {{#with (ember-sparkles/axis xScale
+      position='bottom'
+      tickFormat=(or tick-format '%Y-%m-%d')
+      responsiveSkipIdx=(or responsive-skip-idx 1)
+    ) as |axis|}}
+
+    {{shhh (compute (pipe
+      (d3-select-all '.x.axis')
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+      (d3-call axis)
+      ) d3el)
+    }}
+
+  {{/with}}
+
+  {{!-- y axis --}}
+  {{shhh (compute (pipe
+    (d3-append 'g')
+    (d3-attr 'class' 'y axis')
+    (d3-append 'text')
+    (d3-attr 'class' 'vertical-label')
+    (d3-attr 'transform' 'rotate(-90)')
+    (d3-style 'text-anchor' 'end')
+    (d3-text y-label)
+    ) d3el)
+  }}
+
+  {{#with (ember-sparkles/axis yScale position='left' ticks=ticks width=width) as |axis|}}
+    {{shhh (compute (pipe
+      (d3-select-all '.y.axis')
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-call axis)
+      ) d3el)
+    }}
+  {{/with}}
+
+  {{!-- position vertical label programmatically based on height; -0.4*height is a nice default --}}
+  {{shhh (compute (pipe
+    (d3-select-all '.vertical-label')
+    (if with-transition (d3-transition transition) (d3-noop))
+    (d3-attr 'y' (or vertical-label-dy 6))
+    (d3-attr 'x' (or vertical-label-dx (mult -0.4 height)))
+    ) d3el)
+  }}
+
+  {{#with (band-scale
+    groupDomain
+    (append 0 (compute xScale.bandwidth))
+    padding=groupPadding
+  ) as |groupScale|}}
+
+    {{#with (hash
+      enterRect=(pipe
+        (d3-append 'rect')
+        (d3-attr 'width' 0)
+        (d3-attr 'height' 0)
+        (d3-attr 'x' (pipe groupAccessor groupScale))
+        (d3-attr 'y' height)
+        (d3-style 'fill' 'red')
+        (d3-style 'opacity' 0)
+      )
+
+      updateRect=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'width' groupScale.bandwidth)
+        (d3-attr 'height' (pipe valueAccessor yScale (bar-height height)))
+        (d3-attr 'x' (pipe groupAccessor groupScale))
+        (d3-attr 'y' (pipe valueAccessor yScale))
+        (d3-style 'fill' (pipe groupAccessor colorScale))
+        (d3-style 'opacity' 1)
+      )
+
+      exitRect=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'y' height)
+        (d3-attr 'height' 0)
+        (d3-style 'fill' 'green')
+        (d3-style 'opacity' 0)
+        (d3-remove)
+      )
+
+    ) as |renderOptions|}}
+
+        {{shhh (compute
+          (d3-join '.rect-group' data
+            enter=(pipe
+              (d3-append 'g')
+              (d3-attr 'class' 'rect-group')
+              (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
+              (d3-join 'rect' outputAccessor
+                enter=(pipe renderOptions.enterRect renderOptions.updateRect)
+              )
+            )
+
+            update=(pipe
+              (d3-join 'rect' outputAccessor
+                enter=(pipe renderOptions.enterRect renderOptions.updateRect)
+                update=renderOptions.updateRect
+                exit=renderOptions.exitRect
+              )
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
+            )
+
+            exit=(pipe
+              (d3-join 'rect' outputAccessor
+                update=renderOptions.exitRect
+                exit=renderOptions.exitRect
+              )
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-remove)
+            )
+          ) d3el)
+        }}
+
+    {{/with}}
+
+  {{/with}}
+
+  {{!-- legend --}}
+  {{#if with-legend}}
+    {{#with (compute
+      (pipe
+        (d3-append 'g')
+        (d3-attr 'class' 'legend')
+        (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 80)))
+      )
+      d3el
+    ) as |legend|}}
+
+      {{shhh (compute (d3-join 'rect' groupDomain
+          enter=(pipe
+            (d3-append 'rect')
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-attr 'width' 14)
+            (d3-attr 'height' 14)
+            (d3-style 'fill' colorScale)
+            (d3-attr 'opacity' 0)
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+
+          update=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-style 'fill' colorScale)
+          )
+
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+            (d3-remove)
+          )
+        ) legend)
+      }}
+
+      {{shhh (compute (d3-join 'text' groupDomain
+          enter=(pipe
+            (d3-append 'text')
+            (d3-attr 'opacity' 0)
+            (d3-attr 'dx' '-3.8em')
+            (d3-attr 'dy' '1em')
+            (d3-style 'font-size' '10px')
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-text (d3-get))
+            (d3-attr 'transform' transformLegend)
+            (d3-attr 'opacity' 1)
+          )
+
+          update=(pipe
+            (d3-text (d3-get))
+          )
+
+          exit=(pipe
+            (if with-transition (d3-transition transition) (d3-noop))
+            (d3-attr 'opacity' 0)
+            (d3-remove)
+          )
+        ) legend)
+      }}
+
+    {{/with}}
+  {{/if}}
+
+{{/if}}

@@ -1,0 +1,21 @@
+{{#ember-sparkles
+  sparkled=(data-sparkler
+    data=barData
+    inputKey='ts'
+    outputKey='Wh_sum'
+    groupKey='name'
+    valueKey='value'
+    sortFn=groupSortFunction
+  )
+  padding=0.2
+  as |chart|}}
+
+  {{chart.grouped-bar-chart
+    ticks=5
+    tick-format='%Y-%m-%d'
+    groupPadding=0.05
+    y-label='Wh_sum'
+  }}
+{{/ember-sparkles}}
+
+<button {{action 'toggleData'}}>toggle data</button>
