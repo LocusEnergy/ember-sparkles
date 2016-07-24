@@ -1,10 +1,9 @@
 {{#ember-sparkles as |chart|}}
   {{chart.pie-chart
-    data=(pie-sparkler pieData dataKey='value' threshold=5 precision=1)
-    domain=(map-by 'key' pieData)
+    data=(pie-sparkler pieData dataKey="value" threshold=5 precision=1)
+    domain=(map-by "key" pieData)
     with-arc-labels=true
   }}
 {{/ember-sparkles}}
 
-
-<button {{action 'toggleData'}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") 500 true)}}>Toggle Data</button>
