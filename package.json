@@ -58,7 +58,7 @@
     "ember-composable-helpers": "0.27.0",
     "ember-d3-helpers": "0.5.2",
     "ember-math-helpers": "1.0.0",
-    "ember-reactive-helpers": "0.3.5",
+    "ember-reactive-helpers": "0.3.6",
     "ember-resize": "0.0.13",
     "ember-truth-helpers": "1.2.0"
   },
