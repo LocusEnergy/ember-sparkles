@@ -7,8 +7,10 @@
     centerHeight=(div height 2)
   ) as |constructors|}}
 
-    {{shhh (compute
-      (d3-join 'path' (compute constructors.pie data)
+    {{shhh (compute (pipe
+      (d3-select-all 'path')
+      (d3-data (compute constructors.pie data))
+      (d3-join
         enter=(pipe
           (d3-append 'path')
           (d3-attr 'class' (pipe (r/get 'data.key') (r 'dasherize')))
@@ -30,10 +32,13 @@
           (d3-attr 'opacity' 0)
           (d3-remove)
         )
-    ) d3el)}}
+      )) d3el)
+    }}
 
-    {{shhh (compute
-      (d3-join '.percentage' (compute constructors.pie data)
+    {{shhh (compute (pipe
+      (d3-select-all '.percentage')
+      (d3-data (compute constructors.pie data))
+      (d3-join
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'class' 'percentage')
@@ -53,7 +58,8 @@
           (d3-attr 'opacity' 0)
           (d3-remove)
         )
-    ) d3el)}}
+      )) d3el)
+    }}
   {{/with}}
 
   {{#with (compute (pipe
@@ -64,8 +70,10 @@
       (d3-attr 'opacity' 1)
   ) d3el) as |legend|}}
 
-    {{shhh (compute
-      (d3-join 'circle' domain
+    {{shhh (compute (pipe
+      (d3-select-all 'circle')
+      (d3-data domain)
+      (d3-join
         enter=(pipe
           (d3-append 'circle')
           (d3-style 'fill' colorScale)
@@ -83,10 +91,13 @@
           (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
           (d3-remove)
         )
-    ) legend)}}
+      )) legend)
+    }}
 
-    {{shhh (compute
-      (d3-join 'text' domain
+    {{shhh (compute (pipe
+      (d3-select-all 'text')
+      (d3-data domain)
+      (d3-join
         enter=(pipe
           (d3-append 'text')
           (d3-attr 'opacity' 0)
@@ -106,7 +117,8 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-remove)
         )
-    ) legend)}}
+      )) legend)
+    }}
 
   {{/with}}
 

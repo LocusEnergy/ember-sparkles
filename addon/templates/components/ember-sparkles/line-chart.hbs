@@ -57,8 +57,10 @@
     {{/with}}
 
 
-    {{shhh (compute (d3-join '.line' data
-
+    {{shhh (compute (pipe
+      (d3-select-all '.line')
+      (d3-data data)
+      (d3-join
         enter=(pipe
           (d3-append 'path')
           (d3-attr 'class' 'line')
@@ -70,7 +72,6 @@
           (d3-style 'fill' 'none')
           (d3-style 'stroke-width' '1.5px')
         )
-
         update=(pipe
           (if with-transition (d3-transition options.transition) (d3-noop))
           (d3-attr 'class' 'line')
@@ -80,14 +81,12 @@
           ))
           (d3-style 'stroke' (pipe (d3-get 'id') options.colorScale))
         )
-
         exit=(pipe
           (if with-transition (d3-transition options.transition) (d3-noop))
           (d3-style 'opacity' 0)
           (d3-remove)
         )
-
-      ) d3el)
+      )) d3el)
     }}
 
 

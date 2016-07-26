@@ -90,36 +90,46 @@
 
     ) as |renderOptions|}}
 
-        {{shhh (compute
-          (d3-join '.rect-group' data
+        {{shhh (compute (pipe
+          (d3-select-all '.rect-group')
+          (d3-data data)
+          (d3-join
             enter=(pipe
               (d3-append 'g')
               (d3-attr 'class' 'rect-group')
               (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
-              (d3-join 'rect' outputAccessor
+              (d3-select-all 'rect')
+              (d3-data outputAccessor)
+              (d3-join
                 enter=(pipe renderOptions.enterRect renderOptions.updateRect)
               )
             )
-
             update=(pipe
-              (d3-join 'rect' outputAccessor
-                enter=(pipe renderOptions.enterRect renderOptions.updateRect)
-                update=renderOptions.updateRect
-                exit=renderOptions.exitRect
-              )
+              (d3-call (pipe 
+                (d3-select-all 'rect')
+                (d3-data outputAccessor)
+                (d3-join
+                  enter=(pipe renderOptions.enterRect renderOptions.updateRect)
+                  update=renderOptions.updateRect
+                  exit=renderOptions.exitRect
+                )
+              ))
               (if with-transition (d3-transition transition) (d3-noop))
               (d3-attr 'transform' (pipe inputAccessor xScale (ember-sparkles/translate-x)))
             )
-
             exit=(pipe
-              (d3-join 'rect' outputAccessor
-                update=renderOptions.exitRect
-                exit=renderOptions.exitRect
-              )
+              (d3-call (pipe
+                (d3-select-all 'rect')
+                (d3-data outputAccessor)
+                (d3-join
+                  update=renderOptions.exitRect
+                  exit=renderOptions.exitRect
+                )              
+              ))
               (if with-transition (d3-transition transition) (d3-noop))
               (d3-remove)
             )
-          ) d3el)
+          )) d3el)
         }}
 
     {{/with}}
@@ -137,55 +147,59 @@
       d3el
     ) as |legend|}}
 
-      {{shhh (compute (d3-join 'rect' groupDomain
-          enter=(pipe
-            (d3-append 'rect')
-            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-            (d3-attr 'width' 14)
-            (d3-attr 'height' 14)
-            (d3-style 'fill' colorScale)
-            (d3-attr 'opacity' 0)
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' transformLegend)
-            (d3-attr 'opacity' 1)
-          )
-
-          update=(pipe
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-style 'fill' colorScale)
-          )
-
-          exit=(pipe
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-            (d3-remove)
-          )
-        ) legend)
+      {{shhh (compute (pipe
+          (d3-select-all 'rect')
+          (d3-data groupDomain)
+          (d3-join
+            enter=(pipe
+              (d3-append 'rect')
+              (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+              (d3-attr 'width' 14)
+              (d3-attr 'height' 14)
+              (d3-style 'fill' colorScale)
+              (d3-attr 'opacity' 0)
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-attr 'transform' transformLegend)
+              (d3-attr 'opacity' 1)
+            )
+            update=(pipe
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-style 'fill' colorScale)
+            )
+            exit=(pipe
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+              (d3-remove)
+            )
+          )) legend)
       }}
 
-      {{shhh (compute (d3-join 'text' groupDomain
-          enter=(pipe
-            (d3-append 'text')
-            (d3-attr 'opacity' 0)
-            (d3-attr 'dx' '-3.8em')
-            (d3-attr 'dy' '1em')
-            (d3-style 'font-size' '10px')
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-text (d3-get))
-            (d3-attr 'transform' transformLegend)
-            (d3-attr 'opacity' 1)
-          )
+      {{shhh (compute (pipe
+          (d3-select-all 'text')
+          (d3-data groupDomain)
+          (d3-join
+            enter=(pipe
+              (d3-append 'text')
+              (d3-attr 'opacity' 0)
+              (d3-attr 'dx' '-3.8em')
+              (d3-attr 'dy' '1em')
+              (d3-style 'font-size' '10px')
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-text (d3-get))
+              (d3-attr 'transform' transformLegend)
+              (d3-attr 'opacity' 1)
+            )
 
-          update=(pipe
-            (d3-text (d3-get))
-          )
+            update=(pipe
+              (d3-text (d3-get))
+            )
 
-          exit=(pipe
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'opacity' 0)
-            (d3-remove)
-          )
-        ) legend)
+            exit=(pipe
+              (if with-transition (d3-transition transition) (d3-noop))
+              (d3-attr 'opacity' 0)
+              (d3-remove)
+            )
+          )) legend)
       }}
 
     {{/with}}
