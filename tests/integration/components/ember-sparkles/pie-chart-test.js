@@ -6,6 +6,13 @@ moduleForComponent('ember-sparkles/pie-chart', 'Integration | Component | ember 
   integration: true
 });
 
+import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
+
+const {
+  run: { later }
+} = Ember;
+
 test('it renders', function(assert) {
   this.set('data', []);
   this.render(hbs`
@@ -149,11 +156,15 @@ test('The proper arcs have the proper data', function(assert) {
       }}
     </svg>
   `);
-  assert.ok(this.$('.arc-1'),'Arc 1 Arc');
-  assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
-  assert.ok(this.$('.arc-2'),'Arc 2 Arc');
-  assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
-  assert.ok(this.$('.arc-3'),'Arc 3 Arc');
-  assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
 
+  later( ()=> {}, 20);
+
+  return wait().then(()=>{
+    assert.ok(this.$('.arc-1'),'Arc 1 Arc');
+    assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
+    assert.ok(this.$('.arc-2'),'Arc 2 Arc');
+    assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
+    assert.ok(this.$('.arc-3'),'Arc 3 Arc');
+    assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
+  });
 });
