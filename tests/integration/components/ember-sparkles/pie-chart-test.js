@@ -6,13 +6,19 @@ moduleForComponent('ember-sparkles/pie-chart', 'Integration | Component | ember 
   integration: true
 });
 
+import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
+
+const {
+  run: { later }
+} = Ember;
+
 test('it renders', function(assert) {
   this.set('data', []);
   this.render(hbs`
   <svg>
     {{ember-sparkles/pie-chart
         data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
-        with-transition=false
         domain=(map-by 'key' pieData)
         width=1
         height=1
@@ -52,7 +58,6 @@ test('The chart accepts data and generates arcs properly', function(assert) {
         colorScale=(cat-color-scale '20' domain)
         domain=domain
         data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
-        with-transition=false
         with-arc-labels=true
       }}
     </svg>
@@ -88,7 +93,6 @@ test('data can be updated and removed', function(assert) {
       colorScale=(cat-color-scale '20' domain)
       domain=domain
       data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
-      with-transition=false
       with-arc-labels=true
       }}
   </svg>
@@ -134,31 +138,33 @@ test('The proper arcs have the proper data', function(assert) {
 
   let total = _.sum(data.map(({ ['value']: d }) => d));
   let expectedPercentages = data.map(({ value }) => ((value/total) * 100).toFixed(1));
-  //
-
   let domain = data.map(({ key }) => key);
 
   this.setProperties({ data, domain });
 
   this.render(hbs`
-  <svg height="100" width="100">
-    {{ember-sparkles/pie-chart
-      height=50
-      width=50
-      radius=10
-      colorScale=(cat-color-scale '20' domain)
-      domain=domain
-      data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
-      with-transition=false
-      with-arc-labels=true
+    <svg height="100" width="100">
+      {{ember-sparkles/pie-chart
+        height=50
+        width=50
+        radius=10
+        colorScale=(cat-color-scale '20' domain)
+        domain=domain
+        data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
+        transition=(ember-sparkles/transition duration=10)
+        with-arc-labels=true
       }}
-  </svg>
+    </svg>
   `);
-  assert.ok(this.$('.arc-1'),'Arc 1 Arc');
-  assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
-  assert.ok(this.$('.arc-2'),'Arc 2 Arc');
-  assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
-  assert.ok(this.$('.arc-3'),'Arc 3 Arc');
-  assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
 
+  later( ()=> {}, 20);
+
+  return wait().then(()=>{
+    assert.ok(this.$('.arc-1'),'Arc 1 Arc');
+    assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
+    assert.ok(this.$('.arc-2'),'Arc 2 Arc');
+    assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
+    assert.ok(this.$('.arc-3'),'Arc 3 Arc');
+    assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
+  });
 });

@@ -18,4 +18,4 @@
   }}
 {{/ember-sparkles}}
 
-<button {{action 'toggleData'}}>toggle data</button>
+<button {{action (throttle (action "toggleData") 820)}}>Toggle Data</button>

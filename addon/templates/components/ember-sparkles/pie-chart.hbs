@@ -14,7 +14,7 @@
           (d3-attr 'class' (pipe (r/get 'data.key') (r 'dasherize')))
           (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'd' constructors.arc)
+          (d3-attr-tween 'd' (d3-arc-tween constructors.arc))
           (d3-style 'fill' (pipe (r/get 'data.key') colorScale))
           (d3-attr 'opacity' 1)
         )
@@ -22,7 +22,7 @@
           (d3-style 'fill' 'purple')
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'transform' (i 'translate(${w},${h})' h=constructors.centerHeight w=constructors.centerWidth))
-          (d3-attr 'd' constructors.arc)
+          (d3-attr-tween 'd' (d3-arc-tween constructors.arc))
           (d3-style 'fill' (pipe (r/get 'data.key') colorScale))
         )
         exit=(pipe
@@ -50,8 +50,8 @@
         )
         exit=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-remove)
           (d3-attr 'opacity' 0)
+          (d3-remove)
         )
     ) d3el)}}
   {{/with}}
@@ -60,7 +60,7 @@
       (d3-append 'g')
       (d3-attr 'class' 'legend')
       (d3-attr 'opacity' 0)
-      (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width (div 99 100))))
+      (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width 0.99)))
       (d3-attr 'opacity' 1)
   ) d3el) as |legend|}}
 

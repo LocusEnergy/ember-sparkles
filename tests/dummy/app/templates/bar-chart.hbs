@@ -22,10 +22,9 @@
       nice=true
     )
 
-    transition=(or transition (ember-sparkles/transition duration=800 data=data))
+    transition=(or transition (ember-sparkles/transition duration=500 data=data))
   }}
 
 {{/ember-sparkles}}
 
-
-<button {{action 'toggleData'}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") 520)}}>Toggle Data</button>

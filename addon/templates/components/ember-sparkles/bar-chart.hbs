@@ -5,6 +5,7 @@
   {{shhh (compute (pipe
       (d3-append 'g')
       (d3-attr 'class' 'x axis')
+      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
     ) d3el)
   }}
 
@@ -14,7 +15,6 @@
     {{shhh (compute (pipe
         (d3-select-all '.x.axis')
         (if with-transition (d3-transition transition) (d3-noop))
-        (d3-attr 'transform' (i 'translate(0,${h})' h=height))
         (d3-call axis)
       ) d3el)
     }}
