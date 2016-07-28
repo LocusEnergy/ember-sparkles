@@ -32,7 +32,7 @@
 
       colorScale=(cat-color-scale '20c' sparkled.groupDomain)
       tickFormat=(or tick-format '%Y-%m-%d')
-      transition=(or transition (ember-sparkles/transition duration=800 data=sparkled.data))
+      transition=(or transition (ember-sparkles/transition duration=(or transition-duration 700) data=sparkled.data))
     )
 
     line-chart=(component 'ember-sparkles/line-chart'
@@ -44,7 +44,7 @@
       height=innerHeight
       colorScale=(cat-color-scale '20' domain)
       radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
-      transition=(or transition (ember-sparkles/transition duration=700))
+      transition=(or transition (ember-sparkles/transition duration=(or transition-duration 700)))
     )
 
     width=innerWidth
