@@ -45,7 +45,10 @@
     }}
   {{/with}}
 
-  {{shhh (compute (d3-join 'rect' data
+  {{shhh (compute (pipe
+    (d3-select-all 'rect')
+    (d3-data data)
+    (d3-join 
       enter=(pipe
         (d3-append 'rect')
         (d3-attr 'class' 'bar')
@@ -76,7 +79,7 @@
         (d3-attr 'y' height)
         (d3-remove)
       )
-    ) d3el)
+    )) d3el)
   }}
 
 {{/if}}
