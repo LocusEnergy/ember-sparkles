@@ -1,13 +1,13 @@
-{{#if d3el}}
+{{#with (hash
+  arc=(d3-arc (sub radius 10) 0)
+  pie=(d3-pie valueFn=(pipe (r/get 'value')))
+  centerWidth=(div width 2)
+  centerHeight=(div height 2)
+) as |constructors|}}
 
-  {{#with (hash
-    arc=(d3-arc (sub radius 10) 0)
-    pie=(d3-pie valueFn=(pipe (r/get 'value')))
-    centerWidth=(div width 2)
-    centerHeight=(div height 2)
-  ) as |constructors|}}
+  {{#d3-graph classNames="ember-sparkles--pie-chart" as |d3|}}
 
-    {{shhh (compute (pipe
+    {{d3.graph (pipe
       (d3-select-all 'path')
       (d3-data (compute constructors.pie data))
       (d3-join
@@ -32,10 +32,9 @@
           (d3-attr 'opacity' 0)
           (d3-remove)
         )
-      )) d3el)
-    }}
+    ))}}
 
-    {{shhh (compute (pipe
+    {{d3.graph (pipe
       (d3-select-all '.percentage')
       (d3-data (compute constructors.pie data))
       (d3-join
@@ -58,43 +57,44 @@
           (d3-attr 'opacity' 0)
           (d3-remove)
         )
-      )) d3el)
-    }}
-  {{/with}}
+    ))}}
 
-  {{#with (compute (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'legend')
-      (d3-attr 'opacity' 0)
-      (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width 0.99)))
-      (d3-attr 'opacity' 1)
-  ) d3el) as |legend|}}
+  {{/d3-graph}}
 
-    {{shhh (compute (pipe
-      (d3-select-all 'circle')
-      (d3-data domain)
-      (d3-join
-        enter=(pipe
-          (d3-append 'circle')
-          (d3-style 'fill' colorScale)
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (i 'translate(${w}, 18)' w=(sub width 18)))
-          (d3-attr 'r' (div radius 25))
-          (d3-attr 'transform' transformLegend)
-        )
-        update=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'fill' colorScale)
-        )
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-          (d3-remove)
-        )
-      )) legend)
-    }}
+{{/with}}
 
-    {{shhh (compute (pipe
+{{#d3-graph (pipe
+    (d3-append 'g')
+    (d3-attr 'class' 'legend')
+    (d3-attr 'opacity' 0)
+    (d3-attr 'transform' (i 'translate(${w}, 18)' w=(mult width 0.99)))
+    (d3-attr 'opacity' 1)
+) as |d3|}}
+
+  {{d3.graph (pipe
+    (d3-select-all 'circle')
+    (d3-data domain)
+    (d3-join
+      enter=(pipe
+        (d3-append 'circle')
+        (d3-style 'fill' colorScale)
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (i 'translate(${w}, 18)' w=(sub width 18)))
+        (d3-attr 'r' (div radius 25))
+        (d3-attr 'transform' transformLegend)
+      )
+      update=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'fill' colorScale)
+      )
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
+        (d3-remove)
+      )
+    ))}}
+
+    {{d3.graph (pipe
       (d3-select-all 'text')
       (d3-data domain)
       (d3-join
@@ -117,9 +117,6 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-remove)
         )
-      )) legend)
-    }}
+    ))}}
 
-  {{/with}}
-
-{{/if}}
+{{/d3-graph}}
