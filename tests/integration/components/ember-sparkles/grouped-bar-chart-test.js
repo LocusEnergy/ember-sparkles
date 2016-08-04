@@ -22,8 +22,8 @@ test('it renders', function(assert) {
         with-transition=false
         data=data
         groupDomain=groupDomain
-        inputAccessor=(r/param)
-        outputAccessor=(r/param)
+        inputKey=(r/param)
+        outputKey=(r/param)
         xScale=(band-scale)
         yScale=(linear-scale)
       }}
@@ -120,10 +120,10 @@ test('accepts data and dynamically generates rectangles and legend', function(as
         data=data
         groupDomain=groupDomain
 
-        inputAccessor=(r/get 'ts')
-        outputAccessor=(r/get 'watts')
-        valueAccessor=(r/get 'value')
-        groupAccessor=(r/get 'name')
+        inputKey=(r/get 'ts')
+        outputKey=(r/get 'watts')
+        valueKey=(r/get 'value')
+        groupKey=(r/get 'name')
 
         xScale=(band-scale
           xDomain

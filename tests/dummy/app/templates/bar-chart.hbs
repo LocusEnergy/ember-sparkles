@@ -3,8 +3,8 @@
 
   {{chart.bar-chart
     data=data
-    inputAccessor=(r/get 'ts')
-    outputAccessor=(r/get 'value')
+    inputKey=(r/get 'ts')
+    outputKey=(r/get 'value')
     ticks=5
     tick-format='%Y-%m-%d'
     y-label='value'
