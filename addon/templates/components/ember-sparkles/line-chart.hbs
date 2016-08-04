@@ -1,7 +1,7 @@
 {{#with (hash
-  inputAccessor=(or input-accessor (d3-get 'ts'))
-  outputAccessor=(or output-accessor (d3-get 'Wh_sum'))
-  groupAccessor=(d3-get 'id')
+  inputKey=(or input-accessor (d3-get 'ts'))
+  outputKey=(or output-accessor (d3-get 'Wh_sum'))
+  groupKey=(d3-get 'id')
   xScale=(or x-scale (time-scale
     (append 0 width)
     (append 0 width)

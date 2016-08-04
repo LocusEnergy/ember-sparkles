@@ -35,15 +35,15 @@ export default Ember.Controller.extend({
     return domains[0];
   }),
 
-  valueAccessor: function({ Wh_sum }) {
+  valueKey: function({ Wh_sum }) {
     return Wh_sum;
   },
 
   range: Ember.computed('timeseriesData', function() {
     let data = this.get('timeseriesData');
-    let valueAccessor = this.get('valueAccessor');
-    let minimum = min(data, ({ data: d }) => min(d, valueAccessor));
-    let maximum = max(data, ({ data: d }) => max(d, valueAccessor));
+    let valueKey = this.get('valueKey');
+    let minimum = min(data, ({ data: d }) => min(d, valueKey));
+    let maximum = max(data, ({ data: d }) => max(d, valueKey));
     return [ minimum, maximum ];
   }),
 
