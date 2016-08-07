@@ -1,22 +1,42 @@
-{{#ember-sparkles
-  sparkled=(data-sparkler
+{{#with (area 960 500 top=10 right=25 bottom=20 left=40) as |plotArea|}}
+
+  {{#ember-sparkles
+    area=plotArea
     data=barData
     inputKey='ts'
     outputKey='Wh_sum'
     groupKey='name'
     valueKey='value'
-    sortFn=groupSortFunction
-  )
-  padding=0.2
-  transition-duration=300
-  as |chart|}}
+    groupDomain=groupDomain
 
-  {{chart.grouped-bar-chart
-    ticks=5
-    tick-format='%Y-%m-%d'
+    x-scale=(band-scale
+      (map (r/get 'ts') barData)
+      (append 0 plotArea.width)
+      round=true
+      padding=0.2
+    )
+
+    y-scale=(linear-scale
+      (append 0 outputMax)
+      (append plotArea.height 0)
+    )
+
     groupPadding=0.05
-    y-label='Wh_sum'
-  }}
-{{/ember-sparkles}}
+    padding=0.2
+    transition-duration=300
+    as |chart|}}
+
+    {{chart.x-axis height=plotArea.height label='x-axis' tick-format='%Y-%m-%d' position='bottom'}}
+    {{!-- {{chart.y-axis}} --}}
+
+    {{chart.grouped-bar-chart
+      ticks=5
+
+      y-label='Wh_sum'
+    }}
+
+  {{/ember-sparkles}}
+
+{{/with}}
 
 <button {{action (throttle (action "toggleData") 320)}}>Toggle Data</button>

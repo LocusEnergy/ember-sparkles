@@ -1,5 +1,8 @@
 import Ember from 'ember';
 import _ from 'lodash/lodash';
+import { max } from 'd3-array';
+
+const { computed } = Ember;
 
 let generateData = function() {
   let end = moment('2015-03-14');
@@ -26,13 +29,26 @@ let generateData = function() {
 };
 
 export default Ember.Controller.extend({
+  init() {
+    this.set('barData', generateData());
+  },
+
   groupSortFunction({ name: a }, { name: b }) {
     return a > b;
   },
 
-  init() {
-    this.set('barData', generateData());
-  },
+  outputMax: Ember.computed('barData', function() {
+    let data = this.get('barData');
+    let outputKey = 'Wh_sum';
+    return Math.ceil(max(data, ({ [outputKey]: o }) => max(o, ({ value }) => value)));
+  }),
+
+  groupDomain: Ember.computed('barData', function() {
+    let data = this.get('barData');
+    let [ firstGroup ] = data;
+    let values = firstGroup['Wh_sum'].sort(this.get('sortFn'));
+    return values.map(({ name }) => name);
+  }),
 
   actions: {
     toggleData() {
