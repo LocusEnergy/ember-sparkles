@@ -3,11 +3,11 @@
   {{#ember-sparkles
     area=plotArea
     data=barData
+
     inputKey='ts'
     outputKey='Wh_sum'
     groupKey='name'
     valueKey='value'
-    groupDomain=groupDomain
 
     x-scale=(band-scale
       (map (r/get 'ts') barData)
@@ -21,6 +21,8 @@
       (append plotArea.height 0)
     )
 
+    groupDomain=groupDomain
+
     groupPadding=0.05
     padding=0.2
     transition-duration=300
@@ -31,7 +33,6 @@
 
     {{chart.grouped-bar-chart
       ticks=5
-
       y-label='Wh_sum'
     }}
 
