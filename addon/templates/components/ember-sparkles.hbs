@@ -2,8 +2,8 @@
 
 
   {{yield (hash
-    x-axis=(component 'ember-sparkles/axis' scale=x-scale)
-    y-axis=(component 'ember-sparkles/axis' scale=y-scale)
+    x-axis=(component 'ember-sparkles/axis' scale=x-scale height=area.height)
+    y-axis=(component 'ember-sparkles/axis' scale=y-scale height=0 width=area.width)
 
     bar-chart=(component 'ember-sparkles/bar-chart'
       width=area.width

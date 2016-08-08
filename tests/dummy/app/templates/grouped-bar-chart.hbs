@@ -22,19 +22,24 @@
     )
 
     groupDomain=groupDomain
-
     groupPadding=0.05
     padding=0.2
     transition-duration=300
     as |chart|}}
 
-    {{chart.x-axis height=plotArea.height label='x-axis' tick-format='%Y-%m-%d' position='bottom'}}
-    {{!-- {{chart.y-axis}} --}}
-
-    {{chart.grouped-bar-chart
-      ticks=5
-      y-label='Wh_sum'
+    {{chart.x-axis
+      position='bottom'
+      tickFormat='%Y-%m-%d'
     }}
+
+    {{chart.y-axis
+      position='left'
+      vertical-label='Wh_sum'
+      ticks=5
+      yGrid=true
+    }}
+
+    {{chart.grouped-bar-chart}}
 
   {{/ember-sparkles}}
 

@@ -37,13 +37,13 @@ export default Ember.Controller.extend({
     return a > b;
   },
 
-  outputMax: Ember.computed('barData', function() {
+  outputMax: computed('barData', function() {
     let data = this.get('barData');
     let outputKey = 'Wh_sum';
     return Math.ceil(max(data, ({ [outputKey]: o }) => max(o, ({ value }) => value)));
   }),
 
-  groupDomain: Ember.computed('barData', function() {
+  groupDomain: computed('barData', function() {
     let data = this.get('barData');
     let [ firstGroup ] = data;
     let values = firstGroup['Wh_sum'].sort(this.get('sortFn'));
