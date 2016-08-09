@@ -23,18 +23,18 @@
 
     groupDomain=groupDomain
     groupPadding=0.05
-    padding=0.2
     transition-duration=300
-    as |chart|}}
+  as |chart|}}
 
     {{chart.x-axis
       position='bottom'
-      tickFormat='%Y-%m-%d'
+      tick-format='%Y-%m-%d'
+      label='bottom axis'
     }}
 
     {{chart.y-axis
       position='left'
-      vertical-label='Wh_sum'
+      label='Wh_sum'
       ticks=5
       yGrid=true
     }}
