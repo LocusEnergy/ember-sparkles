@@ -10,7 +10,7 @@ let generateData = function() {
   let start = end.clone().subtract(numDays, 'days');
   let dateRange = moment.range(start, end);
   let series = ['series 1', 'series 2', 'series 3', 'series 4', 'series 5', 'series 6', 'series 7'];
-  let valueType = 'Wh_sum';
+  let valueType = 'W';
 
   let seriesSample = _.sample(series, _.random(2, _.size(series)));
 
@@ -39,14 +39,14 @@ export default Ember.Controller.extend({
 
   outputMax: computed('barData', function() {
     let data = this.get('barData');
-    let outputKey = 'Wh_sum';
+    let outputKey = 'W';
     return Math.ceil(max(data, ({ [outputKey]: o }) => max(o, ({ value }) => value)));
   }),
 
   groupDomain: computed('barData', function() {
     let data = this.get('barData');
     let [ firstGroup ] = data;
-    let values = firstGroup['Wh_sum'].sort(this.get('sortFn'));
+    let values = firstGroup['W'].sort(this.get('sortFn'));
     return values.map(({ name }) => name);
   }),
 

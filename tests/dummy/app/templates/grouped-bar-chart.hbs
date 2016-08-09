@@ -5,7 +5,7 @@
     data=barData
 
     inputKey='ts'
-    outputKey='Wh_sum'
+    outputKey='W'
     groupKey='name'
     valueKey='value'
 
@@ -23,18 +23,16 @@
 
     groupDomain=groupDomain
     groupPadding=0.05
-    transition-duration=300
+    transition-duration=900
   as |chart|}}
 
     {{chart.x-axis
-      position='bottom'
       tick-format='%Y-%m-%d'
-      label='bottom axis'
+      label='Date (Y-M-D)'
     }}
 
     {{chart.y-axis
-      position='left'
-      label='Wh_sum'
+      label='Watts'
       ticks=5
       yGrid=true
     }}

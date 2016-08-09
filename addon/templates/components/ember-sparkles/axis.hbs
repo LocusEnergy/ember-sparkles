@@ -1,13 +1,13 @@
-{{#with (hash
+{{#with (ember-sparkles/axis scale
   position=position
   ticks=ticks
   width=width
   height=height
-  tickFormat=(or tick-format '%Y-%m')
+  tickFormat=tick-format
   skipIdx=responsiveSkipIdx
   xGrid=xGrid
   yGrid=yGrid
-  ) as |options|}}
+  ) as |axis|}}
 
   {{#d3-graph as |d3|}}
 
@@ -20,24 +20,24 @@
     {{d3.graph (pipe
       (d3-select-all '.axis')
       (if with-transition (d3-transition transition) (d3-noop))
-      (d3-call (ember-sparkles/axis scale options))
+      (d3-call axis)
     )}}
 
     {{#if label}}
       {{d3.graph (pipe
         (d3-append 'text')
         (d3-attr 'class' 'label')
-        (d3-attr 'transform' 'rotate(-90)')
+        (d3-call labelAttrs)
         (d3-style 'text-anchor' 'end')
         (d3-text label)
       )}}
 
-      {{d3.graph (pipe
+      {{!-- {{d3.graph (pipe
         (d3-select-all '.label')
         (if with-transition (d3-transition transition) (d3-noop))
         (d3-attr 'y' (or dy 6))
         (d3-attr 'x' (or dx (mult -0.4 options.height)))
-      )}}
+      )}} --}}
     {{/if}}
 
   {{/d3-graph}}
@@ -54,13 +54,7 @@
   (d3-text y-label)
 )}} --}}
 
-{{!-- {{#with (ember-sparkles/axis yScale position='left' ticks=ticks width=width) as |axis|}}
-  {{d3.graph (pipe
-    (d3-select-all '.y.axis')
-    (if with-transition (d3-transition transition) (d3-noop))
-    (d3-call axis)
-  )}}
-{{/with}} --}}
+
 
 {{!-- position vertical label programmatically based on height; -0.4*height is a nice default --}}
 {{!-- {{d3.graph (pipe
