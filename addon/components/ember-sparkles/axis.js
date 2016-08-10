@@ -3,5 +3,6 @@ import layout from '../../templates/components/ember-sparkles/axis';
 
 export default Ember.Component.extend({
   layout,
-  tagName: ''
+  tagName: '',
+  'with-transition': true
 });

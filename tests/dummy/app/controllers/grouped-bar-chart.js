@@ -29,6 +29,8 @@ let generateData = function() {
 };
 
 export default Ember.Controller.extend({
+  transitionDuration: 500,
+
   init() {
     this.set('barData', generateData());
   },

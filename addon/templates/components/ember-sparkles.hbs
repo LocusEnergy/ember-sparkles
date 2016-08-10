@@ -8,10 +8,7 @@
         position='bottom'
         height=area.height
         transition=transition
-        labelAttrs=(pipe
-          (d3-attr 'x' area.width)
-          (d3-attr 'y' (add area.height 15))
-        )
+        labelAttrs=(pipe (d3-attr 'x' area.width))
       )
 
       y-axis=(component 'ember-sparkles/axis'
@@ -37,6 +34,8 @@
         outputKey=(r/get outputKey)
         groupKey=(r/get groupKey)
 
+        data=data
+
         xScale=x-scale
         yScale=y-scale
         groupScale=(band-scale
@@ -46,10 +45,8 @@
         )
 
         groupDomain=groupDomain
-        data=data
 
         colorScale=(cat-color-scale '20c' groupDomain)
-        tickFormat=(or tick-format '%Y-%m-%d')
         transition=transition
       )
 

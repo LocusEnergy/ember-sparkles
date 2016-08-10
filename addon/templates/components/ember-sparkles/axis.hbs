@@ -9,12 +9,12 @@
   yGrid=yGrid
   ) as |axis|}}
 
-  {{#d3-graph as |d3|}}
+  {{#d3-graph classNames="ember-sparkles--axis" as |d3|}}
 
     {{d3.graph (pipe
       (d3-append 'g')
       (d3-attr 'class' 'axis')
-      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
+      (d3-attr 'transform' (i 'translate(0,${h})' h=(or height 0)))
     )}}
 
     {{d3.graph (pipe
@@ -28,38 +28,13 @@
         (d3-append 'text')
         (d3-attr 'class' 'label')
         (d3-call labelAttrs)
+        (d3-attr 'dy' (or dy 0))
+        (d3-attr 'dx' (or dx 0))
         (d3-style 'text-anchor' 'end')
         (d3-text label)
       )}}
-
-      {{!-- {{d3.graph (pipe
-        (d3-select-all '.label')
-        (if with-transition (d3-transition transition) (d3-noop))
-        (d3-attr 'y' (or dy 6))
-        (d3-attr 'x' (or dx (mult -0.4 options.height)))
-      )}} --}}
     {{/if}}
 
   {{/d3-graph}}
 
 {{/with}}
-
-{{!-- y axis --}}
-{{!-- {{d3.graph (pipe
-  (d3-attr 'class' 'y axis')
-  (d3-append 'text')
-  (d3-attr 'class' 'vertical-label')
-  (d3-attr 'transform' 'rotate(-90)')
-  (d3-style 'text-anchor' 'end')
-  (d3-text y-label)
-)}} --}}
-
-
-
-{{!-- position vertical label programmatically based on height; -0.4*height is a nice default --}}
-{{!-- {{d3.graph (pipe
-  (d3-select-all '.vertical-label')
-  (if with-transition (d3-transition transition) (d3-noop))
-  (d3-attr 'y' (or vertical-label-dy 6))
-  (d3-attr 'x' (or vertical-label-dx (mult -0.4 height)))
-)}} --}}

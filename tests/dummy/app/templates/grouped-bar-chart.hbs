@@ -1,4 +1,4 @@
-{{#with (area 960 500 top=10 right=25 bottom=20 left=40) as |plotArea|}}
+{{#with (area 960 500 top=10 right=25 bottom=30 left=40) as |plotArea|}}
 
   {{#ember-sparkles
     area=plotArea
@@ -23,18 +23,21 @@
 
     groupDomain=groupDomain
     groupPadding=0.05
-    transition-duration=900
+    transition-duration=transitionDuration
   as |chart|}}
 
     {{chart.x-axis
       tick-format='%Y-%m-%d'
       label='Date (Y-M-D)'
+      dy=(add plotArea.height 30)
     }}
 
     {{chart.y-axis
       label='Watts'
       ticks=5
       yGrid=true
+      dy=-30
+      dx=(mult -0.5 plotArea.height)
     }}
 
     {{chart.grouped-bar-chart}}
@@ -43,4 +46,4 @@
 
 {{/with}}
 
-<button {{action (throttle (action "toggleData") 320)}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
