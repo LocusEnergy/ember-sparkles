@@ -5,12 +5,5 @@ export default Ember.Component.extend({
   layout,
   tagName: '',
 
-  'with-transition': true,
-  'with-legend': true,
-
-  // callback to position legend
-  transformLegend(d, i) {
-    return `translate(0,${i * 20})`;
-  }
-
+  'with-transition': true
 });

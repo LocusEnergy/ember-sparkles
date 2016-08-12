@@ -1,9 +1,13 @@
-{{#ember-sparkles as |chart|}}
-  {{chart.pie-chart
-    data=(pie-sparkler pieData dataKey="value" threshold=5 precision=1)
-    domain=(map-by "key" pieData)
-    with-arc-labels=true
-    transition=(ember-sparkles/transition duration=1000 data=pieData)
+{{#ember-sparkles
+  data=(pie-sparkler pieData dataKey='value' threshold=5 precision=1)
+  domain=(map-by 'key' pieData)
+  transition-duration=700
+  as |chart|}}
+
+  {{chart.pie-chart}}
+
+  {{chart.legend
+    shape='circle'
   }}
 {{/ember-sparkles}}
 

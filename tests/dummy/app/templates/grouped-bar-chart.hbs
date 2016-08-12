@@ -1,49 +1,49 @@
-{{#with (area 960 500 top=10 right=25 bottom=30 left=40) as |plotArea|}}
+{{#ember-sparkles
+  data=barData
+  inputKey='ts'
+  outputKey='W'
+  groupKey='name'
+  valueKey='value'
 
-  {{#ember-sparkles
-    area=plotArea
-    data=barData
+  x-scale=(band-scale
+    (map (r/get 'ts') barData)
+    round=true
+    padding=0.2
+  )
+  y-scale=(linear-scale (append 0 outputMax))
 
-    inputKey='ts'
-    outputKey='W'
-    groupKey='name'
-    valueKey='value'
+  color-scale-type='20c'
+  domain=groupDomain
+  groupPadding=0.05
+  transition-duration=transitionDuration
+as |chart|}}
 
-    x-scale=(band-scale
-      (map (r/get 'ts') barData)
-      (append 0 plotArea.width)
-      round=true
-      padding=0.2
-    )
+  {{chart.x-axis
+    tick-format='%Y-%m-%d'
+    label='Date (Y-M-D)'
+    dy=(add chart.height 30)
+    dx=-100
+  }}
 
-    y-scale=(linear-scale
-      (append 0 outputMax)
-      (append plotArea.height 0)
-    )
+  {{chart.y-axis
+    label='Watts'
+    ticks=5
+    yGrid=true
+    dx=(mult -0.5 chart.height)
+    dy=-30
+  }}
 
-    groupDomain=groupDomain
-    groupPadding=0.05
-    transition-duration=transitionDuration
-  as |chart|}}
+  {{chart.grouped-bar-chart}}
 
-    {{chart.x-axis
-      tick-format='%Y-%m-%d'
-      label='Date (Y-M-D)'
-      dy=(add plotArea.height 30)
-    }}
+  {{chart.legend
+    dx=(sub chart.width 5)
+    dy=20
+    shape='rect'
+    shape-spacing=17
+    shape-size=15
+  }}
 
-    {{chart.y-axis
-      label='Watts'
-      ticks=5
-      yGrid=true
-      dy=-30
-      dx=(mult -0.5 plotArea.height)
-    }}
+{{/ember-sparkles}}
 
-    {{chart.grouped-bar-chart}}
-
-  {{/ember-sparkles}}
-
-{{/with}}
 
 <button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
