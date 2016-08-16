@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
     this.set('timeseriesData', generateData());
   },
 
-  domain: Ember.computed('timeseriesData', function() {
+  'x-domain': Ember.computed('timeseriesData', function() {
     let domains = this.get('timeseriesData').map(({ data }) => extent(data, ({ ts }) => ts));
     return domains[0];
   }),
@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
     return Wh_sum;
   },
 
-  range: Ember.computed('timeseriesData', function() {
+  'y-domain': Ember.computed('timeseriesData', function() {
     let data = this.get('timeseriesData');
     let valueKey = this.get('valueKey');
     let minimum = min(data, ({ data: d }) => min(d, valueKey));

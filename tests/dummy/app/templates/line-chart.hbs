@@ -1,17 +1,14 @@
-{{#ember-sparkles as |chart|}}
+{{#ember-sparkles
+  data=timeseriesData
+
+  x-scale-type='time'
+  x-domain=x-domain
+  y-scale-type='linear'
+  y-domain=y-domain
+
+  as |chart|}}
 
   {{chart.line-chart
-    data=timeseriesData
-    x-scale=(time-scale
-      domain
-      (append 0 chart.width)
-    )
-
-    y-scale=(linear-scale
-      range
-      (append chart.height 0)
-    )
-
     ticks=5
     tick-format='%Y-%m-%d'
   }}

@@ -12,9 +12,8 @@
       (i '${t}-scale' t=y-scale-type)
         y-domain
         (append innerHeight 0)
-        nice=true
     ))
-    color-scale=(cat-color-scale color-scale-type domain)
+    color-scale=(cat-color-scale (or color-scale-type '20') group-domain=group-domain)
     transition=(ember-sparkles/transition duration=(or transition-duration 700) data=data)
   ) as |options|}}
 
@@ -36,9 +35,15 @@
       )
 
       bar-chart=(component 'ember-sparkles/bar-chart'
+        data=data
+        xScale=options.x-scale
+        yScale=options.y-scale
+        inputKey=(r/get inputKey)
+        outputKey=(r/get outputKey)
+
         width=innerWidth
         height=innerHeight
-        tickFormat=(or tick-format '%Y-%m-%d')
+        transition=options.transition
       )
 
       grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
@@ -55,7 +60,7 @@
         xScale=options.x-scale
         yScale=options.y-scale
         groupScale=(band-scale
-          domain
+          group-domain
           (append 0 (compute options.x-scale.bandwidth))
           padding=groupPadding
         )
@@ -79,7 +84,7 @@
       legend=(component 'ember-sparkles/legend'
         width=innerWidth
         height=innerHeight
-        domain=domain
+        domain=group-domain
         colorScale=options.color-scale
         transition=options.transition
         dx=(or dx 0)

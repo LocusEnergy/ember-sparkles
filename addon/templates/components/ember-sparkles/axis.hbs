@@ -1,15 +1,15 @@
-{{#d3-graph classNames="ember-sparkles--axis" as |d3|}}
+{{#with (ember-sparkles/axis scale
+  position=position
+  ticks=ticks
+  width=width
+  height=height
+  tickFormat=tick-format
+  skipIdx=responsiveSkipIdx
+  xGrid=xGrid
+  yGrid=yGrid
+  ) as |axis|}}
 
-  {{#with (ember-sparkles/axis scale
-    position=position
-    ticks=ticks
-    width=width
-    height=height
-    tickFormat=tick-format
-    skipIdx=responsiveSkipIdx
-    xGrid=xGrid
-    yGrid=yGrid
-    ) as |axis|}}
+  {{#d3-graph classNames="ember-sparkles--axis" as |d3|}}
 
     {{d3.graph (pipe
       (d3-append 'g')
@@ -39,6 +39,6 @@
       )}}
     {{/if}}
 
-  {{/with}}
+  {{/d3-graph}}
 
-{{/d3-graph}}
+{{/with}}
