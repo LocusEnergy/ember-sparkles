@@ -28,15 +28,16 @@ let generateData = function() {
   });
 };
 
+let sortFn = function({ name: a }, { name: b }) {
+  return a > b;
+}
+
+
 export default Ember.Controller.extend({
   transitionDuration: 500,
 
   init() {
     this.set('barData', generateData());
-  },
-
-  groupSortFunction({ name: a }, { name: b }) {
-    return a > b;
   },
 
   outputMax: computed('barData', function() {
@@ -48,7 +49,7 @@ export default Ember.Controller.extend({
   groupDomain: computed('barData', function() {
     let data = this.get('barData');
     let [ firstGroup ] = data;
-    let values = firstGroup['W'].sort(this.get('sortFn'));
+    let values = firstGroup['W'].sort(sortFn);
     return values.map(({ name }) => name);
   }),
 

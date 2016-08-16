@@ -1,25 +1,23 @@
 <g transform="translate({{marginLeft}},{{marginTop}})">
 
   {{#with (hash
-    x-scale=(compute (r
-      (i '${t}-scale' t=x-scale-type)
-        x-domain
-        (append 0 innerWidth)
-        round=true
-        padding=0.2
-    ))
-    y-scale=(compute (r
-      (i '${t}-scale' t=y-scale-type)
-        y-domain
-        (append innerHeight 0)
-    ))
-    color-scale=(cat-color-scale (or color-scale-type '20') group-domain=group-domain)
+    x-scale=(r (i '${t}-scale' t=(or x-scale-type 'linear'))
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
+    )
+    y-scale=(r (i '${t}-scale' t=(or y-scale-type 'linear'))
+      y-domain
+      (append innerHeight 0)
+    )
+    color-scale=(cat-color-scale (or color-scale-type '20') domain=group-domain)
     transition=(ember-sparkles/transition duration=(or transition-duration 700) data=data)
   ) as |options|}}
 
     {{yield (hash
       x-axis=(component 'ember-sparkles/axis'
-        scale=options.x-scale
+        scale=(compute options.x-scale)
         position='bottom'
         height=innerHeight
         transition=options.transition
@@ -27,7 +25,7 @@
       )
 
       y-axis=(component 'ember-sparkles/axis'
-        scale=options.y-scale
+        scale=(compute options.y-scale)
         position='left'
         width=innerWidth
         transition=options.transition
@@ -36,48 +34,63 @@
 
       bar-chart=(component 'ember-sparkles/bar-chart'
         data=data
-        xScale=options.x-scale
-        yScale=options.y-scale
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
+
         inputKey=(r/get inputKey)
         outputKey=(r/get outputKey)
 
+        transition=options.transition
         width=innerWidth
         height=innerHeight
-        transition=options.transition
       )
 
       grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
-        width=innerWidth
-        height=innerHeight
+        data=data
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
+        colorScale=options.color-scale
+        groupScale=(band-scale
+          group-domain
+          (append 0 (compute (get (compute options.x-scale) 'bandwidth')))
+          padding=groupPadding
+        )
 
         inputKey=(r/get inputKey)
         valueKey=(r/get valueKey)
         outputKey=(r/get outputKey)
         groupKey=(r/get groupKey)
 
-        data=data
-
-        xScale=options.x-scale
-        yScale=options.y-scale
-        groupScale=(band-scale
-          group-domain
-          (append 0 (compute options.x-scale.bandwidth))
-          padding=groupPadding
-        )
-
-        colorScale=options.color-scale
         transition=options.transition
+        width=innerWidth
+        height=innerHeight
       )
 
       line-chart=(component 'ember-sparkles/line-chart'
-        width=innerWidth height=innerHeight
+        data=data
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
+        colorScale=options.color-scale
+
+        inputKey=(r/get inputKey)
+        outputKey=(r/get outputKey)
+        groupKey=(r/get groupKey)
+
+        transition=options.transition
+        width=innerWidth
+        height=innerHeight
       )
 
       pie-chart=(component 'ember-sparkles/pie-chart'
+        data=data
         width=innerWidth
         height=innerHeight
+
+        outputKey=(r/get outputKey)
+        groupKey=(r/get (concat 'data.' groupKey))
+
         colorScale=options.color-scale
-        radius=(div (d3-array 'min' (array width height)) 2)
+        radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
         transition=options.transition
       )
 

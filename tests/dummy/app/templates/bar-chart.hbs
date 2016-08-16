@@ -1,3 +1,5 @@
+{{!-- BEGIN-SNIPPET bar-chart-example --}}
+
 {{#ember-sparkles
   data=data
   inputKey='ts'
@@ -29,4 +31,14 @@
 
 {{/ember-sparkles}}
 
+{{!-- END-SNIPPET --}}
+
 <button {{action (throttle (action "toggleData") 520)}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="bar-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="bar-chart.hbs" unindent=false}}

@@ -1,3 +1,5 @@
+{{!-- BEGIN-SNIPPET grouped-bar-chart-example --}}
+
 {{#ember-sparkles
   data=barData
   inputKey='ts'
@@ -44,5 +46,14 @@ as |chart|}}
 
 {{/ember-sparkles}}
 
+{{!-- END-SNIPPET --}}
 
 <button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="grouped-bar-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="grouped-bar-chart.hbs" unindent=false}}

@@ -34,6 +34,7 @@
     "ember-cli-sri": "^2.1.0",
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
+    "ember-code-snippet": "1.4.0",
     "ember-concurrency": "0.6.3",
     "ember-data": "^2.7.0-beta.1",
     "ember-disable-prototype-extensions": "^1.1.0",
@@ -57,7 +58,7 @@
     "ember-composable-helpers": "0.27.0",
     "ember-d3-helpers": "0.5.7",
     "ember-interpolate-helper": "0.1.1",
-    "ember-math-helpers": "1.0.0",
+    "ember-math-helpers": "1.2.2",
     "ember-reactive-helpers": "0.3.7",
     "ember-resize": "0.0.13",
     "ember-truth-helpers": "1.2.0"

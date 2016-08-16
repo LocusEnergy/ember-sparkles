@@ -1,6 +1,10 @@
+{{!-- BEGIN-SNIPPET pie-chart-example --}}
+
 {{#ember-sparkles
-  data=(pie-sparkler pieData dataKey='value' threshold=5 precision=1)
-  domain=(map-by 'key' pieData)
+  data=(pie-sparkler pieData dataKey='value')
+  outputKey='value'
+  groupKey='name'
+  group-domain=(map-by 'name' pieData)
   transition-duration=700
   as |chart|}}
 
@@ -8,7 +12,18 @@
 
   {{chart.legend
     shape='circle'
+    dx=chart.width
   }}
 {{/ember-sparkles}}
 
+{{!-- END-SNIPPET --}}
+
 <button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="pie-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="pie-chart.hbs" unindent=false}}
