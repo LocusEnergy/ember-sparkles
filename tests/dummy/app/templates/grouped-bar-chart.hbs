@@ -5,12 +5,10 @@
   groupKey='name'
   valueKey='value'
 
-  x-scale=(band-scale
-    (map (r/get 'ts') barData)
-    round=true
-    padding=0.2
-  )
-  y-scale=(linear-scale (append 0 outputMax))
+  x-scale-type='band'
+  x-domain=(map (r/get 'ts') barData)
+  y-scale-type='linear'
+  y-domain=(append 0 outputMax)
 
   color-scale-type='20c'
   domain=groupDomain

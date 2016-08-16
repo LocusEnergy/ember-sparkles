@@ -1,8 +1,19 @@
 <g transform="translate({{marginLeft}},{{marginTop}})">
 
   {{#with (hash
-    x-scale=(e-s/apply-method x-scale (append 0 innerWidth) method='range')
-    y-scale=(e-s/apply-method y-scale (append innerHeight 0) method='range')
+    x-scale=(compute (r
+      (i '${t}-scale' t=x-scale-type)
+        x-domain
+        (append 0 innerWidth)
+        round=true
+        padding=0.2
+    ))
+    y-scale=(compute (r
+      (i '${t}-scale' t=y-scale-type)
+        y-domain
+        (append innerHeight 0)
+        nice=true
+    ))
     color-scale=(cat-color-scale color-scale-type domain)
     transition=(ember-sparkles/transition duration=(or transition-duration 700) data=data)
   ) as |options|}}
