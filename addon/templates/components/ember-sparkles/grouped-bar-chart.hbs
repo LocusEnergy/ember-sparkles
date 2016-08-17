@@ -1,197 +1,81 @@
+{{!-- BEGIN-SNIPPET grouped-bar-chart --}}
+
 {{#d3-graph classNames="ember-sparkles--grouped-bar-chart" as |d3|}}
-  {{!-- x axis --}}
-  {{d3.graph (pipe
-    (d3-append 'g')
-    (d3-attr 'class' 'x axis')
-    (d3-attr 'transform' (i 'translate(0,${h})' h=height))      
-  )}}
 
-  {{#with (ember-sparkles/axis xScale
-      position='bottom'
-      tickFormat=(or tick-format '%Y-%m-%d')
-      responsiveSkipIdx=(or responsive-skip-idx 1)
-    ) as |axis|}}
+  {{#with (hash
+    enterRect=(pipe
+      (d3-append 'rect')
+      (d3-attr 'width' 0)
+      (d3-attr 'height' 0)
+      (d3-attr 'x' (pipe groupKey groupScale))
+      (d3-attr 'y' height)
+      (d3-style 'fill' 'red')
+      (d3-style 'opacity' 0)
+    )
+
+    updateRect=(pipe
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'width' groupScale.bandwidth)
+      (d3-attr 'height' (pipe valueKey yScale (bar-height height)))
+      (d3-attr 'x' (pipe groupKey groupScale))
+      (d3-attr 'y' (pipe valueKey yScale))
+      (d3-style 'fill' (pipe groupKey colorScale))
+      (d3-style 'opacity' 1)
+    )
+
+    exitRect=(pipe
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'y' height)
+      (d3-attr 'height' 0)
+      (d3-style 'fill' 'green')
+      (d3-style 'opacity' 0)
+      (d3-remove)
+    )
+
+  ) as |renderOptions|}}
 
     {{d3.graph (pipe
-      (d3-select-all '.x.axis')
-      (if with-transition (d3-transition transition) (d3-noop))
-      (d3-call axis)
-    )}}
-
-  {{/with}}
-
-  {{!-- y axis --}}
-  {{d3.graph (pipe
-    (d3-append 'g')
-    (d3-attr 'class' 'y axis')
-    (d3-append 'text')
-    (d3-attr 'class' 'vertical-label')
-    (d3-attr 'transform' 'rotate(-90)')
-    (d3-style 'text-anchor' 'end')
-    (d3-text y-label)
-  )}}
-
-  {{#with (ember-sparkles/axis yScale position='left' ticks=ticks width=width) as |axis|}}
-    {{d3.graph (pipe
-      (d3-select-all '.y.axis')
-      (if with-transition (d3-transition transition) (d3-noop))
-      (d3-call axis)
-    )}}
-  {{/with}}
-
-  {{!-- position vertical label programmatically based on height; -0.4*height is a nice default --}}
-  {{d3.graph (pipe
-    (d3-select-all '.vertical-label')
-    (if with-transition (d3-transition transition) (d3-noop))
-    (d3-attr 'y' (or vertical-label-dy 6))
-    (d3-attr 'x' (or vertical-label-dx (mult -0.4 height)))
-  )}}
-
-  {{#with (band-scale
-    groupDomain
-    (append 0 (compute xScale.bandwidth))
-    padding=groupPadding
-  ) as |groupScale|}}
-
-    {{#with (hash
-      enterRect=(pipe
-        (d3-append 'rect')
-        (d3-attr 'width' 0)
-        (d3-attr 'height' 0)
-        (d3-attr 'x' (pipe groupKey groupScale))
-        (d3-attr 'y' height)
-        (d3-style 'fill' 'red')
-        (d3-style 'opacity' 0)
-      )
-
-      updateRect=(pipe
-        (if with-transition (d3-transition transition) (d3-noop))
-        (d3-attr 'width' groupScale.bandwidth)
-        (d3-attr 'height' (pipe valueKey yScale (bar-height height)))
-        (d3-attr 'x' (pipe groupKey groupScale))
-        (d3-attr 'y' (pipe valueKey yScale))
-        (d3-style 'fill' (pipe groupKey colorScale))
-        (d3-style 'opacity' 1)
-      )
-
-      exitRect=(pipe
-        (if with-transition (d3-transition transition) (d3-noop))
-        (d3-attr 'y' height)
-        (d3-attr 'height' 0)
-        (d3-style 'fill' 'green')
-        (d3-style 'opacity' 0)
-        (d3-remove)
-      )
-
-    ) as |renderOptions|}}
-
-      {{d3.graph (pipe
-        (d3-select-all '.rect-group')
-        (d3-data data)
-        (d3-join
-          enter=(pipe
-            (d3-append 'g')
-            (d3-attr 'class' 'rect-group')
-            (d3-attr 'transform' (pipe inputKey xScale (ember-sparkles/translate-x)))
+      (d3-select-all '.rect-group')
+      (d3-data data)
+      (d3-join
+        enter=(pipe
+          (d3-append 'g')
+          (d3-attr 'class' 'rect-group')
+          (d3-attr 'transform' (pipe inputKey xScale (ember-sparkles/translate-x)))
+          (d3-select-all 'rect')
+          (d3-data outputKey)
+          (d3-join
+            enter=(pipe renderOptions.enterRect renderOptions.updateRect)
+          )
+        )
+        update=(pipe
+          (d3-call (pipe
             (d3-select-all 'rect')
             (d3-data outputKey)
             (d3-join
               enter=(pipe renderOptions.enterRect renderOptions.updateRect)
+              update=renderOptions.updateRect
+              exit=renderOptions.exitRect
             )
-          )
-          update=(pipe
-            (d3-call (pipe 
-              (d3-select-all 'rect')
-              (d3-data outputKey)
-              (d3-join
-                enter=(pipe renderOptions.enterRect renderOptions.updateRect)
-                update=renderOptions.updateRect
-                exit=renderOptions.exitRect
-              )
-            ))
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' (pipe inputKey xScale (ember-sparkles/translate-x)))
-          )
-          exit=(pipe
-            (d3-call (pipe
-              (d3-select-all 'rect')
-              (d3-data outputKey)
-              (d3-join
-                update=renderOptions.exitRect
-                exit=renderOptions.exitRect
-              )              
-            ))
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-remove)
-          )
-      ))}}
-
-    {{/with}}
-
-  {{/with}}
-
-  {{!-- legend --}}
-  {{#if with-legend}}
-  
-    {{#d3-graph (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'legend')
-      (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 80)))
-    ) as |d3|}}
-
-      {{d3.graph (pipe
-        (d3-select-all 'rect')
-        (d3-data groupDomain)
-        (d3-join
-          enter=(pipe
-            (d3-append 'rect')
-            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-            (d3-attr 'width' 14)
-            (d3-attr 'height' 14)
-            (d3-style 'fill' colorScale)
-            (d3-attr 'opacity' 0)
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' transformLegend)
-            (d3-attr 'opacity' 1)
-          )
-          update=(pipe
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-style 'fill' colorScale)
-          )
-          exit=(pipe
-            (if with-transition (d3-transition transition) (d3-noop))
-            (d3-attr 'transform' (i 'translate(${w},18)' w=(sub width 18)))
-            (d3-remove)
-          )
-      ))}}
-
-    {{d3.graph (pipe
-      (d3-select-all 'text')
-      (d3-data groupDomain)
-      (d3-join
-        enter=(pipe
-          (d3-append 'text')
-          (d3-attr 'opacity' 0)
-          (d3-attr 'dx' '-3.8em')
-          (d3-attr 'dy' '1em')
-          (d3-style 'font-size' '10px')
+          ))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-text (d3-get))
-          (d3-attr 'transform' transformLegend)
-          (d3-attr 'opacity' 1)
+          (d3-attr 'transform' (pipe inputKey xScale (ember-sparkles/translate-x)))
         )
-
-        update=(pipe
-          (d3-text (d3-get))
-        )
-
         exit=(pipe
+          (d3-call (pipe
+            (d3-select-all 'rect')
+            (d3-data outputKey)
+            (d3-join
+              update=renderOptions.exitRect
+              exit=renderOptions.exitRect
+            )
+          ))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'opacity' 0)
           (d3-remove)
         )
-      ))}}
-      
-    {{/d3-graph}}
-  {{/if}}
+    ))}}
+
+  {{/with}}
 {{/d3-graph}}
+
+{{!-- END-SNIPPET --}}

@@ -1,21 +1,53 @@
-{{#ember-sparkles as |chart|}}
+{{!-- BEGIN-SNIPPET line-chart-example --}}
 
-  {{chart.line-chart
-    data=timeseriesData
-    x-scale=(time-scale
-      domain
-      (append 0 chart.width)
-    )
+{{#ember-sparkles
+  data=timeseriesData
 
-    y-scale=(linear-scale
-      range
-      (append chart.height 0)
-    )
+  inputKey='ts'
+  outputKey='Wh_sum'
+  groupKey='id'
 
+  x-scale-type='time'
+  y-scale-type='linear'
+  x-domain=xDomain
+  y-domain=yDomain
+  group-domain=(map-by 'id' timeseriesData)
+
+  transition-duration=400
+
+  as |chart|}}
+
+  {{chart.line-chart}}
+
+  {{chart.x-axis
+    tick-format='%Y-%m'
+    label='date'
+    dy=(add chart.height 30)
+    dx=-100
+  }}
+
+  {{chart.y-axis
+    label='kWh'
     ticks=5
-    tick-format='%Y-%m-%d'
+    yGrid=true
+    dx=(mult -0.5 chart.height)
+    dy=-30
+  }}
+
+  {{chart.legend
+    dx=chart.width
   }}
 
 {{/ember-sparkles}}
 
+{{!-- END-SNIPPET --}}
+
 <button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="line-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="line-chart.hbs" unindent=false}}

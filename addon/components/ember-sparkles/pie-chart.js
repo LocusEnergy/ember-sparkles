@@ -5,9 +5,5 @@ export default Ember.Component.extend({
   layout,
   tagName: '',
   'with-transition': true,
-  'with-arc-labels': false,
-
-  transformLegend(d, i) {
-    return `translate(0,${i * 20})`;
-  }
+  'with-arc-labels': true
 });

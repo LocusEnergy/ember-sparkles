@@ -1,30 +1,44 @@
+{{!-- BEGIN-SNIPPET bar-chart-example --}}
+
 {{#ember-sparkles
+  data=data
+  inputKey='ts'
+  outputKey='value'
+
+  x-scale-type='band'
+  y-scale-type='linear'
+  x-domain=(map (r/get 'ts') data)
+  y-domain=(append 0 outputMax)
+
   as |chart|}}
 
-  {{chart.bar-chart
-    data=data
-    inputKey=(r/get 'ts')
-    outputKey=(r/get 'value')
-    ticks=5
+  {{chart.x-axis
     tick-format='%Y-%m-%d'
-    y-label='value'
-
-    xScale=(band-scale
-      (map (r/get 'ts') data)
-      (append 0 chart.width)
-      round=true
-      padding=0.02
-    )
-
-    yScale=(linear-scale
-      (append 0 outputMax)
-      (append chart.height 0)
-      nice=true
-    )
-
-    transition=(ember-sparkles/transition duration=500 data=data)
+    label='Date (Y-M-D)'
+    dy=(add chart.height 30)
+    dx=-100
   }}
+
+  {{chart.y-axis
+    label='Watts'
+    ticks=5
+    yGrid=true
+    dx=(mult -0.5 chart.height)
+    dy=-30
+  }}
+
+  {{chart.bar-chart}}
 
 {{/ember-sparkles}}
 
+{{!-- END-SNIPPET --}}
+
 <button {{action (throttle (action "toggleData") 520)}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="bar-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="bar-chart.hbs" unindent=false}}

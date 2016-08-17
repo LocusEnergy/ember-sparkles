@@ -18,8 +18,12 @@ html,body {
   height: 50%;
 }
 
-.axis {
+.axis, .label {
   font: 10px sans-serif;
+}
+
+.label {
+  font-weight: bold;
 }
 
 .axis path,

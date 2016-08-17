@@ -1,84 +1,40 @@
-{{#with (hash
-  inputKey=(or input-accessor (d3-get 'ts'))
-  outputKey=(or output-accessor (d3-get 'Wh_sum'))
-  groupKey=(d3-get 'id')
-  xScale=(or x-scale (time-scale
-    (append 0 width)
-    (append 0 width)
-  ))
-  yScale=(or y-scale (linear-scale
-    (append 0 height)
-    (append height 0)
-  ))
-  tickFormat=(or tick-format '%Y-%m-%d')
-  colorScale=(or color-scale (cat-color-scale '10'))
+{{!-- BEGIN-SNIPPET line-chart --}}
 
-  transition=(or transition (ember-sparkles/transition duration=600 data=data))
-  ) as |options|}}
+{{#d3-graph classNames="ember-sparkles--line-chart" as |d3|}}
 
-    {{#d3-graph classNames="ember-sparkles--line-chart" as |d3|}}
-      
-      {{!-- create x axis --}}
-    
-    {{d3.graph (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'x axis')
-      (d3-attr 'transform' (i 'translate(0,${h})' h=height))
-    )}}
+  {{d3.graph (pipe
+    (d3-select-all '.line')
+    (d3-data data)
+    (d3-join
+      enter=(pipe
+        (d3-append 'path')
+        (d3-attr 'class' 'line')
+        (d3-attr 'd' (pipe
+          (r/get 'data')
+          (d3-line xScale yScale xAccessor=inputKey yAccessor=outputKey)
+        ))
+        (d3-style 'stroke' (pipe groupKey colorScale))
+        (d3-style 'fill' 'none')
+        (d3-style 'stroke-width' '1.5px')
+      )
 
-    {{!-- select / call x axis function on d3 selection --}}
+      update=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'class' 'line')
+        (d3-attr 'd' (pipe
+          (r/get 'data')
+          (d3-line xScale yScale xAccessor=inputKey yAccessor=outputKey)
+        ))
+        (d3-style 'stroke' (pipe groupKey colorScale))
+      )
 
-    {{d3.graph (pipe
-      (d3-select-all '.x.axis')
-      (if with-transition (d3-transition options.transition) (d3-noop))
-      (d3-call (ember-sparkles/axis options.xScale position='bottom' tickFormat='%Y-%m-%d'))
-    )}}
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'opacity' 0)
+        (d3-remove)
+      )
+  ))}}
 
-    {{!-- create y axis --}}
+{{/d3-graph}}
 
-    {{d3.graph (pipe
-      (d3-append 'g')
-      (d3-attr 'class' 'y axis')
-    )}}
-
-    {{!-- select / call y axis function on d3 selection --}}
-
-    {{d3.graph (pipe
-      (d3-select-all '.y.axis')
-      (if with-transition (d3-transition options.transition) (d3-noop))
-      (d3-call (ember-sparkles/axis options.yScale position='left' ticks=ticks))
-    )}}
-
-    {{d3.graph (pipe
-      (d3-select-all '.line')
-      (d3-data data)
-      (d3-join
-        enter=(pipe
-          (d3-append 'path')
-          (d3-attr 'class' 'line')
-          (d3-attr 'd' (pipe
-            (d3-get 'data')
-            (d3-line options.xScale options.yScale xAccessor=(d3-get 'ts') yAccessor=(d3-get 'Wh_sum'))
-          ))
-          (d3-style 'stroke' (pipe (d3-get 'id') options.colorScale))
-          (d3-style 'fill' 'none')
-          (d3-style 'stroke-width' '1.5px')
-        )
-        update=(pipe
-          (if with-transition (d3-transition options.transition) (d3-noop))
-          (d3-attr 'class' 'line')
-          (d3-attr 'd' (pipe
-            (d3-get 'data')
-            (d3-line options.xScale options.yScale xAccessor=(d3-get 'ts') yAccessor=(d3-get 'Wh_sum'))
-          ))
-          (d3-style 'stroke' (pipe (d3-get 'id') options.colorScale))
-        )
-        exit=(pipe
-          (if with-transition (d3-transition options.transition) (d3-noop))
-          (d3-style 'opacity' 0)
-          (d3-remove)
-        )
-    ))}}
-    
-  {{/d3-graph}}
-{{/with}}
+{{!-- END-SNIPPET --}}

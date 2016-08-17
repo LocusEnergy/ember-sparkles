@@ -18,9 +18,9 @@ export default Ember.Component.extend({
   height: DEFAULT_HEIGHT,
 
   marginTop: 20,
-  marginRight: 25,
+  marginRight: 50,
   marginBottom: 30,
-  marginLeft: 25,
+  marginLeft: 40,
 
   resizeService: Ember.inject.service('resize'),
   didInsertElement() {

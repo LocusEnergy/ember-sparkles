@@ -31,7 +31,7 @@ test('it has sensible defaults for SVG dimensions and margins', function(assert)
   assert.ok(this.exists('g'), 'g element exists');
   assert.equal(this.$('svg').attr('width'), '100%', 'svg has width attribute is set to 100%');
   assert.equal(this.$('svg').attr('height'), '100%', 'svg has height attribute is set to 100%');
-  assert.equal(this.$('g').attr('transform'), 'translate(25,20)', 'g has transform attribute');
+  assert.equal(this.$('g').attr('transform'), 'translate(40,20)', 'g has transform attribute');
 });
 
 test('it renders basic SVG elements', function(assert) {

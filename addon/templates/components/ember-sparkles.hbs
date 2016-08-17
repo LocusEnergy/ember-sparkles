@@ -1,54 +1,113 @@
 <g transform="translate({{marginLeft}},{{marginTop}})">
 
-  {{yield (hash
-    bar-chart=(component 'ember-sparkles/bar-chart'
-      width=innerWidth
-      height=innerHeight
-      tickFormat=(or tick-format '%Y-%m-%d')
+  {{#with (hash
+    x-scale=(r (i '${t}-scale' t=(or x-scale-type 'linear'))
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
     )
-    grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
-      width=innerWidth
-      height=innerHeight
+    y-scale=(r (i '${t}-scale' t=(or y-scale-type 'linear'))
+      y-domain
+      (append innerHeight 0)
+    )
+    color-scale=(cat-color-scale (or color-scale-type '20') domain=group-domain)
+    transition=(ember-sparkles/transition duration=(or transition-duration 700) data=data)
+  ) as |options|}}
 
-      inputKey=(r/get sparkled.inputKey)
-      valueKey=(r/get sparkled.valueKey)
-      outputKey=(r/get sparkled.outputKey)
-      groupKey=(r/get sparkled.groupKey)
-
-      xScale=(band-scale
-        (map (r/get sparkled.inputKey) sparkled.data)
-        (append 0 innerWidth)
-        round=true
-        padding=padding
+    {{yield (hash
+      x-axis=(component 'ember-sparkles/axis'
+        scale=(compute options.x-scale)
+        position='bottom'
+        height=innerHeight
+        transition=options.transition
+        labelAttrs=(pipe (d3-attr 'x' width))
       )
 
-      yScale=(linear-scale
-        (append 0 sparkled.outputMax)
-        (append innerHeight 0)
+      y-axis=(component 'ember-sparkles/axis'
+        scale=(compute options.y-scale)
+        position='left'
+        width=innerWidth
+        transition=options.transition
+        labelAttrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
       )
 
-      groupDomain=sparkled.groupDomain
-      data=sparkled.data
+      bar-chart=(component 'ember-sparkles/bar-chart'
+        data=data
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
 
-      colorScale=(cat-color-scale '20c' sparkled.groupDomain)
-      tickFormat=(or tick-format '%Y-%m-%d')
-      transition=(or transition (ember-sparkles/transition duration=(or transition-duration 700) data=sparkled.data))
-    )
+        inputKey=(r/get inputKey)
+        outputKey=(r/get outputKey)
 
-    line-chart=(component 'ember-sparkles/line-chart'
-      width=innerWidth height=innerHeight
-    )
+        transition=options.transition
+        width=innerWidth
+        height=innerHeight
+      )
 
-    pie-chart=(component 'ember-sparkles/pie-chart'
+      grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
+        data=data
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
+        colorScale=options.color-scale
+        groupScale=(band-scale
+          group-domain
+          (append 0 (compute (get (compute options.x-scale) 'bandwidth')))
+          padding=groupPadding
+        )
+
+        inputKey=(r/get inputKey)
+        outputKey=(r/get outputKey)
+        groupKey=(r/get groupKey)
+        valueKey=(r/get valueKey)
+
+        transition=options.transition
+        width=innerWidth
+        height=innerHeight
+      )
+
+      line-chart=(component 'ember-sparkles/line-chart'
+        data=data
+        xScale=(compute options.x-scale)
+        yScale=(compute options.y-scale)
+        colorScale=options.color-scale
+
+        inputKey=(r/get inputKey)
+        outputKey=(r/get outputKey)
+        groupKey=(r/get groupKey)
+
+        transition=options.transition
+        width=innerWidth
+        height=innerHeight
+      )
+
+      pie-chart=(component 'ember-sparkles/pie-chart'
+        data=data
+        width=innerWidth
+        height=innerHeight
+
+        outputKey=(r/get outputKey)
+        groupKey=(r/get (concat 'data.' groupKey))
+
+        colorScale=options.color-scale
+        radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
+        transition=options.transition
+      )
+
+      legend=(component 'ember-sparkles/legend'
+        width=innerWidth
+        height=innerHeight
+        domain=group-domain
+        colorScale=options.color-scale
+        transition=options.transition
+        shape=(or shape 'rect')
+        dx=(or dx 0)
+        dy=(or dy 0)
+      )
+
       width=innerWidth
       height=innerHeight
-      colorScale=(cat-color-scale '20' domain)
-      radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)
-      transition=(or transition (ember-sparkles/transition duration=(or transition-duration 700)))
-    )
+    )}}
 
-    width=innerWidth
-    height=innerHeight
-    sparkled=sparkled
-  )}}
+  {{/with}}
 </g>

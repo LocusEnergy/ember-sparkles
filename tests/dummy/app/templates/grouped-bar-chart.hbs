@@ -1,22 +1,59 @@
-{{#ember-sparkles
-  sparkled=(data-sparkler
-    data=barData
-    inputKey='ts'
-    outputKey='Wh_sum'
-    groupKey='name'
-    valueKey='value'
-    sortFn=groupSortFunction
-  )
-  padding=0.2
-  transition-duration=300
-  as |chart|}}
+{{!-- BEGIN-SNIPPET grouped-bar-chart-example --}}
 
-  {{chart.grouped-bar-chart
-    ticks=5
+{{#ember-sparkles
+  data=barData
+  inputKey='ts'
+  outputKey='W'
+  groupKey='name'
+  valueKey='value'
+
+  x-scale-type='band'
+  y-scale-type='linear'
+  color-scale-type='20c'
+
+  x-domain=(map (r/get 'ts') barData)
+  y-domain=(append 0 outputMax)
+  group-domain=groupDomain
+
+  groupPadding=0.05
+  transition-duration=transitionDuration
+as |chart|}}
+
+  {{chart.x-axis
     tick-format='%Y-%m-%d'
-    groupPadding=0.05
-    y-label='Wh_sum'
+    label='Date (Y-M-D)'
+    dy=(add chart.height 30)
+    dx=-100
   }}
+
+  {{chart.y-axis
+    label='Watts'
+    ticks=5
+    yGrid=true
+    dx=(mult -0.5 chart.height)
+    dy=-30
+  }}
+
+  {{chart.grouped-bar-chart}}
+
+  {{chart.legend
+    dx=(sub chart.width 5)
+    dy=20
+    shape='rect'
+    shape-spacing=17
+    shape-size=15
+  }}
+
 {{/ember-sparkles}}
 
-<button {{action (throttle (action "toggleData") 320)}}>Toggle Data</button>
+{{!-- END-SNIPPET --}}
+
+<button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
+
+<h5>example</h5>
+
+{{code-snippet name="grouped-bar-chart-example.hbs" unindent=false}}
+
+<h5>implementation</h5>
+
+{{code-snippet name="grouped-bar-chart.hbs" unindent=false}}
