@@ -57,9 +57,9 @@
         )
 
         inputKey=(r/get inputKey)
-        valueKey=(r/get valueKey)
         outputKey=(r/get outputKey)
         groupKey=(r/get groupKey)
+        valueKey=(r/get valueKey)
 
         transition=options.transition
         width=innerWidth
@@ -100,6 +100,7 @@
         domain=group-domain
         colorScale=options.color-scale
         transition=options.transition
+        shape=(or shape 'rect')
         dx=(or dx 0)
         dy=(or dy 0)
       )

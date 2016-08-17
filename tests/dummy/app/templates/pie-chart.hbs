@@ -5,7 +5,6 @@
   outputKey='value'
   groupKey='name'
   group-domain=(map-by 'name' pieData)
-  transition-duration=700
   as |chart|}}
 
   {{chart.pie-chart}}
@@ -13,6 +12,8 @@
   {{chart.legend
     shape='circle'
     dx=chart.width
+    text-dx=22
+    text-dy=3
   }}
 {{/ember-sparkles}}
 

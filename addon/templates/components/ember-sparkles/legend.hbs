@@ -9,7 +9,7 @@
     )
     circle=(pipe
       (d3-append 'circle')
-      (d3-attr 'r' (or shape-size 10))
+      (d3-attr 'r' (or shape-size 8))
     )
   ) shape)
   ) as |options|}}
@@ -55,7 +55,7 @@
       (d3-join
         enter=(pipe
           (d3-append 'text')
-          (d3-attr 'dx' (or text-dx 16))
+          (d3-attr 'dx' (or text-dx 32))
           (d3-attr 'dy' (or text-dy 10))
           (d3-style 'font-size' '9px')
           (d3-attr 'opacity' 0)

@@ -60,8 +60,6 @@ test('it accepts data and generates rectangles', function(assert) {
           (append 100 0)
           nice=true
         )
-        tick-format='%Y-%m-%d'
-        ticks=5
         width=100
         height=100
         with-transition=false
@@ -76,13 +74,6 @@ test('it accepts data and generates rectangles', function(assert) {
   assert.deepEqual(this.chart.getAttr('y'), ['91', '58', '35', '83'], 'each rectangle has a properly calculated y-coordinate');
   assert.deepEqual(this.chart.getAttr('width'), ['25', '25', '25', '25'], 'each rectangle has a width attribute, all width values are equal');
   assert.deepEqual(this.chart.getAttr('height'), ['9', '42', '65', '17'], 'each rectangle has a properly calculated height attribute');
-
-  // check axes existence and attributes
-  assert.ok(this.$('.x.axis').length, 'x axis renders');
-  assert.ok(this.$('.y.axis').length, 'y axis renders');
-  assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
-  assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
-  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'ticks on x axis are formatted correctly');
 });
 
 test('data can be updated and removed', function(assert) {
@@ -120,8 +111,6 @@ test('data can be updated and removed', function(assert) {
           (append 100 0)
           nice=true
         )
-        tick-format='%Y-%m-%d'
-        ticks=5
         width=100
         height=100
         with-transition=false
@@ -131,9 +120,6 @@ test('data can be updated and removed', function(assert) {
 
   assert.deepEqual(this.chart.getAttr('y'), ['90', '0', '40', '70'], 'the y-coordinates correspond to the first dataset');
   assert.deepEqual(this.chart.getAttr('height'), ['10', '100', '60', '30'], 'height attributes correspond to first dataset');
-  assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
-  assert.equal(this.$('.y.axis .tick').last().text(), '50', 'largest tick on y axis is the maximum y value');
-  assert.equal(this.$('.x.axis .tick').first().text(), '2016-03-02', 'tick on x axis is formatted with correct value');
 
   data = [
     [ new Date('2014-09-12T00:00:00-08:00'), 45 ],
@@ -151,7 +137,4 @@ test('data can be updated and removed', function(assert) {
 
   assert.deepEqual(this.chart.getAttr('y'), ['55', '90', '39', '70', '49'], 'the y-coordinates correspond to the second dataset');
   assert.deepEqual(this.chart.getAttr('height'), ['45', '10', '61', '30', '51'], 'height attributes correspond to second dataset');
-  assert.equal(this.$('.x.axis .tick').length, 5, 'there are now 5 ticks on the x axis');
-  assert.equal(this.$('.y.axis .tick').last().text(), '100', 'largest tick on y axis is 100');
-  assert.equal(this.$('.x.axis .tick').first().text(), '2014-09-12', 'tick on x axis is formatted with correct value');
 });

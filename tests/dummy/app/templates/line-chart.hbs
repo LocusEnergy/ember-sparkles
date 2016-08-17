@@ -8,11 +8,12 @@
   groupKey='id'
 
   x-scale-type='time'
-  x-domain=xDomain
   y-scale-type='linear'
+  x-domain=xDomain
   y-domain=yDomain
+  group-domain=(map-by 'id' timeseriesData)
 
-  transition-duration=100
+  transition-duration=400
 
   as |chart|}}
 
@@ -31,6 +32,10 @@
     yGrid=true
     dx=(mult -0.5 chart.height)
     dy=-30
+  }}
+
+  {{chart.legend
+    dx=chart.width
   }}
 
 {{/ember-sparkles}}

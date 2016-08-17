@@ -6,8 +6,8 @@
   outputKey='value'
 
   x-scale-type='band'
-  x-domain=(map (r/get 'ts') data)
   y-scale-type='linear'
+  x-domain=(map (r/get 'ts') data)
   y-domain=(append 0 outputMax)
 
   as |chart|}}

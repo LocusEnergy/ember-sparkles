@@ -5,20 +5,29 @@ moduleForComponent('ember-sparkles/axis', 'Integration | Component | ember spark
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+test('accepts a scale argument', function(assert) {
+  this.set('domain', ['2016-03-02', '2016-03-03', '2016-03-04', '2016-03-05']);
 
-  this.render(hbs`{{ember-sparkles/axis}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
   this.render(hbs`
-    {{#ember-sparkles/axis}}
-      template block text
-    {{/ember-sparkles/axis}}
+    {{ember-sparkles/axis
+      scale=(band-scale
+        domain
+        (append 0 100)
+      )
+      label='elephants'
+      position='bottom'
+      with-transition=false
+      dy=30
+      dx=-100
+    }}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$('.axis').length, 'axis renders');
+  assert.equal(this.$('.axis .tick').length, 4, 'there are 4 ticks on the x axis');
+  assert.equal(this.$('.axis .tick').first().text(), '2016-03-02', 'ticks on x axis are formatted correctly');
+  assert.equal(this.$('.label').text(), 'elephants', 'displays a label');
+
+  this.set('domain', ['2016-03-01', '2016-03-03', '2016-03-05']);
+  assert.equal(this.$('.axis .tick').length, 3, 'axis updates when data changes');
+  assert.equal(this.$('.axis .tick').first().text(), '2016-03-01', 'axis updates correctly');
 });

@@ -17,15 +17,10 @@ test('it renders', function(assert) {
   this.render(hbs`
     <svg>
       {{ember-sparkles/grouped-bar-chart
-        height=1
-        width=1
         with-transition=false
         data=data
-        groupDomain=groupDomain
         inputKey=(r/param)
         outputKey=(r/param)
-        xScale=(band-scale)
-        yScale=(linear-scale)
       }}
     </svg>
   `);
@@ -112,35 +107,42 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   this.setProperties({ data, xDomain, groupDomain, colorScale });
 
   this.render(hbs`
-    <svg height="100" width="120">
-      {{ember-sparkles/grouped-bar-chart
-        width=100
-        height=100
-        with-transition=false
-        data=data
-        groupDomain=groupDomain
+    {{#with (band-scale
+      xDomain
+      (append 0 120)
+      round=true
+      padding=0
+    ) as |xScale|}}
 
-        inputKey=(r/get 'ts')
-        outputKey=(r/get 'watts')
-        valueKey=(r/get 'value')
-        groupKey=(r/get 'name')
+      <svg height="100" width="120">
+        {{ember-sparkles/grouped-bar-chart
+          width=100
+          height=100
+          with-transition=false
+          data=data
 
-        xScale=(band-scale
-          xDomain
-          (append 0 120)
-          round=true
-          padding=0
-        )
-        yScale=(linear-scale
-          (append 0 100)
-          (append 100 0)
-          nice=true
-        )
-        colorScale=colorScale
-        groupPadding=0
-        ticks=5
-      }}
-    </svg>
+          inputKey=(r/get 'ts')
+          outputKey=(r/get 'watts')
+          valueKey=(r/get 'value')
+          groupKey=(r/get 'name')
+
+          xScale=xScale
+          yScale=(linear-scale
+            (append 0 100)
+            (append 100 0)
+            nice=true
+          )
+          groupScale=(band-scale
+            groupDomain
+            (append 0 (compute (get xScale 'bandwidth')))
+            padding=0
+          )
+          colorScale=colorScale
+        }}
+      </svg>
+
+    {{/with}}
+
   `);
 
   let groups = this.chart.groups();
@@ -161,21 +163,6 @@ test('accepts data and dynamically generates rectangles and legend', function(as
 
   let colorSequence = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
   assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence], 'each group has a unique fill color that maintains the order given by the color scale\'s specified range');
-
-  // check axes existence and attributes
-  assert.ok(this.$('.x.axis').length, 'x axis renders');
-  assert.ok(this.$('.y.axis').length, 'y axis renders');
-  assert.equal(this.$('.x.axis .tick').length, 4, 'there are 4 ticks on the x axis');
-  assert.equal(this.$('.y.axis .tick').length, 6, 'there are 6 ticks on the y axis');
-  assert.equal(this.$('.x.axis .tick').first().text(), '2001-03-14', 'ticks on x axis are formatted correctly');
-
-
-  // check legend existence and attributes
-  assert.ok(this.$('.legend').length, 'legend renders');
-  assert.equal(this.$('.legend rect').length, 3, 'there are 3 rectangles in the legend');
-  assert.equal(this.$('.legend text').length, 3, 'there are 3 text elements in the legend');
-  assert.deepEqual(this.$('.legend rect').toArray().map(r => $(r).css('fill')), colorSequence, 'legend rectangles have correct colors');
-  assert.deepEqual(this.$('.legend text').text(), 'series 1series 2series 3', 'legend has correct text');
 
   // check deletion of data
   data.pop();
@@ -235,5 +222,4 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['98', '59', '10'], ['10', '30', '87']], 'each rectangle has correct y-coordinate after update');
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['2', '41', '90'], ['90', '70', '13']], 'each rectangle has correct height after update');
   assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');
-
 });

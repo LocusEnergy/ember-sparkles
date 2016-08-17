@@ -34,13 +34,13 @@ test('The chart accepts data and generates arcs properly', function(assert) {
 
   let data = [
     {
-      key: 'arc 1',
+      name: 'arc 1',
       value: 50
     },{
-      key: 'arc 2',
+      name: 'arc 2',
       value: 50
     }, {
-      key: 'arc 3',
+      name: 'arc 3',
       value: 50
     }
   ];
@@ -55,9 +55,10 @@ test('The chart accepts data and generates arcs properly', function(assert) {
         height=50
         width=50
         radius=10
+        outputKey=(r/get 'value')
+        groupKey=(r/get 'data.name')
         colorScale=(cat-color-scale '20' domain)
-        domain=domain
-        data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
+        data=(pie-sparkler data dataKey='value')
         with-arc-labels=true
       }}
     </svg>
@@ -69,13 +70,13 @@ test('data can be updated and removed', function(assert) {
   assert.expect(2);
   let data = [
     {
-      key: 'arc 1',
+      name: 'arc 1',
       value: 50
     },{
-      key: 'arc 2',
+      name: 'arc 2',
       value: 50
     }, {
-      key: 'arc 3',
+      name: 'arc 3',
       value: 50
     }
   ];
@@ -85,32 +86,32 @@ test('data can be updated and removed', function(assert) {
   this.setProperties({ data, domain });
 
   this.render(hbs`
-  <svg height="100" width="100">
-    {{ember-sparkles/pie-chart
-      height=50
-      width=50
-      radius=10
-      colorScale=(cat-color-scale '20' domain)
-      domain=domain
-      data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
-      with-arc-labels=true
+    <svg height="100" width="100">
+      {{ember-sparkles/pie-chart
+        height=50
+        width=50
+        radius=10
+        outputKey=(r/get 'value')
+        groupKey=(r/get 'data.name')
+        colorScale=(cat-color-scale '20' domain)
+        data=(pie-sparkler data dataKey='value')
       }}
-  </svg>
+    </svg>
   `);
   assert.equal(this.$('path').length, 3, 'There are intially 3 arcs');
-  //Information updated
+
   data = [
     {
-      key: 'arc 1',
+      name: 'arc 1',
       value: 50
     },{
-      key: 'arc 2',
+      name: 'arc 2',
       value: 50
     }, {
-      key: 'arc 3',
+      name: 'arc 3',
       value: 50
     }, {
-      key: 'arc 4',
+      name: 'arc 4',
       value: 50
     }
   ];
@@ -122,23 +123,23 @@ test('data can be updated and removed', function(assert) {
 
 });
 test('The proper arcs have the proper data', function(assert) {
-  assert.expect(6);
+  assert.expect(3);
   let data = [
     {
-      key: 'arc 1',
+      name: 'arc 1',
       value: 30
     },{
-      key: 'arc 2',
+      name: 'arc 2',
       value: 60
     }, {
-      key: 'arc 3',
+      name: 'arc 3',
       value: 40
     }
   ];
 
-  let total = _.sum(data.map(({ ['value']: d }) => d));
-  let expectedPercentages = data.map(({ value }) => ((value/total) * 100).toFixed(1));
   let domain = data.map(({ key }) => key);
+  let total = _.sum(data.map(({ value }) => value));
+  let expectedPercentages = data.map(({ value }) => ((value/total) * 100).toFixed(1));
 
   this.setProperties({ data, domain });
 
@@ -148,23 +149,20 @@ test('The proper arcs have the proper data', function(assert) {
         height=50
         width=50
         radius=10
+        outputKey=(r/get 'value')
+        groupKey=(r/get 'data.name')
         colorScale=(cat-color-scale '20' domain)
-        domain=domain
-        data=(pie-sparkler data dataKey='value' threshold=5 precision=1)
+        data=(pie-sparkler data dataKey='value')
         transition=(ember-sparkles/transition duration=10)
-        with-arc-labels=true
       }}
     </svg>
   `);
 
-  later( ()=> {}, 20);
+  later(() => {}, 20);
 
-  return wait().then(()=>{
-    assert.ok(this.$('.arc-1'),'Arc 1 Arc');
-    assert.equal(this.$("text[data=arc-1]").text(), expectedPercentages[0], 'Arc 1 Percentage Properties match');
-    assert.ok(this.$('.arc-2'),'Arc 2 Arc');
-    assert.equal(this.$("text[data=arc-2]").text(), expectedPercentages[1], 'Arc 2 Percentage Properties match');
-    assert.ok(this.$('.arc-3'),'Arc 3 Arc');
-    assert.equal(this.$("text[data=arc-3]").text(), expectedPercentages[2], 'Arc 3 Percentage Properties match');
+  return wait().then(() => {
+    assert.equal(this.$('.arc-1').text(), expectedPercentages[0], 'arc 1 has correct percentage');
+    assert.equal(this.$('.arc-2').text(), expectedPercentages[1], 'arc 2 has correct percentage');
+    assert.equal(this.$('.arc-3').text(), expectedPercentages[2], 'arc 3 has correct percentage');
   });
 });

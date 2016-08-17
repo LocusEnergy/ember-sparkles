@@ -6,19 +6,19 @@ moduleForComponent('ember-sparkles/legend', 'Integration | Component | ember spa
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  this.set('domain', ['series 1', 'series 2', 'series 3']);
 
-  this.render(hbs`{{ember-sparkles/legend}}`);
+  this.render(hbs`{{ember-sparkles/legend
+    width=10
+    height=10
+    domain=domain
+    colorScale=(cat-color-scale '20')
+    with-transition=false
+    shape='rect'
+    dx=0
+    dy=0
+  }}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#ember-sparkles/legend}}
-      template block text
-    {{/ember-sparkles/legend}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('text').length, 3, 'there are 3 text elements');
+  assert.equal(this.$('rect').length, 3, 'there are 3 rect elements');
 });

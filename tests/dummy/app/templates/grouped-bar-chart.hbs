@@ -8,11 +8,11 @@
   valueKey='value'
 
   x-scale-type='band'
-  x-domain=(map (r/get 'ts') barData)
   y-scale-type='linear'
-  y-domain=(append 0 outputMax)
-
   color-scale-type='20c'
+
+  x-domain=(map (r/get 'ts') barData)
+  y-domain=(append 0 outputMax)
   group-domain=groupDomain
 
   groupPadding=0.05
