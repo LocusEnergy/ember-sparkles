@@ -11,7 +11,7 @@
   y-scale-type='linear'
   x-domain=xDomain
   y-domain=yDomain
-  group-domain=(map-by 'id' timeseriesData)
+  group-domain=(map-by 'id' (sort-by 'id' timeseriesData))
 
   transition-duration=400
 
@@ -20,7 +20,7 @@
   {{chart.line-chart}}
 
   {{chart.x-axis
-    tick-format='%Y-%m'
+    tick-format='%Y-%m-%d'
     label='date'
     dy=(add chart.height 30)
     dx=-100
@@ -44,10 +44,10 @@
 
 <button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
 
-<h5>example</h5>
+<h4>example</h4>
 
+<h5>glimmer</h5>
 {{code-snippet name="line-chart-example.hbs" unindent=false}}
 
-<h5>implementation</h5>
-
-{{code-snippet name="line-chart.hbs" unindent=false}}
+<h5>javascript</h5>
+{{code-snippet name="line-chart-example.js" unindent=false}}

@@ -15,7 +15,6 @@
   y-domain=(append 0 outputMax)
   group-domain=groupDomain
 
-  groupPadding=0.05
   transition-duration=transitionDuration
 as |chart|}}
 
@@ -50,10 +49,10 @@ as |chart|}}
 
 <button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
 
-<h5>example</h5>
+<h4>example</h4>
 
+<h5>glimmer</h5>
 {{code-snippet name="grouped-bar-chart-example.hbs" unindent=false}}
 
-<h5>implementation</h5>
-
-{{code-snippet name="grouped-bar-chart.hbs" unindent=false}}
+<h5>javascript</h5>
+{{code-snippet name="grouped-bar-chart-example.js" unindent=false}}

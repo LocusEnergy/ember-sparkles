@@ -1,3 +1,5 @@
+// BEGIN-SNIPPET pie-chart-example
+
 import Ember from 'ember';
 import _ from 'lodash/lodash';
 
@@ -20,3 +22,5 @@ export default Ember.Controller.extend({
     }
   }
 });
+
+// END-SNIPPET
