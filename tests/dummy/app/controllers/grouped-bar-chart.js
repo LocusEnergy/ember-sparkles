@@ -1,3 +1,5 @@
+// BEGIN-SNIPPET grouped-bar-chart-example
+
 import Ember from 'ember';
 import _ from 'lodash/lodash';
 import { max } from 'd3-array';
@@ -28,10 +30,6 @@ let generateData = function() {
   });
 };
 
-let sortFn = function({ name: a }, { name: b }) {
-  return a > b;
-}
-
 
 export default Ember.Controller.extend({
   transitionDuration: 500,
@@ -49,7 +47,9 @@ export default Ember.Controller.extend({
   groupDomain: computed('barData', function() {
     let data = this.get('barData');
     let [ firstGroup ] = data;
-    let values = firstGroup['W'].sort(sortFn);
+    let values = firstGroup['W'].sort(({ name: a }, { name: b }) => {
+      return a > b;
+    });
     return values.map(({ name }) => name);
   }),
 
@@ -60,3 +60,5 @@ export default Ember.Controller.extend({
   }
 
 });
+
+// END-SNIPPET

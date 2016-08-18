@@ -1,3 +1,5 @@
+// BEGIN-SNIPPET bar-chart-example
+
 import Ember from 'ember';
 import dateify from 'dummy/utils/dateify';
 import { timeseriesData } from 'dummy/utils/fixture-data';
@@ -13,7 +15,6 @@ export default Ember.Controller.extend({
   dataIdx: 1,
   barData: new Ember.A(dateified),
 
-  // will need to update this property when we handle multiple series
   data: Ember.computed('barData', 'dataIdx', function() {
     let b = this.get('barData');
     let idx = this.get('dataIdx');
@@ -36,3 +37,5 @@ export default Ember.Controller.extend({
     }
   }
 });
+
+// END-SNIPPET

@@ -1,3 +1,5 @@
+// BEGIN-SNIPPET line-chart-example
+
 import Ember from 'ember';
 import _ from 'lodash/lodash';
 import { extent, min, max } from 'd3-array';
@@ -13,7 +15,7 @@ let generateData = function() {
 
   return seriesSample.map(seriesName => {
     return {
-      id: seriesName,
+      id: `series ${seriesName}`,
       datatype: valueType,
       data: dateRange.toArray('days').map(d => {
         return {
@@ -53,3 +55,5 @@ export default Ember.Controller.extend({
     }
   }
 });
+
+// END-SNIPPET

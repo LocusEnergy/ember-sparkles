@@ -53,7 +53,7 @@
         groupScale=(band-scale
           group-domain
           (append 0 (compute (get (compute options.x-scale) 'bandwidth')))
-          padding=groupPadding
+          padding=(or groupPadding 0.05)
         )
 
         inputKey=(r/get inputKey)
