@@ -12,7 +12,9 @@
       (append innerHeight 0)
     )
     color-scale=(cat-color-scale (or color-scale-type '20') domain=group-domain)
-    transition=(ember-sparkles/transition duration=(or transition-duration 700) data=data)
+    transition=(ember-sparkles/transition duration=(or transition-duration 1000) data=data)
+    inputKey=(r/get (or input-key 0))
+    outputKey=(r/get (or output-key 1))
   ) as |options|}}
 
     {{yield (hash
@@ -37,8 +39,8 @@
         xScale=(compute options.x-scale)
         yScale=(compute options.y-scale)
 
-        inputKey=(r/get inputKey)
-        outputKey=(r/get outputKey)
+        inputKey=options.inputKey
+        outputKey=options.outputKey
 
         transition=options.transition
         width=innerWidth
@@ -53,13 +55,13 @@
         groupScale=(band-scale
           group-domain
           (append 0 (compute (get (compute options.x-scale) 'bandwidth')))
-          padding=(or groupPadding 0.05)
+          padding=(or group-padding 0.05)
         )
 
-        inputKey=(r/get inputKey)
-        outputKey=(r/get outputKey)
-        groupKey=(r/get groupKey)
-        valueKey=(r/get valueKey)
+        inputKey=options.inputKey
+        outputKey=options.outputKey
+        groupKey=(r/get group-key)
+        valueKey=(r/get value-key)
 
         transition=options.transition
         width=innerWidth
@@ -72,9 +74,9 @@
         yScale=(compute options.y-scale)
         colorScale=options.color-scale
 
-        inputKey=(r/get inputKey)
-        outputKey=(r/get outputKey)
-        groupKey=(r/get groupKey)
+        inputKey=options.inputKey
+        outputKey=options.outputKey
+        groupKey=(r/get group-key)
 
         transition=options.transition
         width=innerWidth
@@ -86,8 +88,8 @@
         width=innerWidth
         height=innerHeight
 
-        outputKey=(r/get outputKey)
-        groupKey=(r/get (concat 'data.' groupKey))
+        outputKey=options.outputKey
+        groupKey=(r/get (concat 'data.' group-key))
 
         colorScale=options.color-scale
         radius=(div (d3-array 'min' (array innerWidth innerHeight)) 2)

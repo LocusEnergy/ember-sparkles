@@ -5,9 +5,8 @@
 [![Dependency Status](https://david-dm.org/locusenergy/ember-sparkles.svg)](https://david-dm.org/locusenergy/ember-sparkles)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-sparkles.svg)](http://emberobserver.com/addons/ember-sparkles)
 
-![William Shatner in Sparkles](http://i.giphy.com/W1R2pCzmib6h2.gif)
 
-`ember-sparkles` is a collection of composable D3 charts built with [`ember-d3-helpers`](https://github.com/LocusEnergy/ember-d3-helpers) library. It aim to provide D3 graphs that are easy to customize and configure in the template. 
+`ember-sparkles` is a collection of composable D3 charts built with [`ember-d3-helpers`](https://github.com/LocusEnergy/ember-d3-helpers) library. It aims to provide reactive and highly performant D3-based data visualizations through simple template-bound configurations.
 
 This library currently includes the following charts:
 - [Bar Chart](http://locusenergy.github.io/ember-sparkles/#/bar-chart)
@@ -15,20 +14,58 @@ This library currently includes the following charts:
 - [Line Chart](http://locusenergy.github.io/ember-sparkles/#/line-chart)
 - [Pie Chart](http://locusenergy.github.io/ember-sparkles/#/pie-chart)
 
-Note: PRs for additional charts are welcome.
+Note: This library is still in beta, please use carefully, and file issues as discovered. Pull requests for additional charts always welcome!
 
 ## How to use
 
-This addon provides `{{ember-sparkles}}` component that you provides the SVG element for graphs rendered inside. Graphs, axis and legends are on contextual components yielded from `ember-sparkles` component. 
+This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG container element. D3-based graphs, axes, and legend components are contextually yielded from this component.
+
+### example
 
 ```hbs
-{{#ember-sparkes 
+{{#ember-sparkes
   data=your-data
+
+  input-key='ts'
+  output-key='value'
+
+  x-scale-type='band'
+  y-scale-type='linear'
+  x-domain=(map (r/get 'ts') data)
+  y-domain=(append 0 outputMax)
+
+
   as |chart|
 }}
   {{!render your charts here}}
 {{/ember-sparkes}}
 ```
+
+### Properties (WIP)
+
+* `data {Array}` **required**
+
+  Array containing data, structure depending on data visualization type.
+
+* `input-key {String}` **required**
+
+  Key by which to obtain independent variable from array or object. Defaults to zeroth index of array.
+
+* `output-key {String}` **required**
+
+  Key by which to obtain dependent variable from array or object. Defaults to first index of array.
+
+* `x-scale-type {String}` **optional**
+
+  Type of D3 scale function to use for horizontal axis.
+
+  _default:_ `linear`
+
+* `y-scale-type {String}` **optional**
+
+  Type of D3 scale function to use for vertical axis.
+
+  _default:_ `linear`
 
 ### Axis
 
@@ -42,7 +79,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
     dy=100
     dx=-100
   }}
-  
+
   {{graph.y-axis
     label='kWh'
     ticks=5
@@ -91,3 +128,5 @@ If it is a bug [please open an issue on GitHub](http://github.com/LocusEnergy/em
 ember github-pages:commit --message <some commit message>
 git push origin master
 ```
+
+![William Shatner in Sparkles](http://i.giphy.com/W1R2pCzmib6h2.gif)
