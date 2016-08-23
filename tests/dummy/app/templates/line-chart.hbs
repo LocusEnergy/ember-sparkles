@@ -3,9 +3,9 @@
 {{#ember-sparkles
   data=timeseriesData
 
-  inputKey='ts'
-  outputKey='Wh_sum'
-  groupKey='id'
+  input-key='ts'
+  output-key='Wh_sum'
+  group-key='id'
 
   x-scale-type='time'
   y-scale-type='linear'
@@ -24,6 +24,7 @@
     label='date'
     dy=(add chart.height 30)
     dx=-100
+    skip-idx=2
   }}
 
   {{chart.y-axis

@@ -34,6 +34,7 @@
         (d3-attr 'dy' (or dy 0))
         (d3-attr 'dx' (or dx 0))
         (d3-call (or labelAttrs (d3-noop)))
+        (d3-call (or label-transform (d3-noop)))
         (d3-style 'text-anchor' 'end')
         (d3-text label)
       )}}
