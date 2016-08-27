@@ -1,6 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import _ from 'lodash';
+import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
+LetHelperInitializer.initialize();
 
 moduleForComponent('ember-sparkles/pie-chart', 'Integration | Component | ember sparkles/pie chart', {
   integration: true

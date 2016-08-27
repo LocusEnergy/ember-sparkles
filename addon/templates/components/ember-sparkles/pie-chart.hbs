@@ -1,68 +1,65 @@
 {{!-- BEGIN-SNIPPET pie-chart --}}
-
-{{#with (hash
-  arc=(d3-arc (sub radius 10) 0)
-  pie=(compute (d3-pie valueFn=outputKey) data)
-  centerWidth=(div width 2)
-  centerHeight=(div height 2)
-) as |options|}}
-
-  {{#d3-graph classNames="ember-sparkles--pie-chart" as |d3|}}
-
-     {{d3.graph (pipe
-      (d3-select-all 'path')
-      (d3-data options.pie)
-      (d3-join
-        enter=(pipe
-          (d3-append 'path')
-          (d3-attr 'class' (pipe groupKey (r 'dasherize')))
-          (d3-attr 'transform' (i 'translate(${w},${h})' h=options.centerHeight w=options.centerWidth))
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr-tween 'd' (d3-arc-tween options.arc))
-          (d3-style 'fill' (pipe groupKey colorScale))
-          (d3-attr 'opacity' 1)
-        )
-        update=(pipe
-          (d3-style 'fill' 'purple')
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (i 'translate(${w},${h})' h=options.centerHeight w=options.centerWidth))
-          (d3-attr-tween 'd' (d3-arc-tween options.arc))
-          (d3-style 'fill' (pipe groupKey colorScale))
-        )
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'opacity' 0)
-          (d3-remove)
-        )
-    ))}}
+{{let arc (d3-arc (sub radius 10) 0)
+      pie (compute (d3-pie valueFn=outputKey) data)
+      centerWidth (div width 2)
+      centerHeight (div height 2)
+}}
 
 
-    {{d3.graph (pipe
-      (d3-select-all 'text')
-      (d3-data options.pie)
-      (d3-join
-        enter=(pipe
-          (d3-append 'text')
-          (d3-attr 'class' (pipe groupKey (r 'dasherize')))
-          (d3-attr 'opacity' 1)
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (ember-sparkles/arc-translate options.arc.centroid height=options.centerHeight width=options.centerWidth))
-          (d3-text (r/get 'data.percentage'))
-        )
-        update=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' (ember-sparkles/arc-translate options.arc.centroid height=options.centerHeight width=options.centerWidth))
-          (d3-text (r/get 'data.percentage'))
-        )
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'opacity' 0)
-          (d3-remove)
-        )
-    ))}}
+{{#d3-graph classNames="ember-sparkles--pie-chart" as |d3|}}
 
-  {{/d3-graph}}
+  {{d3.graph (pipe
+    (d3-select-all 'path')
+    (d3-data pie)
+    (d3-join
+      enter=(pipe
+        (d3-append 'path')
+        (d3-attr 'class' (pipe groupKey (r 'dasherize')))
+        (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr-tween 'd' (d3-arc-tween arc))
+        (d3-style 'fill' (pipe groupKey colorScale))
+        (d3-attr 'opacity' 1)
+      )
+      update=(pipe
+        (d3-style 'fill' 'purple')
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (i 'translate(${w},${h})' h=centerHeight w=centerWidth))
+        (d3-attr-tween 'd' (d3-arc-tween arc))
+        (d3-style 'fill' (pipe groupKey colorScale))
+      )
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'opacity' 0)
+        (d3-remove)
+      )
+  ))}}
 
-{{/with}}
+
+  {{d3.graph (pipe
+    (d3-select-all 'text')
+    (d3-data pie)
+    (d3-join
+      enter=(pipe
+        (d3-append 'text')
+        (d3-attr 'class' (pipe groupKey (r 'dasherize')))
+        (d3-attr 'opacity' 1)
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (ember-sparkles/arc-translate arc.centroid height=centerHeight width=centerWidth))
+        (d3-text (r/get 'data.percentage'))
+      )
+      update=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'transform' (ember-sparkles/arc-translate arc.centroid height=centerHeight width=centerWidth))
+        (d3-text (r/get 'data.percentage'))
+      )
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-attr 'opacity' 0)
+        (d3-remove)
+      )
+  ))}}
+
+{{/d3-graph}}
 
 {{!-- END-SNIPPET --}}

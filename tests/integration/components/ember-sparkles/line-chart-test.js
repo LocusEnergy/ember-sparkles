@@ -1,5 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
+LetHelperInitializer.initialize();
 
 moduleForComponent('ember-sparkles/line-chart', 'Integration | Component | ember sparkles/line chart', {
   integration: true

@@ -2,6 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import BarChart from 'ember-sparkles/page-objects/bar-chart';
 import { max } from 'd3-array';
+import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
+LetHelperInitializer.initialize();
 
 moduleForComponent('ember-sparkles/bar-chart', 'Integration | Component | ember sparkles/bar chart', {
   integration: true,

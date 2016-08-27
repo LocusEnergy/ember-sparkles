@@ -1,43 +1,39 @@
 {{!-- BEGIN-SNIPPET bar-chart --}}
-
-{{#with (hash
-  updateRect=(pipe
+{{let updateRect (pipe
     (if with-transition (d3-transition transition) (d3-noop))
     (d3-attr 'width' xScale.bandwidth)
     (d3-attr 'height' (pipe outputKey yScale (bar-height height)))
     (d3-attr 'x' (pipe inputKey xScale))
     (d3-attr 'y' (pipe outputKey yScale))
     (d3-style 'opacity' 1)
-  )
-  ) as |options|}}
+)}}
 
-  {{#d3-graph classNames="ember-sparkles--bar-chart" as |d3|}}
+{{#d3-graph classNames="ember-sparkles--bar-chart" as |d3|}}
 
-    {{d3.graph (pipe
-      (d3-select-all 'rect')
-      (d3-data data)
-      (d3-join
-        enter=(pipe
-          (d3-append 'rect')
-          (d3-attr 'class' 'bar')
-          (d3-attr 'y' height)
-          (d3-attr 'x' width)
-          (d3-style 'fill' 'steelblue')
-          (d3-style 'opacity' 0)
-          (d3-call options.updateRect)
-        )
-        update=(d3-call options.updateRect)
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'fill' 'purple')
-          (d3-style 'opacity' 0)
-          (d3-attr 'height' 0)
-          (d3-attr 'y' height)
-          (d3-remove)
-        )
-    ))}}
-  {{/d3-graph}}
-
-{{/with}}
+  {{d3.graph (pipe
+    (d3-select-all 'rect')
+    (d3-data data)
+    (d3-join
+      enter=(pipe
+        (d3-append 'rect')
+        (d3-attr 'class' 'bar')
+        (d3-attr 'y' height)
+        (d3-attr 'x' width)
+        (d3-style 'fill' 'steelblue')
+        (d3-style 'opacity' 0)
+        (d3-call updateRect)
+      )
+      update=(d3-call updateRect)
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'fill' 'purple')
+        (d3-style 'opacity' 0)
+        (d3-attr 'height' 0)
+        (d3-attr 'y' height)
+        (d3-remove)
+      )
+  ))}}
+  
+{{/d3-graph}}
 
 {{!-- END-SNIPPET bar-chart --}}

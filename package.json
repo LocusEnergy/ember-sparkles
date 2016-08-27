@@ -59,6 +59,7 @@
     "ember-d3-helpers": "0.5.7",
     "ember-interpolate-helper": "0.1.1",
     "ember-math-helpers": "1.2.2",
+    "ember-let": "0.4.0",    
     "ember-reactive-helpers": "0.3.7",
     "ember-resize": "0.0.13",
     "ember-truth-helpers": "1.2.0"

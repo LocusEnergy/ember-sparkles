@@ -1,24 +1,23 @@
-{{#with (hash
-  transform=(d3-attr 'transform' (i 'translate(${coords})' coords=(concat dx ',' dy)))
-  shapePositioner=(compute (action shapePositioner (or direction 'vertical') (or shape-spacing 20) (hash x=dx y=dy)))
-  addShape=(get (hash
-    rect=(pipe
-      (d3-append 'rect')
-      (d3-attr 'width' (or shape-size 10))
-      (d3-attr 'height' (or shape-size 10))
-    )
-    circle=(pipe
-      (d3-append 'circle')
-      (d3-attr 'r' (or shape-size 8))
-    )
-  ) shape)
-  ) as |options|}}
+{{let transform (d3-attr 'transform' (i 'translate(${coords})' coords=(concat dx ',' dy)))
+      shapePositioner (compute (action shapePositioner (or direction 'vertical') (or shape-spacing 20) (hash x=dx y=dy)))
+      addShape (get (hash
+        rect=(pipe
+          (d3-append 'rect')
+          (d3-attr 'width' (or shape-size 10))
+          (d3-attr 'height' (or shape-size 10))
+        )
+        circle=(pipe
+          (d3-append 'circle')
+          (d3-attr 'r' (or shape-size 8))
+        )
+      ) shape)
+}}
 
-  {{#d3-graph classNames="ember-sparkles--legend" as |d3|}}
+{{#d3-graph classNames="ember-sparkles--legend" as |d3|}}
     {{d3.graph (pipe
       (d3-append 'g')
       (d3-attr 'class' 'legend')
-      (d3-call options.transform)
+      (d3-call transform)
     )}}
 
     {{d3.graph (pipe
@@ -26,19 +25,19 @@
       (d3-data domain)
       (d3-join
         enter=(pipe
-          options.addShape
+          addShape
           (d3-attr 'transform' (i 'translate(0,${c})' c=width))
           (d3-attr 'opacity' 0)
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'opacity' 1)
-          (d3-attr 'transform' options.shapePositioner)
+          (d3-attr 'transform' shapePositioner)
           (d3-style 'fill' colorScale)
         )
 
         update=(pipe
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-style 'fill' colorScale)
-          (d3-attr 'transform' options.shapePositioner)
+          (d3-attr 'transform' shapePositioner)
         )
         exit=(pipe
           (d3-attr 'opacity' 1)
@@ -62,13 +61,13 @@
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'opacity' 1)
           (d3-text (d3-get))
-          (d3-attr 'transform' options.shapePositioner)
+          (d3-attr 'transform' shapePositioner)
         )
 
         update=(pipe
           (d3-text (d3-get))
           (if with-transition (d3-transition transition) (d3-noop))
-          (d3-attr 'transform' options.shapePositioner)
+          (d3-attr 'transform' shapePositioner)
         )
 
         exit=(pipe
@@ -80,5 +79,3 @@
       ))}}
 
   {{/d3-graph}}
-
-{{/with}}
