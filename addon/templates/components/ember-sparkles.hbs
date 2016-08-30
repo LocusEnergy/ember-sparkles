@@ -12,13 +12,13 @@
       (append innerHeight 0)
     )
     color-scale=(cat-color-scale (or color-scale-type '20') domain=group-domain)
-    transition=(ember-sparkles/transition duration=(or transition-duration 1000) data=data)
+    transition=(e-s/transition duration=(or transition-duration 1000) data=data)
     inputKey=(r/get (or input-key 0))
     outputKey=(r/get (or output-key 1))
   ) as |options|}}
 
     {{yield (hash
-      x-axis=(component 'ember-sparkles/axis'
+      x-axis=(component 'e-s/axis'
         scale=(compute options.x-scale)
         position='bottom'
         height=innerHeight
@@ -26,7 +26,7 @@
         labelAttrs=(pipe (d3-attr 'x' width))
       )
 
-      y-axis=(component 'ember-sparkles/axis'
+      y-axis=(component 'e-s/axis'
         scale=(compute options.y-scale)
         position='left'
         width=innerWidth
@@ -34,7 +34,7 @@
         labelAttrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
       )
 
-      bar-chart=(component 'ember-sparkles/bar-chart'
+      bar-chart=(component 'e-s/bar-chart'
         data=data
         xScale=(compute options.x-scale)
         yScale=(compute options.y-scale)
@@ -47,7 +47,7 @@
         height=innerHeight
       )
 
-      grouped-bar-chart=(component 'ember-sparkles/grouped-bar-chart'
+      grouped-bar-chart=(component 'e-s/grouped-bar-chart'
         data=data
         xScale=(compute options.x-scale)
         yScale=(compute options.y-scale)
@@ -68,7 +68,7 @@
         height=innerHeight
       )
 
-      line-chart=(component 'ember-sparkles/line-chart'
+      line-chart=(component 'e-s/line-chart'
         data=data
         xScale=(compute options.x-scale)
         yScale=(compute options.y-scale)
@@ -83,8 +83,8 @@
         height=innerHeight
       )
 
-      pie-chart=(component 'ember-sparkles/pie-chart'
-        data=data
+      pie-chart=(component 'e-s/pie-chart'
+        data=(e-s/pie-data data valueKey=output-key threshold=arc-threshold precision=arc-precision)
         width=innerWidth
         height=innerHeight
 
@@ -96,7 +96,7 @@
         transition=options.transition
       )
 
-      legend=(component 'ember-sparkles/legend'
+      legend=(component 'e-s/legend'
         width=innerWidth
         height=innerHeight
         domain=group-domain
