@@ -5,6 +5,7 @@
 [![Dependency Status](https://david-dm.org/locusenergy/ember-sparkles.svg)](https://david-dm.org/locusenergy/ember-sparkles)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-sparkles.svg)](http://emberobserver.com/addons/ember-sparkles)
 
+<img src="http://i.giphy.com/W1R2pCzmib6h2.gif" alt="William Shatner in Sparkles" align="right">
 
 `ember-sparkles` is a collection of composable D3 charts built with [`ember-d3-helpers`](https://github.com/LocusEnergy/ember-d3-helpers) library. It aims to provide reactive and highly performant D3-based data visualizations through simple template-bound configurations.
 
@@ -128,5 +129,3 @@ If it is a bug [please open an issue on GitHub](http://github.com/LocusEnergy/em
 ember github-pages:commit --message <some commit message>
 git push origin master
 ```
-
-![William Shatner in Sparkles](http://i.giphy.com/W1R2pCzmib6h2.gif)
