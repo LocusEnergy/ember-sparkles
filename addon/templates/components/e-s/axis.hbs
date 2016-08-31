@@ -1,0 +1,45 @@
+{{#with (e-s/axis-helper scale
+  position=position
+  ticks=ticks
+  width=width
+  height=height
+  tickFormat=tick-format
+  skipIdx=responsiveSkipIdx
+  xGrid=xGrid
+  yGrid=yGrid
+  ) as |axis|}}
+
+  {{#d3-graph classNames="ember-sparkles--axis" as |d3|}}
+
+    {{d3.graph (pipe
+      (d3-append 'g')
+      (d3-attr 'class' 'axis')
+    )}}
+
+    {{d3.graph (pipe
+      (d3-select-all '.axis')
+      (if with-transition (d3-transition transition) (d3-noop))
+      (d3-attr 'transform' (i 'translate(0,${h})' h=(or height 0)))
+      (d3-call axis)
+    )}}
+
+    {{#if label}}
+      {{d3.graph (pipe
+        (d3-append 'text')
+        (d3-attr 'class' 'label')
+      )}}
+
+      {{d3.graph (pipe
+        (d3-select-all '.label')
+        (d3-attr 'dy' (or dy 0))
+        (d3-attr 'dx' (or dx 0))
+        (d3-call (or labelAttrs (d3-noop)))
+        (d3-call (or label-transform (d3-noop)))
+        (d3-style 'text-anchor' 'end')
+        (d3-text label)
+      )}}
+    {{/if}}
+
+  {{/d3-graph}}
+
+{{/with}}

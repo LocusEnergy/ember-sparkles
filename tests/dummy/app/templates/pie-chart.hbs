@@ -1,9 +1,11 @@
 {{!-- BEGIN-SNIPPET pie-chart-example --}}
 
 {{#ember-sparkles
-  data=(pie-sparkler pieData dataKey='value')
-  output-key='value'
+  data=pieData
+  output-key='sites'
   group-key='name'
+  arc-threshold=arcThreshold
+  arc-precision=2
   group-domain=(map-by 'name' pieData)
   as |chart|}}
 
@@ -18,6 +20,8 @@
 {{/ember-sparkles}}
 
 {{!-- END-SNIPPET --}}
+
+{{!-- {{input type="number" id="number" name="number" value=arcThreshold}} --}}
 
 <button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
 
