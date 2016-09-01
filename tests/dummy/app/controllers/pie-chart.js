@@ -6,7 +6,7 @@ import _ from 'lodash/lodash';
 let generateData = function() {
   return _.range(_.random(3, 8)).map((k, idx) => {
     return {
-      name: `Arc ${idx}`,
+      name: `${idx + 1}`,
       sites: _.random(1, 10000)
     }
   })

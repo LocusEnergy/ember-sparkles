@@ -9,7 +9,6 @@
 
   x-scale-type='band'
   y-scale-type='linear'
-  color-scale-type='20c'
 
   x-domain=(map (r/get 'ts') barData)
   y-domain=(append 0 outputMax)
@@ -36,10 +35,11 @@ as |chart|}}
   {{chart.grouped-bar-chart}}
 
   {{chart.legend
-    dx=(sub chart.width 5)
+    dx=(sub chart.width 20)
     dy=20
+    text-dx=18
     shape='rect'
-    shape-spacing=17
+    shape-spacing=19
     shape-size=15
   }}
 
@@ -47,11 +47,9 @@ as |chart|}}
 
 {{!-- END-SNIPPET --}}
 
-<button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") (add transitionDuration 20))}}>toggle</button>
 
-<h4>example</h4>
-
-<h5>glimmer</h5>
+<h5>htmlbars</h5>
 {{code-snippet name="grouped-bar-chart-example.hbs" unindent=false}}
 
 <h5>javascript</h5>

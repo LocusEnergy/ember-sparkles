@@ -11,7 +11,7 @@
       y-domain
       (append innerHeight 0)
     )
-    color-scale=(cat-color-scale (or color-scale-type '20') domain=group-domain)
+    color-scale=(cat-color-scale (or color-scale-type '20b') domain=group-domain)
     transition=(e-s/transition duration=(or transition-duration 1000) data=data)
     inputKey=(r/get (or input-key 0))
     outputKey=(r/get (or output-key 1))

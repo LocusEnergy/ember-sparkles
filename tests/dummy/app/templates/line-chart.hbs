@@ -36,18 +36,19 @@
   }}
 
   {{chart.legend
-    dx=chart.width
+    dx=(sub chart.width 300)
+    text-dx=18
+    direction='horizontal'
+    shape-spacing=73
   }}
 
 {{/ember-sparkles}}
 
 {{!-- END-SNIPPET --}}
 
-<button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") 500)}}>toggle</button>
 
-<h4>example</h4>
-
-<h5>glimmer</h5>
+<h5>htmlbars</h5>
 {{code-snippet name="line-chart-example.hbs" unindent=false}}
 
 <h5>javascript</h5>

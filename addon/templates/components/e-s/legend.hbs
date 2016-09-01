@@ -4,8 +4,8 @@
   addShape=(get (hash
     rect=(pipe
       (d3-append 'rect')
-      (d3-attr 'width' (or shape-size 10))
-      (d3-attr 'height' (or shape-size 10))
+      (d3-attr 'width' (or shape-size 14))
+      (d3-attr 'height' (or shape-size 14))
     )
     circle=(pipe
       (d3-append 'circle')
@@ -55,9 +55,9 @@
       (d3-join
         enter=(pipe
           (d3-append 'text')
-          (d3-attr 'dx' (or text-dx 32))
+          (d3-attr 'dx' (or text-dx 38))
           (d3-attr 'dy' (or text-dy 10))
-          (d3-style 'font-size' '9px')
+          (d3-style 'font-size' '11px')
           (d3-attr 'opacity' 0)
           (if with-transition (d3-transition transition) (d3-noop))
           (d3-attr 'opacity' 1)

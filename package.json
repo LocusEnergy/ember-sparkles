@@ -1,7 +1,7 @@
 {
   "name": "ember-sparkles",
   "version": "0.4.12",
-  "description": "Glimmering D3 library for Ember 2.0+",
+  "description": "htmlbarsing D3 library for Ember 2.0+",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -24,6 +24,7 @@
     "ember-cli": "^2.7.0-beta.4",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
+    "ember-cli-deploy": "0.5.1",
     "ember-cli-eslint": "1.6.0",
     "ember-cli-github-pages": "0.1.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
@@ -41,7 +42,6 @@
     "ember-export-application-global": "^1.0.5",
     "ember-let": "0.5.0",
     "ember-load-initializers": "^0.5.1",
-    "ember-pagefront": "0.11.1",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"
   },
@@ -49,7 +49,7 @@
     "ember-addon",
     "d3",
     "data-visualization",
-    "glimmer"
+    "htmlbars"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
