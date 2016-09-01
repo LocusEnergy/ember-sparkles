@@ -40,7 +40,6 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
-    "ember-lodash": "0.0.7",
     "ember-pagefront": "0.11.1",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.1"
@@ -58,6 +57,7 @@
     "ember-composable-helpers": "0.27.0",
     "ember-d3-helpers": "0.5.7",
     "ember-interpolate-helper": "0.1.1",
+    "ember-lodash": "0.0.7",
     "ember-math-helpers": "1.2.2",
     "ember-reactive-helpers": "0.3.7",
     "ember-resize": "0.0.13",
