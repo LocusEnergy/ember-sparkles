@@ -1,6 +1,9 @@
 /*eslint-disable no-constant-condition*/
+
 import Ember from 'ember';
 import _ from 'lodash/lodash';
+
+// BEGIN-SNIPPET data-join-example
 import { task, timeout } from 'ember-concurrency';
 
 const SIZE = 650;
@@ -58,3 +61,5 @@ export default Ember.Controller.extend({
     }
   }
 });
+
+// END-SNIPPET
