@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('grouped-bar-chart');
   this.route('line-chart');
   this.route('pie-chart');
+  this.route('data-join');
 });
 
 export default Router;

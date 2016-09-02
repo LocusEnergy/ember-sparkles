@@ -14,8 +14,10 @@
   {{chart.legend
     shape='circle'
     dx=chart.width
-    text-dx=22
-    text-dy=3
+    shape-spacing=30
+    shape-size=10
+    text-dx=18
+    text-dy=4
   }}
 {{/ember-sparkles}}
 
@@ -23,11 +25,9 @@
 
 {{!-- {{input type="number" id="number" name="number" value=arcThreshold}} --}}
 
-<button {{action (throttle (action "toggleData") 500)}}>Toggle Data</button>
+<button {{action (throttle (action "toggleData") 500)}}>toggle</button>
 
-<h4>example</h4>
-
-<h5>glimmer</h5>
+<h5>htmlbars</h5>
 {{code-snippet name="pie-chart-example.hbs" unindent=false}}
 
 <h5>javascript</h5>

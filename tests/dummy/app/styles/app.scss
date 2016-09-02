@@ -1,9 +1,54 @@
-@import "./normalize";
-@import "./skeleton";
-@import "./pie-chart";
+@import 'normalize';
+@import 'skeleton';
+@import 'pie-chart';
+@import 'data-join';
 
 html,body {
   height: 100%;
+  // font-family: "Roboto", "Arial", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #6b6ecf;
+  &:hover, &.active {
+    color: rgb(57, 59, 121);
+  }
+}
+
+button {
+  border-radius: 1px;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 5px;
+}
+
+
+.title {
+  margin: 0 0 9px 0;
+}
+
+.container {
+  width: 90%;
+}
+
+.svg-container {
+  margin-left: 2%;
+}
+
+
+.side-menu {
+  ul {
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    .active {
+
+    }
+  }
+
 }
 
 #ember-sparkles {

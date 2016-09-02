@@ -1,0 +1,147 @@
+<div class="row data-join-graphic">
+  <div class="eight columns">
+
+    {{!-- TODO: this really should be {{#ember-sparkles !! but needs https://github.com/LocusEnergy/ember-sparkles/issues/28 --}}
+    {{!-- BEGIN-SNIPPET data-join-1-example --}}
+    <svg class="data-join-example" width={{svgDimension}} height={{svgDimension}}>
+      <rect width="100%" height="100%" fill="#f8f8f8"/>
+
+      {{#let (e-s/transition duration=duration data=data) as |transition|}}
+        {{#d3-graph as |d3|}}
+
+          {{d3.graph (pipe
+            (d3-select-all 'circle')
+            (d3-data data (r/get 'idx'))
+            (d3-join
+              enter=(pipe
+                (d3-append 'circle')
+                (d3-attr 'cx' (r/get 'x'))
+                (d3-attr 'cy' (r/get 'y'))
+                (d3-attr 'r' 0)
+                (d3-attr 'opacity' 0.3)
+                (d3-style 'fill' enterFill)
+                (d3-transition transition)
+                (d3-attr 'r' (r/get 'radius'))
+                (d3-style 'fill' staticFill)
+                (d3-attr 'opacity' 0.85)
+              )
+
+              update=(pipe
+                (d3-transition transition)
+                (d3-style 'fill' updateFill)
+                (d3-attr 'r' (r/get 'radius'))
+              )
+
+              exit=(pipe
+                (d3-transition transition)
+                (d3-style 'fill' exitFill)
+                (d3-attr 'r' 0)
+                (d3-attr 'opacity' 0)
+                (d3-remove)
+              )
+            )
+          )}}
+
+        {{/d3-graph}}
+      {{/let}}
+
+    </svg>
+    {{!-- END-SNIPPET --}}
+
+  </div>
+
+  <div class="four columns">
+    <p>
+      Data joins are a fundamental concept in <a href="https://d3js.org/" target="_blank">D3.js</a>.
+      This is a visual example of the data join, and D3's <a href="https://bost.ocks.org/mike/join/" target="_blank">enter, update, exit</a> pattern.
+    </p>
+    <p>
+      We join data to the DOM using regularly-placed <code>&lt;circle&gt;</code> SVG elements, mapping datapoints to radius, similar to <a href="https://bost.ocks.org/mike/circles/" target="_blank">this</a>.
+    </p>
+
+    <p>
+      <strong>data</strong>
+      <br>
+      <code>
+        {{map (r 'round') (map-by 'radius' data)}}
+      </code>
+    </p>
+
+    <p>
+      <strong>enter</strong>
+
+      entering (new) elements have radius <code>r</code>
+
+      <br>
+      <em>transitions</em>
+      <ul class="transition-list">
+        <li>
+          radius: <code>0</code> to <code>r</code>
+        </li>
+        <li>
+          fill:
+          <span class="swatch" style="background:{{enterFill}}"/>
+          to
+          <span class="swatch" style="background:{{staticFill}}"/>
+        </li>
+        <li>
+          opacity: 0.3 to 0.85
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <strong>update</strong>
+      updating elements – radius changes to <code>r'</code>
+
+      <br>
+      <em>transitions</em>
+      <ul class="transition-list">
+        <li>
+          radius: <code>r</code> to <code>r'</code>
+        </li>
+        <li>
+          fill:
+          <span class="swatch" style="background:{{staticFill}}"/>
+          to
+          <span class="swatch" style="background:{{updateFill}}"/>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <strong>exit</strong>
+
+      <br>
+      exiting elements
+      <br>
+
+      <br>
+      <em>transitions</em>
+      <ul class="transition-list">
+        <li>
+          radius: <code>r</code> to <code>0</code>
+        </li>
+        <li>
+          fill:
+          <span class="swatch" style="background:{{staticFill}}"/>
+          or
+          <span class="swatch" style="background:{{updateFill}}"/>
+          to
+          <span class="swatch" style="background:{{exitFill}}"/>
+        </li>
+        <li>
+          opacity: 0.85 to 0
+        </li>
+      </ul>
+    </p>
+
+  </div>
+</div>
+
+<div class="row data-join-example">
+</div>
+
+<button {{action 'reset'}}>reset</button>
+<button {{action 'toggle'}}>toggle</button>
+<button {{action 'makeThingsInteresting'}}>turnt</button>
