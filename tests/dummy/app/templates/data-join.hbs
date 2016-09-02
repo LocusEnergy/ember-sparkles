@@ -2,7 +2,7 @@
   <div class="eight columns">
 
     {{!-- TODO: this really should be {{#ember-sparkles !! but needs https://github.com/LocusEnergy/ember-sparkles/issues/28 --}}
-    {{!-- BEGIN-SNIPPET data-join-1-example --}}
+    {{!-- BEGIN-SNIPPET data-join-example --}}
     <svg class="data-join-example" width={{svgDimension}} height={{svgDimension}}>
       <rect width="100%" height="100%" fill="#f8f8f8"/>
 
@@ -145,3 +145,9 @@
 <button {{action 'reset'}}>reset</button>
 <button {{action 'toggle'}}>toggle</button>
 <button {{action 'makeThingsInteresting'}}>turnt</button>
+
+<h5>htmlbars</h5>
+{{code-snippet name="data-join-example.hbs" unindent=false}}
+
+<h5>javascript</h5>
+{{code-snippet name="data-join-example.js" unindent=false}}
