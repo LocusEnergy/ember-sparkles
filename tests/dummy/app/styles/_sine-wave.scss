@@ -1,8 +1,43 @@
-circle {
-  fill: none;
-  stroke: #000;
-}
+.sine-wave {
 
-#spinner {
-  fill: purple;
+  .axis path {
+    display: block;
+  }
+
+  .x-axis {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+  }
+
+  circle {
+    fill: none;
+    stroke: #f0f0f0;
+    stroke-width: 2px;
+  }
+
+  .point {
+    fill: #707070;
+    stroke: none;
+  }
+
+  path.line {
+    stroke: rgb(82, 84, 163) !important;
+    stroke-width: 2px !important;
+  }
+
+  line.connector {
+    stroke: #dcdcdc;
+    stroke-width: 1px;
+  }
+
+  #y {
+    stroke: rgb(82, 84, 163);
+  }
+
+  line.triangle {
+    stroke-width: 2px;
+    stroke: rgb(181, 207, 107);
+  }
 }

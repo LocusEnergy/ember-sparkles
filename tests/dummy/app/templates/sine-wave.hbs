@@ -1,37 +1,59 @@
 {{!-- BEGIN-SNIPPET sine-wave-example --}}
 
 {{#ember-sparkles
+  classNames="sine-wave"
   data=wave
   input-key='x'
   output-key='y'
-  group-key='name'
-  x-domain=(array 0 12)
+  x-domain=(array 0 xMax)
   y-domain=(array -1 1)
-  scale-width=400
-  transition-duration=25
+  transition-duration=0.001
   as |chart|}}
-
-  {{chart.line-chart}}
 
   {{rotating-circle
     theta=theta
     dx=(compute chart.x-scale 10)
+    wave-end=(compute chart.x-scale 6.283)
     origin=(compute chart.y-scale 0)
     radius=(round (mult (compute chart.y-scale 0) 1))
   }}
 
-  {{chart.x-axis}}
-  {{chart.y-axis ticks=2}}
+  {{log qq}}
+
+  {{!-- {{#each zeros as |p|}}
+    <circle class="point" cx={{compute chart.x-scale p.x}} cy={{compute chart.y-scale 0}} r="4"/>
+  {{/each}} --}}
+
+  {{!-- <line class="x-axis" x1=0 x2={{compute chart.x-scale 6.7}} y1={{compute chart.y-scale 0}} y2={{compute chart.y-scale 0}}></line> --}}
+
+  {{chart.line-chart}}
+  {{chart.y-axis x-translate=(compute chart.x-scale 6.7) ticks=2}}
 
 {{/ember-sparkles}}
 
-{{input type="range" min="0.01" max="1000" value=period}}
-
-
 {{!-- END-SNIPPET --}}
 
-{{!-- <h5>htmlbars</h5>
-{{code-snippet name="line-chart-example.hbs" unindent=false}}
+<p>
+  <em>
+    a sine wave plots the y coordinate of a rotating point on the unit circle
+  </em>
+</p>
+
+<p>
+  <button {{action 'start'}}>start</button>
+  <button {{action 'stop'}}>stop</button>
+</p>
+
+<strong>speed</strong>
+{{input type="range" min="1" max="30" value=speed}}
+
+
+<h5>htmlbars</h5>
+{{code-snippet name="sine-wave-example.hbs" unindent=false}}
 
 <h5>javascript</h5>
-{{code-snippet name="line-chart-example.js" unindent=false}} --}}
+{{code-snippet name="sine-wave-example.js" unindent=false}}
+
+<h5>custom rotating circle component</h5>
+{{code-snippet name="rotating-circle.hbs" unindent=false}}
+{{code-snippet name="rotating-circle.js" unindent=false}}

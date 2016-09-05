@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 const { computed } = Ember;
-const { cos, sin, atan } = Math;
+const { cos, sin } = Math;
 
+// BEGIN-SNIPPET rotating-circle
 export default Ember.Component.extend({
   tagName: 'g',
 
@@ -18,3 +19,4 @@ export default Ember.Component.extend({
     return r * sin(t);
   })
 });
+// END-SNIPPET
