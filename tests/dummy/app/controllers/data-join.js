@@ -53,11 +53,11 @@ export default Ember.Controller.extend({
     },
 
     toggle() {
-      this.toggleCycle({ f: 400, d: 300, g: 61, o: 0.4 });
+      this.toggleCycle({ f: 400, d: 300, g: 75, o: 0.3 });
     },
 
     makeThingsInteresting() {
-      this.toggleCycle({ f: 110, d: 95, g: 11, o: 2 });
+      this.toggleCycle({ f: 80, d: 60, g: 11, o: 2.1 });
     }
   }
 });

@@ -5,13 +5,13 @@
 
   input-key='ts'
   output-key='Wh_sum'
-  group-key='id'
+  group-key='series'
 
   x-scale-type='time'
   y-scale-type='linear'
   x-domain=xDomain
   y-domain=yDomain
-  group-domain=(map-by 'id' (sort-by 'id' timeseriesData))
+  group-domain=(map-by 'series' (sort-by 'series' timeseriesData))
 
   transition-duration=400
 

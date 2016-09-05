@@ -1,0 +1,37 @@
+{{!-- BEGIN-SNIPPET sine-wave-example --}}
+
+{{#ember-sparkles
+  data=wave
+  input-key='x'
+  output-key='y'
+  group-key='name'
+  x-domain=(array 0 12)
+  y-domain=(array -1 1)
+  scale-width=400
+  transition-duration=25
+  as |chart|}}
+
+  {{chart.line-chart}}
+
+  {{rotating-circle
+    theta=theta
+    dx=(compute chart.x-scale 10)
+    origin=(compute chart.y-scale 0)
+    radius=(round (mult (compute chart.y-scale 0) 1))
+  }}
+
+  {{chart.x-axis}}
+  {{chart.y-axis ticks=2}}
+
+{{/ember-sparkles}}
+
+{{input type="range" min="0.01" max="1000" value=period}}
+
+
+{{!-- END-SNIPPET --}}
+
+{{!-- <h5>htmlbars</h5>
+{{code-snippet name="line-chart-example.hbs" unindent=false}}
+
+<h5>javascript</h5>
+{{code-snippet name="line-chart-example.js" unindent=false}} --}}

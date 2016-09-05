@@ -12,6 +12,7 @@ Router.map(function() {
   this.route('line-chart');
   this.route('pie-chart');
   this.route('data-join');
+  this.route('sine-wave');
 });
 
 export default Router;

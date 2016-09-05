@@ -15,7 +15,7 @@ let generateData = function() {
 
   return seriesSample.map(seriesName => {
     return {
-      id: `series ${seriesName}`,
+      series: `series ${seriesName}`,
       datatype: valueType,
       data: dateRange.toArray('days').map(d => {
         return {
