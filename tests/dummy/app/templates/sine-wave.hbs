@@ -44,6 +44,8 @@
         data=unitCircle
         transition=chart.transition
         element-attrs=(pipe
+          (d3-attr 'x1' (r/get 'cx'))
+          (d3-attr 'x2' (r/get 'cx'))
           (d3-attr 'y1' 0)
           (d3-attr 'y2' (r/get 'cy'))
         )
@@ -58,8 +60,8 @@
         element-attrs=(pipe
           (d3-attr 'x1' 0)
           (d3-attr 'x2' (r/get 'cx'))
-          (d3-attr 'y1' (r/get 'cy'))
-          (d3-attr 'y2' (r/get 'cy'))
+          (d3-attr 'y1' 0)
+          (d3-attr 'y2' 0)
         )
       }}
 
@@ -92,7 +94,6 @@
   </g>
 
     {{chart.y-axis x-translate=chart.width ticks=4}}
-    {{chart.line-chart}}
 
     {{proto/d3-element
       element-name='circle'
@@ -105,7 +106,13 @@
         (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
         (d3-attr 'r' 4)
       )
+      exit-transition=(pipe
+        (d3-attr 'r' 0)
+      )
     }}
+
+    {{chart.line-chart}}
+
   {{/let}}
   {{/let}}
 
@@ -120,7 +127,7 @@
 </p>
 
 <p>
-  <strong>angle</strong>
+  <strong>&theta;</strong>
   {{angle}}°
 </p>
 

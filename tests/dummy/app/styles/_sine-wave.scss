@@ -14,16 +14,22 @@
   circle {
     fill: none;
     stroke: #f0f0f0;
-    stroke-width: 2px;
+    stroke-width: 1px;
   }
 
-  .zero, .rotator {
+  .rotator {
     fill: #707070;
     stroke: none;
   }
 
+  .zero {
+    fill: none;
+    stroke: #707070;
+    stroke-width: 1px;
+  }
+
   path.line {
-    stroke: rgb(82, 84, 163) !important;
+    stroke: #383838 !important;
     stroke-width: 2px !important;
   }
 
@@ -32,12 +38,12 @@
     stroke-width: 1px;
   }
 
-  .triangle__height {
-    stroke: rgb(82, 84, 163);
-  }
-
   .triangle > line {
     stroke-width: 1px;
-    stroke: rgb(181, 207, 107);
+    stroke: #383838;
+  }
+
+  .triangle__height {
+    stroke-width: 2px !important;
   }
 }
