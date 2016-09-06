@@ -1,3 +1,5 @@
+{{!-- prototypical component, helpful for creating simple reactive shapes --}}
+
 {{#d3-graph classNames=classNames as |d3|}}
   {{d3.graph (pipe
     (d3-select-all (concat '.' selector))
