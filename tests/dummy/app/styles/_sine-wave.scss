@@ -4,7 +4,7 @@
     display: block;
   }
 
-  .x-axis {
+  .horizon {
     fill: none;
     stroke: #dcdcdc;
     stroke-width: 1px;
@@ -17,7 +17,7 @@
     stroke-width: 2px;
   }
 
-  .zero, .point {
+  .zero, .rotator {
     fill: #707070;
     stroke: none;
   }
@@ -32,11 +32,11 @@
     stroke-width: 1px;
   }
 
-  #y {
+  .triangle__height {
     stroke: rgb(82, 84, 163);
   }
 
-  line.triangle {
+  .triangle > line {
     stroke-width: 1px;
     stroke: rgb(181, 207, 107);
   }

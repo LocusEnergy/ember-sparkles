@@ -13,49 +13,100 @@
   {{#let
     (div chart.height 2)
     (compute chart.y-scale 0.5)
-    (mult (compute chart.y-scale 0.5) x)
-    (mult (compute chart.y-scale 0.5) y)
-  as |mid radius cx cy|}}
+  as |mid radius|}}
 
-  <line class="x-axis" x1=0 x2={{chart.width}} y1={{mid}} y2={{mid}}></line>
+  {{#let
+    (array (hash cx=(mult radius rotatorX) cy=(mult radius rotatorY)))
+  as |unitCircle|}}
 
+  <line class="horizon" x1=0 x2={{chart.width}} y1={{mid}} y2={{mid}}></line>
   <g transform="translate({{sub chart.width radius}},0)">
-    <circle cx="0" cy={{mid}} r={{radius}} />
 
-    <g transform="translate(0, {{mid}})">
-      <line class="connector" x2={{sub mid (div radius 2)}} x1={{cx}} y1={{cy}} y2={{cy}}></line>
-      <line class="triangle" id="x" x1=0 x2={{cx}} y1={{cy}} y2={{cy}}></line>
-      <line class="triangle" id="hypotenuse" x1=0 x2={{cx}} y2={{cy}}></line>
-      <line class="triangle" id="y" y1=0 y2={{cy}}></line>
-      <circle class="point" cx={{cx}} cy={{cy}} r="3"/>
+    <circle cx="0" cy={{mid}} r={{radius}} />
+    <g transform="translate(0,{{mid}})">
+      {{proto/d3-element
+        element-name='line'
+        selector='connector'
+        data=unitCircle
+        transition=chart.transition
+        element-attrs=(pipe
+          (d3-attr 'x1' (r/get 'cx'))
+          (d3-attr 'x2' (sub mid (div radius 2)))
+          (d3-attr 'y1' (r/get 'cy'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{proto/d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__height'
+        data=unitCircle
+        transition=chart.transition
+        element-attrs=(pipe
+          (d3-attr 'y1' 0)
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{proto/d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__base'
+        data=unitCircle
+        transition=chart.transition
+        element-attrs=(pipe
+          (d3-attr 'x1' 0)
+          (d3-attr 'x2' (r/get 'cx'))
+          (d3-attr 'y1' (r/get 'cy'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{proto/d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__hypotenuse'
+        data=unitCircle
+        transition=chart.transition
+        element-attrs=(pipe
+          (d3-attr 'x1' 0)
+          (d3-attr 'x2' (r/get 'cx'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{proto/d3-element
+        element-name='circle'
+        selector='rotator'
+        data=unitCircle
+        transition=chart.transition
+        element-attrs=(pipe
+          (d3-attr 'cx' (r/get 'cx'))
+          (d3-attr 'cy' (r/get 'cy'))
+          (d3-attr 'r' 3)
+        )
+      }}
     </g>
 
   </g>
 
-  {{chart.y-axis x-translate=chart.width ticks=4}}
-  {{chart.line-chart}}
+    {{chart.y-axis x-translate=chart.width ticks=4}}
+    {{chart.line-chart}}
 
-  {{#d3-graph as |d3|}}
-    {{d3.graph (pipe
-      (d3-select-all '.zero')
-      (d3-data zeros)
-      (d3-join
-        enter=(pipe
-          (d3-append 'circle')
-          (d3-attr 'class' 'zero')
-          (d3-attr 'cy' mid)
-          (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
-          (d3-attr 'r' 4)
-        )
-
-        update=(pipe
-          (d3-transition chart.transition)
-          (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
-        )
+    {{proto/d3-element
+      element-name='circle'
+      selector='zero'
+      classNames='sine-wave__zeros'
+      data=zeros
+      transition=chart.transition
+      element-attrs=(pipe
+        (d3-attr 'cy' mid)
+        (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
+        (d3-attr 'r' 4)
       )
-    )}}
-  {{/d3-graph}}
-
+    }}
+  {{/let}}
   {{/let}}
 
 {{/ember-sparkles}}
@@ -64,7 +115,7 @@
 
 <p>
   <em>
-    sine waves plot the y coordinate of a point rotating on the circumfrence of a circle
+    sine waves plot the <code>y</code> coordinate of a point rotating on the circumference of a circle
   </em>
 </p>
 

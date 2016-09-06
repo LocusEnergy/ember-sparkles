@@ -45,11 +45,11 @@ export default Ember.Controller.extend({
     return round(360 * (1 - this.get('theta') / TAU));
   }),
 
-  x: computed('theta', function() {
+  rotatorX: computed('theta', function() {
     return cos(this.get('theta'));
   }),
 
-  y: computed('theta', function() {
+  rotatorY: computed('theta', function() {
     return sin(this.get('theta'));
   }),
 

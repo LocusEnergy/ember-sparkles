@@ -1,0 +1,1 @@
+export { default } from 'ember-sparkles/components/proto/d3-element';
