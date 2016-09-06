@@ -33,6 +33,7 @@
   </g>
 
   {{chart.y-axis x-translate=chart.width ticks=4}}
+  {{chart.line-chart}}
 
   {{#d3-graph as |d3|}}
     {{d3.graph (pipe
@@ -54,8 +55,6 @@
       )
     )}}
   {{/d3-graph}}
-
-  {{chart.line-chart}}
 
   {{/let}}
 
