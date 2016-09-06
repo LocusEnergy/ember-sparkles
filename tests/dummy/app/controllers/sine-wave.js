@@ -1,10 +1,12 @@
+/*eslint-disable no-constant-condition*/
+
 import Ember from 'ember';
 import _ from 'lodash/lodash';
 
 // BEGIN-SNIPPET sine-wave-example
 import { task, timeout } from 'ember-concurrency';
 const { computed } = Ember;
-const { PI, sin, abs, cos, round } = Math;
+const { PI, sin, cos, round } = Math;
 
 const TAU = 2 * PI;
 const DELTA = 20;
@@ -51,10 +53,6 @@ export default Ember.Controller.extend({
 
   rotatorY: computed('theta', function() {
     return sin(this.get('theta'));
-  }),
-
-  zeros: computed.filter('data', function({ y }) {
-    return abs(y) < 0.0001;
   }),
 
   cycle: task(function * () {

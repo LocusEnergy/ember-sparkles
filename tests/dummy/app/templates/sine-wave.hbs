@@ -24,6 +24,7 @@
 
     <circle cx="0" cy={{mid}} r={{radius}} />
     <g transform="translate(0,{{mid}})">
+
       {{proto/d3-element
         element-name='line'
         selector='connector'
@@ -90,36 +91,11 @@
         )
       }}
 
-      {{!-- {{#d3-graph as |d3|}}
-        {{#let (d3-arc (sub radius 10) 0) as |arc|}}
-        {{d3.graph (pipe
-
-
-        )}}
-        {{/let}}
-      {{/d3-graph}} --}}
     </g>
 
   </g>
 
     {{chart.y-axis x-translate=chart.width ticks=4}}
-
-    {{proto/d3-element
-      element-name='circle'
-      selector='zero'
-      classNames='sine-wave__zeros'
-      data=zeros
-      transition=chart.transition
-      element-attrs=(pipe
-        (d3-attr 'cy' mid)
-        (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
-        (d3-attr 'r' 4)
-      )
-      exit-transition=(pipe
-        (d3-attr 'r' 0)
-      )
-    }}
-
     {{chart.line-chart}}
 
   {{/let}}
@@ -136,8 +112,11 @@
 </p>
 
 <p>
-  <strong>&theta;</strong>
+  <strong><code>&theta;</code>:</strong>
   {{angle}}°
+
+  <strong><code>sin(&theta;)</code>:</strong>
+  {{mult rotatorY -1}}
 </p>
 
 <p>
@@ -147,7 +126,6 @@
 
 <strong>speed</strong>
 {{input type="range" min="5" max="100" value=speed}}
-
 
 <h5>htmlbars</h5>
 {{code-snippet name="sine-wave-example.hbs" unindent=false}}
