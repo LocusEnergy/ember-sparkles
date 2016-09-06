@@ -4,10 +4,10 @@ import _ from 'lodash/lodash';
 // BEGIN-SNIPPET sine-wave-example
 import { task, timeout } from 'ember-concurrency';
 const { computed } = Ember;
-const { PI, sin, abs } = Math;
+const { PI, sin, abs, cos, round } = Math;
 
 const TAU = 2 * PI;
-const DELTA = 150;
+const DELTA = 20;
 
 const translate = (d) => {
   let X = d.map(({ x }) => x);
@@ -17,7 +17,7 @@ const translate = (d) => {
 }
 
 export default Ember.Controller.extend({
-  xMax: 2 * TAU,
+  xMax: TAU,
   delta: DELTA,
 
   data: computed('xMax', 'delta', function() {
@@ -26,28 +26,41 @@ export default Ember.Controller.extend({
     return _.range(xMax, 0, -1 * xMax / delta).map(x => ({ x, y: sin(x) }));
   }),
 
-  speed: 10,
+  speed: 50,
   step: 0,
-  theta: 0,
-
-  qq: computed.alias('data.objectAt(step)'),
-
-  zeros: computed.filter('data', function({ y }) {
-    return abs(y) < 0.0001;
-  }),
 
   wave: computed('data', function() {
     let data = this.get('data');
     return [ { data } ];
   }),
 
+  theta: computed('data', 'delta', 'step', function() {
+    let data = this.get('data');
+    let delta = this.get('delta');
+    let step = this.get('step');
+    return data[step % delta]['x'];
+  }),
+
+  angle: computed('theta', function() {
+    return round(360 * (1 - this.get('theta') / TAU));
+  }),
+
+  x: computed('theta', function() {
+    return cos(this.get('theta'));
+  }),
+
+  y: computed('theta', function() {
+    return sin(this.get('theta'));
+  }),
+
+  zeros: computed.filter('data', function({ y }) {
+    return abs(y) < 0.0001;
+  }),
+
   cycle: task(function * () {
     while(true) {
-      let step = this.get('step') % this.get('delta');
       this.set('data', translate(this.get('data')));
-      this.set('theta', data[step]['x']);
-      step++;
-      this.set('step', step);
+      this.incrementProperty('step');
       yield timeout(this.get('speed'));
     }
   }).drop(),

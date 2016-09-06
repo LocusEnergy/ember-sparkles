@@ -6,28 +6,58 @@
   input-key='x'
   output-key='y'
   x-domain=(array 0 xMax)
-  y-domain=(array -1 1)
-  transition-duration=0.001
+  y-domain=(array -1.5 1.5)
+  transition-duration=(sub speed 4)
   as |chart|}}
 
-  {{rotating-circle
-    theta=theta
-    dx=(compute chart.x-scale 10)
-    wave-end=(compute chart.x-scale 6.283)
-    origin=(compute chart.y-scale 0)
-    radius=(round (mult (compute chart.y-scale 0) 1))
-  }}
+  {{#let
+    (div chart.height 2)
+    (compute chart.y-scale 0.5)
+    (mult (compute chart.y-scale 0.5) x)
+    (mult (compute chart.y-scale 0.5) y)
+  as |mid radius cx cy|}}
 
-  {{log qq}}
+  <line class="x-axis" x1=0 x2={{chart.width}} y1={{mid}} y2={{mid}}></line>
 
-  {{!-- {{#each zeros as |p|}}
-    <circle class="point" cx={{compute chart.x-scale p.x}} cy={{compute chart.y-scale 0}} r="4"/>
-  {{/each}} --}}
+  <g transform="translate({{sub chart.width radius}},0)">
+    <circle cx="0" cy={{mid}} r={{radius}} />
 
-  {{!-- <line class="x-axis" x1=0 x2={{compute chart.x-scale 6.7}} y1={{compute chart.y-scale 0}} y2={{compute chart.y-scale 0}}></line> --}}
+    <g transform="translate(0, {{mid}})">
+      <line class="connector" x2={{sub mid (div radius 2)}} x1={{cx}} y1={{cy}} y2={{cy}}></line>
+      <line class="triangle" id="x" x1=0 x2={{cx}} y1={{cy}} y2={{cy}}></line>
+      <line class="triangle" id="hypotenuse" x1=0 x2={{cx}} y2={{cy}}></line>
+      <line class="triangle" id="y" y1=0 y2={{cy}}></line>
+      <circle class="point" cx={{cx}} cy={{cy}} r="3"/>
+    </g>
+
+  </g>
+
+  {{chart.y-axis x-translate=chart.width ticks=4}}
+
+  {{#d3-graph as |d3|}}
+    {{d3.graph (pipe
+      (d3-select-all '.zero')
+      (d3-data zeros)
+      (d3-join
+        enter=(pipe
+          (d3-append 'circle')
+          (d3-attr 'class' 'zero')
+          (d3-attr 'cy' mid)
+          (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
+          (d3-attr 'r' 4)
+        )
+
+        update=(pipe
+          (d3-transition chart.transition)
+          (d3-attr 'cx' (pipe (r/get 'x') chart.x-scale))
+        )
+      )
+    )}}
+  {{/d3-graph}}
 
   {{chart.line-chart}}
-  {{chart.y-axis x-translate=(compute chart.x-scale 6.7) ticks=2}}
+
+  {{/let}}
 
 {{/ember-sparkles}}
 
@@ -35,8 +65,13 @@
 
 <p>
   <em>
-    a sine wave plots the y coordinate of a rotating point on the unit circle
+    sine waves plot the y coordinate of a point rotating on the circumfrence of a circle
   </em>
+</p>
+
+<p>
+  <strong>angle</strong>
+  {{angle}}°
 </p>
 
 <p>
@@ -45,7 +80,7 @@
 </p>
 
 <strong>speed</strong>
-{{input type="range" min="1" max="30" value=speed}}
+{{input type="range" min="5" max="100" value=speed}}
 
 
 <h5>htmlbars</h5>
@@ -53,7 +88,3 @@
 
 <h5>javascript</h5>
 {{code-snippet name="sine-wave-example.js" unindent=false}}
-
-<h5>custom rotating circle component</h5>
-{{code-snippet name="rotating-circle.hbs" unindent=false}}
-{{code-snippet name="rotating-circle.js" unindent=false}}

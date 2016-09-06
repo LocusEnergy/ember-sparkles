@@ -6,7 +6,7 @@
 
   .x-axis {
     fill: none;
-    stroke: #000;
+    stroke: #dcdcdc;
     stroke-width: 1px;
     shape-rendering: crispEdges;
   }
@@ -17,7 +17,7 @@
     stroke-width: 2px;
   }
 
-  .point {
+  .zero, .point {
     fill: #707070;
     stroke: none;
   }
@@ -37,7 +37,7 @@
   }
 
   line.triangle {
-    stroke-width: 2px;
+    stroke-width: 1px;
     stroke: rgb(181, 207, 107);
   }
 }
