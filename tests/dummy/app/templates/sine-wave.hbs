@@ -7,7 +7,9 @@
   output-key='y'
   x-domain=(array 0 xMax)
   y-domain=(array -1.5 1.5)
-  transition-duration=(sub speed 4)
+  transition-duration=(round (mult speed 0.9))
+
+  marginRight=100
   as |chart|}}
 
   {{#let
@@ -20,31 +22,44 @@
   as |unitCircle|}}
 
   <line class="horizon" x1=0 x2={{chart.width}} y1={{mid}} y2={{mid}}></line>
-  <g transform="translate({{sub chart.width radius}},0)">
+  <g class="triangle-container" transform="translate({{sub chart.width radius}},0)">
 
     <circle cx="0" cy={{mid}} r={{radius}} />
     <g transform="translate(0,{{mid}})">
 
-      {{proto/d3-element
+      {{d3-element
         element-name='line'
         selector='connector'
         data=unitCircle
         transition=chart.transition
-        element-attrs=(pipe
+        on-enter=(pipe
           (d3-attr 'x1' (r/get 'cx'))
-          (d3-attr 'x2' (sub mid (div radius 2)))
+          (d3-attr 'x2' (add radius 8))
           (d3-attr 'y1' (r/get 'cy'))
           (d3-attr 'y2' (r/get 'cy'))
         )
       }}
 
-      {{proto/d3-element
+      {{d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__hypotenuse'
+        data=unitCircle
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'x1' 0)
+          (d3-attr 'x2' (r/get 'cx'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}]
+
+      {{d3-element
         element-name='line'
         classNames='triangle'
         selector='triangle__height'
         data=unitCircle
         transition=chart.transition
-        element-attrs=(pipe
+        on-enter=(pipe
           (d3-attr 'x1' (r/get 'cx'))
           (d3-attr 'x2' (r/get 'cx'))
           (d3-attr 'y1' 0)
@@ -52,39 +67,51 @@
         )
       }}
 
-      {{proto/d3-element
-        element-name='line'
-        classNames='triangle'
-        selector='triangle__base'
-        data=unitCircle
-        transition=chart.transition
-        element-attrs=(pipe
-          (d3-attr 'x1' 0)
-          (d3-attr 'x2' (r/get 'cx'))
-          (d3-attr 'y1' 0)
-          (d3-attr 'y2' 0)
-        )
-      }}
+      {{#if labels}}
 
-      {{proto/d3-element
-        element-name='line'
-        classNames='triangle'
-        selector='triangle__hypotenuse'
-        data=unitCircle
-        transition=chart.transition
-        element-attrs=(pipe
-          (d3-attr 'x1' 0)
-          (d3-attr 'x2' (r/get 'cx'))
-          (d3-attr 'y2' (r/get 'cy'))
-        )
-      }}
+        {{d3-element
+          element-name='text'
+          selector='sine-text'
+          data=(array (hash text=(concat 'sin(a): ' (div (ceil (mult rotatorY -100)) 100))))
+          transition=chart.transition
+          on-enter=(pipe
+            (d3-attr 'x' (add radius 12))
+            (d3-attr 'y' (add unitCircle.firstObject.cy 3))
+            (d3-text (r/get 'text'))
+          )
+        }}
 
-      {{proto/d3-element
+        <text transform="translate(5,-5)">
+          a:
+          {{angle}}&deg;
+        </text>
+
+        <g transform="rotate(90)">
+
+          {{#let (d3-arc innerRadius=0 outerRadius=(div radius 2) startAngle=(mult theta -1) endAngle=0) as |arc|}}
+          {{#d3-element
+            element-name='path'
+            selector='theta'
+            data=(array theta)
+            transition=chart.transition
+            on-enter=(pipe
+              (d3-attr-tween 'd' (d3-arc-tween arc))
+            )
+          as |d|}}
+          {{/d3-element}}
+          {{/let}}
+
+        </g>
+
+      {{/if}}
+
+
+      {{d3-element
         element-name='circle'
         selector='rotator'
         data=unitCircle
         transition=chart.transition
-        element-attrs=(pipe
+        on-enter=(pipe
           (d3-attr 'cx' (r/get 'cx'))
           (d3-attr 'cy' (r/get 'cy'))
           (d3-attr 'r' 3)
@@ -107,28 +134,27 @@
 
 <p>
   <em>
-    sine waves plot the <code>y</code> coordinate of a point rotating on the circumference of a circle
+    sine waves plot the <code>y</code> coordinate of a point rotating on the circumference of a circle.
   </em>
-</p>
-
-<p>
-  <strong><code>&theta;</code>:</strong>
-  {{angle}}°
-
-  <strong><code>sin(&theta;)</code>:</strong>
-  {{mult rotatorY -1}}
 </p>
 
 <p>
   <button {{action 'start'}}>start</button>
   <button {{action 'stop'}}>stop</button>
+  <button {{action 'labels'}}>{{if labels 'hide' 'show'}}</button>
 </p>
 
 <strong>speed</strong>
-{{input type="range" min="5" max="100" value=speed}}
+{{input type="range" min="10" max="150" value=speed}}
 
 <h5>htmlbars</h5>
 {{code-snippet name="sine-wave-example.hbs" unindent=false}}
 
 <h5>javascript</h5>
 {{code-snippet name="sine-wave-example.js" unindent=false}}
+
+<p>
+  <strong>
+    <a href="http://www.thesoftwaresimpleton.com/blog/2016/05/25/sine-wave/" target="_blank">inspiration</a>
+  </strong>
+</p>

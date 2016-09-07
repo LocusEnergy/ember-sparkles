@@ -23,8 +23,9 @@
   }
 
   path.line {
-    stroke: #383838 !important;
+    stroke: #606060 !important;
     stroke-width: 2px !important;
+    shape-rendering: crispEdges;
   }
 
   line.connector {
@@ -32,12 +33,21 @@
     stroke-width: 1px;
   }
 
+  .triangle-container text {
+    font-size: 12px;
+  }
+
   .triangle > line {
     stroke-width: 1px;
-    stroke: #383838;
+    stroke: #dcdcdc;
   }
 
   .triangle__height {
     stroke-width: 2px !important;
+  }
+
+  .theta {
+    fill: none;
+    stroke: #dcdcdc;
   }
 }

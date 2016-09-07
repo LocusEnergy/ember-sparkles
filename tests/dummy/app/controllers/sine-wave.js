@@ -5,55 +5,60 @@ import _ from 'lodash/lodash';
 
 // BEGIN-SNIPPET sine-wave-example
 import { task, timeout } from 'ember-concurrency';
-const { computed } = Ember;
+import computed from 'ember-computed-decorators';
+const { computed: { alias } } = Ember;
 const { PI, sin, cos, round } = Math;
 
 const TAU = 2 * PI;
-const DELTA = 20;
+const RESOLUTION = 270;
 
 const translate = (d) => {
   let X = d.map(({ x }) => x);
   let Y = d.map(({ y }) => y);
-  Y.unshift(Y.pop());
+  Y.push(Y.shift());
   return _.zipWith(X, Y, (x, y) => ({ x, y }));
 }
 
 export default Ember.Controller.extend({
   xMax: TAU,
-  delta: DELTA,
+  resolution: RESOLUTION,
+  direction: true,
 
-  data: computed('xMax', 'delta', function() {
-    let xMax = this.get('xMax');
-    let delta = this.get('delta');
-    return _.range(xMax, 0, -1 * xMax / delta).map(x => ({ x, y: sin(x) }));
-  }),
+  @computed('xMax', 'resolution')
+  seed(m, r) {
+    let g = m / r;
+    return _.range(g, m + g, g).map(x => ({ x, y: sin(x) }));
+  },
 
-  speed: 50,
+  data: alias('seed'),
+
+  speed: 100,
   step: 0,
 
-  wave: computed('data', function() {
-    let data = this.get('data');
+  @computed('data')
+  wave(data) {
     return [ { data } ];
-  }),
+  },
 
-  theta: computed('data', 'delta', 'step', function() {
-    let data = this.get('data');
-    let delta = this.get('delta');
-    let step = this.get('step');
-    return data[step % delta]['x'];
-  }),
+  @computed('data', 'resolution', 'step')
+  theta(data, r, step) {
+    return data[step % r]['x'];
+  },
 
-  angle: computed('theta', function() {
-    return round(360 * (1 - this.get('theta') / TAU));
-  }),
+  @computed('theta')
+  angle(theta) {
+    return round(theta * 360 / TAU);
+  },
 
-  rotatorX: computed('theta', function() {
-    return cos(this.get('theta'));
-  }),
+  @computed('theta')
+  rotatorX(theta) {
+    return cos(theta);
+  },
 
-  rotatorY: computed('theta', function() {
-    return sin(this.get('theta'));
-  }),
+  @computed('theta')
+  rotatorY(theta) {
+    return -1 * sin(theta);
+  },
 
   cycle: task(function * () {
     while(true) {
@@ -70,6 +75,10 @@ export default Ember.Controller.extend({
 
     stop() {
       this.get('cycle').cancelAll();
+    },
+
+    labels() {
+      this.toggleProperty('labels');
     }
   }
 });
