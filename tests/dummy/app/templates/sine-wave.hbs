@@ -5,7 +5,7 @@
   data=wave
   input-key='x'
   output-key='y'
-  x-domain=(array 0 xMax)
+  x-domain=(array 0 max)
   y-domain=(array -1.5 1.5)
   transition-duration=(round (mult speed 0.5))
 
@@ -19,9 +19,8 @@
 
   {{#let
     (array (hash cx=(mult radius rotatorX) cy=(mult radius rotatorY)))
-  as |unitCircle|}}
+  as |point|}}
 
-  <line class="horizon" x1=0 x2={{chart.width}} y1={{mid}} y2={{mid}}></line>
   <g class="triangle-container" transform="translate({{sub chart.width radius}},0)">
 
     <circle id="unit_circle" cx="0" cy={{mid}} r={{radius}} />
@@ -30,7 +29,7 @@
       {{d3-element
         element-name='line'
         selector='connector'
-        data=unitCircle
+        data=point
         transition=chart.transition
         on-enter=(pipe
           (d3-attr 'x1' (r/get 'cx'))
@@ -44,7 +43,7 @@
         element-name='line'
         classNames='triangle'
         selector='triangle__hypotenuse'
-        data=unitCircle
+        data=point
         transition=chart.transition
         on-enter=(pipe
           (d3-attr 'x1' 0)
@@ -57,7 +56,7 @@
         element-name='line'
         classNames='triangle'
         selector='triangle__height'
-        data=unitCircle
+        data=point
         transition=chart.transition
         on-enter=(pipe
           (d3-attr 'x1' (r/get 'cx'))
@@ -71,7 +70,7 @@
         element-name='line'
         classNames='triangle'
         selector='triangle__base'
-        data=unitCircle
+        data=point
         transition=chart.transition
         on-enter=(pipe
           (d3-attr 'x1' (r/get 'cx'))
@@ -99,11 +98,11 @@
         {{d3-element
           element-name='text'
           selector='sine-text'
-          data=(array (hash text=(concat 'sin(a) = ' (div (ceil (mult rotatorY -100)) 100))))
+          data=(array (hash text=(concat 'sin(a) = ' (float (mult rotatorY -1) 2))))
           transition=chart.transition
           on-enter=(pipe
             (d3-attr 'x' (add radius 12))
-            (d3-attr 'y' (add unitCircle.firstObject.cy 3))
+            (d3-attr 'y' (add point.firstObject.cy 3))
             (d3-text (r/get 'text'))
           )
         }}
@@ -118,7 +117,7 @@
       {{d3-element
         element-name='circle'
         selector='rotator'
-        data=unitCircle
+        data=point
         transition=chart.transition
         on-enter=(pipe
           (d3-attr 'cx' (r/get 'cx'))
@@ -148,12 +147,13 @@
 </p>
 
 <div class="sine-controls">
-  <button {{action (if rotator.isIdle 'start' 'stop')}}>{{if rotator.isIdle 'rotate' 'stop'}}</button>
+  <button {{action (if rotator.isIdle (perform rotator) 'stop')}}>{{if rotator.isIdle 'rotate' 'stop'}}</button>
   <button {{action 'labels'}}>{{if labels 'hide' 'show'}}</button>
 
   <span>
-    <strong>speed</strong>
-    {{input type="range" min="10" max="150" value=speed}}
+    {{!-- period = 1000 / (speed * resolution) --}}
+    {{float (div 1000 (mult speed resolution)) 2}} Hz
+    {{input type="range" min="5" max="250" value=speed}}
   </span>
 </div>
 

@@ -1,19 +1,12 @@
 .sine-controls {
   display: flex;
   flex: 1;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .sine-wave {
   .axis path {
     display: block;
-  }
-
-  .horizon {
-    stroke: #dcdcdc;
-    stroke-width: 1px;
-    fill: none;
-    shape-rendering: crispEdges;
   }
 
   #unit_circle {
