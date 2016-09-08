@@ -4,13 +4,13 @@ import Ember from 'ember';
 import _ from 'lodash/lodash';
 
 // BEGIN-SNIPPET sine-wave-example
-import { task, timeout } from 'ember-concurrency';
 import computed from 'ember-computed-decorators';
+import { task, timeout } from 'ember-concurrency';
 const { computed: { alias } } = Ember;
 const { PI, sin, cos, round } = Math;
 
 const TAU = 2 * PI;
-const RESOLUTION = 270;
+const RESOLUTION = 45;
 
 const translate = (d) => {
   let X = d.map(({ x }) => x);
@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
   @computed('xMax', 'resolution')
   seed(m, r) {
     let g = m / r;
-    return _.range(g, m + g, g).map(x => ({ x, y: sin(x) }));
+    return _.range(m, 0, -1 * g).map(x => ({ x, y: sin(x) }));
   },
 
   data: alias('seed'),
@@ -60,7 +60,7 @@ export default Ember.Controller.extend({
     return -1 * sin(theta);
   },
 
-  cycle: task(function * () {
+  rotator: task(function * () {
     while(true) {
       this.set('data', translate(this.get('data')));
       this.incrementProperty('step');
@@ -70,11 +70,11 @@ export default Ember.Controller.extend({
 
   actions: {
     start() {
-      this.get('cycle').perform();
+      this.get('rotator').perform();
     },
 
     stop() {
-      this.get('cycle').cancelAll();
+      this.get('rotator').cancelAll();
     },
 
     labels() {

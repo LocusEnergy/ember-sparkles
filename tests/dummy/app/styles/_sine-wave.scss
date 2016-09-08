@@ -1,18 +1,23 @@
-.sine-wave {
+.sine-controls {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
 
+.sine-wave {
   .axis path {
     display: block;
   }
 
   .horizon {
-    fill: none;
     stroke: #dcdcdc;
     stroke-width: 1px;
+    fill: none;
     shape-rendering: crispEdges;
   }
 
-  circle {
-    fill: none;
+  #unit_circle {
+    fill: white;
     stroke: #dcdcdc;
     stroke-width: 1px;
   }
@@ -23,7 +28,7 @@
   }
 
   path.line {
-    stroke: #606060 !important;
+    stroke: #888888 !important;
     stroke-width: 2px !important;
     shape-rendering: crispEdges;
   }
@@ -42,12 +47,9 @@
     stroke: #dcdcdc;
   }
 
-  .triangle__height {
-    stroke-width: 2px !important;
-  }
-
   .theta {
-    fill: none;
-    stroke: #dcdcdc;
+    fill: #d8d8d8;
+    stroke: #b8b8b8;
+    stroke-width: 0.5px;
   }
 }
