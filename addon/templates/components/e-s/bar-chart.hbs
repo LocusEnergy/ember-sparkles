@@ -9,31 +9,29 @@
   )
   ) as |options|}}
 
-  {{#d3-graph classNames="ember-sparkles--bar-chart" as |d3|}}
 
-    {{d3.graph (pipe
-      (d3-select-all 'rect')
-      (d3-data data)
-      (d3-join
-        enter=(pipe
-          (d3-append 'rect')
-          (d3-attr 'class' 'bar')
-          (d3-attr 'y' height)
-          (d3-attr 'x' width)
-          (d3-style 'fill' '#637939')
-          (d3-style 'opacity' 0)
-          (d3-call options.updateRect)
-        )
-        update=(d3-call options.updateRect)
-        exit=(pipe
-          (if with-transition (d3-transition transition) (d3-noop))
-          (d3-style 'fill' 'purple')
-          (d3-style 'opacity' 0)
-          (d3-attr 'height' 0)
-          (d3-attr 'y' height)
-          (d3-remove)
-        )
-    ))}}
-  {{/d3-graph}}
+  {{d3-graph (pipe
+    (d3-select-all 'rect')
+    (d3-data data)
+    (d3-join
+      enter=(pipe
+        (d3-append 'rect')
+        (d3-attr 'class' 'bar')
+        (d3-attr 'y' height)
+        (d3-attr 'x' width)
+        (d3-style 'fill' '#637939')
+        (d3-style 'opacity' 0)
+        (d3-call options.updateRect)
+      )
+      update=(d3-call options.updateRect)
+      exit=(pipe
+        (if with-transition (d3-transition transition) (d3-noop))
+        (d3-style 'fill' 'purple')
+        (d3-style 'opacity' 0)
+        (d3-attr 'height' 0)
+        (d3-attr 'y' height)
+        (d3-remove)
+      )
+  ))}}
 
 {{/with}}
