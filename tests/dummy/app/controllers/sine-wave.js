@@ -10,7 +10,7 @@ const { computed: { alias } } = Ember;
 const { PI, sin, cos, round } = Math;
 
 const TAU = 2 * PI;
-const RESOLUTION = 45;
+const RESOLUTION = 90;
 
 const translate = (d) => {
   let X = d.map(({ x }) => x);

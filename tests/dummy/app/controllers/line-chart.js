@@ -6,7 +6,7 @@ import { extent, min, max } from 'd3-array';
 
 let generateData = function() {
   let end = moment('2015-03-14');
-  let numDays = _.random(10, 50);
+  let numDays = _.random(30, 52);
   let start = end.clone().subtract(numDays, 'days');
   let dateRange = moment.range(start, end);
   let series = _.range(4);
@@ -20,7 +20,7 @@ let generateData = function() {
       data: dateRange.toArray('days').map(d => {
         return {
           ts: d.toDate(),
-          [valueType]: _.random(10, 1000)
+          [valueType]: Math.random() * Math.sin(d.utc())
         };
       })
     };
