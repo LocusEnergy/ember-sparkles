@@ -48,6 +48,10 @@ export default Ember.Controller.extend({
   },
 
   actions: {
+    toggleInfo() {
+      this.toggleProperty('info')
+    },
+   
     reset() {
       this.toggleCycle({ f: FREQUENCY, d: DURATION });
     },

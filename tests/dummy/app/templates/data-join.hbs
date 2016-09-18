@@ -48,103 +48,98 @@
   </div>
 
   <div class="four columns">
-    <p>
-      Data joins are a fundamental concept in <a href="https://d3js.org/" target="_blank">D3.js</a>.
-      This is a visual example of the data join, and D3's <a href="https://bost.ocks.org/mike/join/" target="_blank">enter, update, exit</a> pattern.
-    </p>
-    <p>
-      We join data to the DOM using regularly-placed <code>&lt;circle&gt;</code> SVG elements, mapping datapoints to radius, similar to <a href="https://bost.ocks.org/mike/circles/" target="_blank">this</a>.
-    </p>
+    <button {{action 'toggleInfo'}}>{{if info 'no' '?'}}</button>
+    {{#if info}}
+      <p>
+        Data joins are a fundamental concept in <a href="https://d3js.org/" target="_blank">D3.js</a>.
+        This is a visual example of the data join, and D3's <a href="https://bost.ocks.org/mike/join/" target="_blank">enter, update, exit</a> pattern.
+      </p>
+      <p>
+        We join data to the DOM using regularly-placed <code>&lt;circle&gt;</code> SVG elements, mapping datapoints to radius, similar to <a href="https://bost.ocks.org/mike/circles/" target="_blank">this</a>.
+      </p>
 
-    <p>
-      <strong>data</strong>
-      <br>
-      <code>
-        {{map (r 'round') (map-by 'radius' data)}}
-      </code>
-    </p>
+      <p>
+        <strong>data</strong>
+        <code>
+          {{map (r 'round') (map-by 'radius' data)}}
+        </code>
+      </p>
 
-    <p>
-      <strong>enter</strong>
+      <p>
+        <strong>enter</strong>
 
-      entering (new) elements have radius <code>r</code>
+        entering (new) elements have radius <code>r</code>
 
-      <br>
-      <em>transitions</em>
-      <ul class="transition-list">
-        <li>
-          radius: <code>0</code> to <code>r</code>
-        </li>
-        <li>
-          fill:
-          <span class="swatch" style="background:{{enterFill}}"/>
-          to
-          <span class="swatch" style="background:{{staticFill}}"/>
-        </li>
-        <li>
-          opacity: 0.3 to 0.85
-        </li>
-      </ul>
-    </p>
+        <br>
+        <em>transitions</em>
+        <ul class="transition-list">
+          <li>
+            radius: <code>0</code> to <code>r</code>
+          </li>
+          <li>
+            fill:
+            <span class="swatch" style="background:{{enterFill}}"/>
+            to
+            <span class="swatch" style="background:{{staticFill}}"/>
+          </li>
+        </ul>
+      </p>
 
-    <p>
-      <strong>update</strong>
-      updating elements – radius changes to <code>r'</code>
+      <p>
+        <strong>update</strong>
+        updating elements – radius changes to <code>r'</code>
 
-      <br>
-      <em>transitions</em>
-      <ul class="transition-list">
-        <li>
-          radius: <code>r</code> to <code>r'</code>
-        </li>
-        <li>
-          fill:
-          <span class="swatch" style="background:{{staticFill}}"/>
-          to
-          <span class="swatch" style="background:{{updateFill}}"/>
-        </li>
-      </ul>
-    </p>
+        <br>
+        <em>transitions</em>
+        <ul class="transition-list">
+          <li>
+            radius: <code>r</code> to <code>r'</code>
+          </li>
+          <li>
+            fill:
+            <span class="swatch" style="background:{{staticFill}}"/>
+            to
+            <span class="swatch" style="background:{{updateFill}}"/>
+          </li>
+        </ul>
+      </p>
 
-    <p>
-      <strong>exit</strong>
+      <p>
+        <strong>exit</strong>
 
-      <br>
-      exiting elements
-      <br>
+        <br>
+        exiting elements
+        <br>
 
-      <br>
-      <em>transitions</em>
-      <ul class="transition-list">
-        <li>
-          radius: <code>r</code> to <code>0</code>
-        </li>
-        <li>
-          fill:
-          <span class="swatch" style="background:{{staticFill}}"/>
-          or
-          <span class="swatch" style="background:{{updateFill}}"/>
-          to
-          <span class="swatch" style="background:{{exitFill}}"/>
-        </li>
-        <li>
-          opacity: 0.85 to 0
-        </li>
-      </ul>
-    </p>
+        <br>
+        <em>transitions</em>
+        <ul class="transition-list">
+          <li>
+            radius: <code>r</code> to <code>0</code>
+          </li>
+          <li>
+            fill:
+            <span class="swatch" style="background:{{staticFill}}"/>
+            or
+            <span class="swatch" style="background:{{updateFill}}"/>
+            to
+            <span class="swatch" style="background:{{exitFill}}"/>
+          </li>
+        </ul>
+      </p>
 
+    {{/if}}
   </div>
 </div>
 
-<div class="row data-join-example">
-</div>
+{{#if info}}
+  <button {{action 'reset'}}>reset</button>
+  <button {{action 'toggle'}}>toggle</button>
+  <button {{action 'makeThingsInteresting'}}>turnt</button>
 
-<button {{action 'reset'}}>reset</button>
-<button {{action 'toggle'}}>toggle</button>
-<button {{action 'makeThingsInteresting'}}>turnt</button>
+  <h5>htmlbars</h5>
+  {{code-snippet name="data-join-example.hbs" unindent=false}}
 
-<h5>htmlbars</h5>
-{{code-snippet name="data-join-example.hbs" unindent=false}}
-
-<h5>javascript</h5>
-{{code-snippet name="data-join-example.js" unindent=false}}
+  <h5>javascript</h5>
+  {{code-snippet name="data-join-example.js" unindent=false}}
+{{/if}}
