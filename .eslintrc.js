@@ -1,7 +1,16 @@
 module.exports = {
-  extends: './node_modules/ember-cli-eslint/coding-standard/ember-application.js',
-  "globals": {
-    "moment": true,
-    "$": true
+  root: true,
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: 'module',
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true
+    }
+  },
+  extends: 'eslint:recommended',
+  env: {
+    'browser': true
+  },
+  rules: {
   }
 };

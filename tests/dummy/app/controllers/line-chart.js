@@ -1,3 +1,5 @@
+/* global moment */
+
 // BEGIN-SNIPPET line-chart-example
 
 import Ember from 'ember';

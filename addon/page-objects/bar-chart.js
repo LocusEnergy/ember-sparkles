@@ -1,3 +1,5 @@
+/* global $ */
+
 export default class BarChart {
   constructor(env) {
     this.env = env;
