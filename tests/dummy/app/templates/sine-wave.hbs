@@ -1,0 +1,170 @@
+{{!-- BEGIN-SNIPPET sine-wave-example --}}
+
+{{#ember-sparkles
+  classNames="sine-wave"
+  data=wave
+  input-key='x'
+  output-key='y'
+  x-domain=(array 0 max)
+  y-domain=(array -1.5 1.5)
+  transition-duration=(round (mult speed 0.5))
+  marginRight=100
+  as |chart|}}
+
+  {{#let
+    (div chart.height 2)
+    (compute chart.y-scale 0.5)
+  as |mid radius|}}
+
+  {{#let
+    (array (hash cx=(mult radius rotatorX) cy=(mult radius rotatorY)))
+  as |point|}}
+
+  <g class="triangle-container" transform="translate({{sub chart.width radius}},0)">
+
+    <circle id="unit_circle" cx="0" cy={{mid}} r={{radius}} />
+    <g transform="translate(0,{{mid}})">
+
+      {{d3-element
+        element-name='line'
+        selector='connector'
+        data=point
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'x1' (r/get 'cx'))
+          (d3-attr 'x2' (add radius 8))
+          (d3-attr 'y1' (r/get 'cy'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__hypotenuse'
+        data=point
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'x1' 0)
+          (d3-attr 'x2' (r/get 'cx'))
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__height'
+        data=point
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'x1' (r/get 'cx'))
+          (d3-attr 'x2' (r/get 'cx'))
+          (d3-attr 'y1' 0)
+          (d3-attr 'y2' (r/get 'cy'))
+        )
+      }}
+
+      {{d3-element
+        element-name='line'
+        classNames='triangle'
+        selector='triangle__base'
+        data=point
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'x1' (r/get 'cx'))
+          (d3-attr 'y1' 0)
+          (d3-attr 'y2' 0)
+        )
+      }}
+
+      {{#if labels}}
+
+        <g transform="rotate(90)">
+
+          {{#let (d3-arc innerRadius=0 outerRadius=(div radius 2) startAngle=(mult theta -1) endAngle=0) as |arc|}}
+          {{d3-element
+            element-name='path'
+            selector='theta'
+            data=(array theta)
+            transition=chart.transition
+            on-enter=(pipe (d3-attr-tween 'd' (d3-arc-tween arc)))
+          }}
+          {{/let}}
+
+        </g>
+
+        {{d3-element
+          element-name='text'
+          selector='sine-text'
+          data=(array (hash text=(concat 'sin(a) = ' (float (mult rotatorY -1) 2))))
+          transition=chart.transition
+          on-enter=(pipe
+            (d3-attr 'x' (add radius 12))
+            (d3-attr 'y' (add point.firstObject.cy 3))
+            (d3-text (r/get 'text'))
+          )
+        }}
+
+        <text transform="translate(5,-5)">
+          a: {{angle}}&deg;
+        </text>
+
+      {{/if}}
+
+
+      {{d3-element
+        element-name='circle'
+        selector='rotator'
+        data=point
+        transition=chart.transition
+        on-enter=(pipe
+          (d3-attr 'cx' (r/get 'cx'))
+          (d3-attr 'cy' (r/get 'cy'))
+          (d3-attr 'r' 3)
+        )
+      }}
+
+    </g>
+
+  </g>
+
+    {{chart.y-axis x-translate=chart.width ticks=4}}
+    {{chart.line-chart}}
+
+  {{/let}}
+  {{/let}}
+
+{{/ember-sparkles}}
+
+{{!-- END-SNIPPET --}}
+
+<p>
+  <em>
+    sine waves plot the vertical coordinate of a point rotating on the circumference of a circle.
+  </em>
+</p>
+
+<div class="sine-controls">
+  <button {{action (if rotator.isIdle (perform rotator) 'stop')}}>{{if rotator.isIdle 'rotate' 'stop'}}</button>
+  <button {{action 'labels'}}>{{if labels 'hide' 'show'}}</button>
+
+  <span>
+    {{!-- period = 1000 / (speed * resolution) --}}
+    {{float (div 1000 (mult speed resolution)) 2}} Hz
+    {{input type="range" min="5" max="250" value=speed}}
+  </span>
+</div>
+
+
+<h5>htmlbars</h5>
+{{code-snippet name="sine-wave-example.hbs" unindent=false}}
+
+<h5>javascript</h5>
+{{code-snippet name="sine-wave-example.js" unindent=false}}
+
+<p>
+  <strong>
+    <a href="http://www.thesoftwaresimpleton.com/blog/2016/05/25/sine-wave/" target="_blank">inspiration</a>
+  </strong>
+</p>

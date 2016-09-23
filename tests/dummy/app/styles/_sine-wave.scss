@@ -1,0 +1,48 @@
+.sine-controls {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.sine-wave {
+  .axis path {
+    display: block;
+  }
+
+  #unit_circle {
+    fill: white;
+    stroke: #dcdcdc;
+    stroke-width: 1px;
+  }
+
+  .rotator {
+    fill: #383838;
+    stroke: none;
+  }
+
+  path.line {
+    stroke: #888888 !important;
+    stroke-width: 2px !important;
+    shape-rendering: crispEdges;
+  }
+
+  line.connector {
+    stroke: #dcdcdc;
+    stroke-width: 1px;
+  }
+
+  .triangle-container text {
+    font-size: 12px;
+  }
+
+  .triangle > line {
+    stroke-width: 1px;
+    stroke: #dcdcdc;
+  }
+
+  .theta {
+    fill: #d8f1e2;
+    stroke: #b8b8b8;
+    stroke-width: 0.5px;
+  }
+}

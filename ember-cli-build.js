@@ -5,7 +5,10 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     snippetPaths: ['tests/dummy/snippets'],
-    snippetSearchPaths: ['app', 'tests/dummy/app', 'addon']
+    snippetSearchPaths: ['app', 'tests/dummy/app', 'addon'],
+    babel: {
+      optional: ['es7.decorators']
+    }
   });
 
 

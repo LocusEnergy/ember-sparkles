@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   init() {
     this.set('pieData', generateData());
   },
-  arcThreshold: 10,
+  
   actions: {
     toggleData() {
       this.set('pieData', generateData());
