@@ -1,4 +1,4 @@
-/*eslint-disable no-constant-condition*/
+/* eslint-disable no-constant-condition */
 
 import Ember from 'ember';
 import _ from 'lodash/lodash';

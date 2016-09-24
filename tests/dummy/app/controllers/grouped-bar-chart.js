@@ -1,3 +1,5 @@
+/* global moment */
+
 // BEGIN-SNIPPET grouped-bar-chart-example
 
 import Ember from 'ember';

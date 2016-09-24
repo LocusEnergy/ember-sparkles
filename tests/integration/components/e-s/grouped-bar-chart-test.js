@@ -144,7 +144,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   `);
 
   let groups = this.chart.groups();
-  let transforms = groups.map((idx, g) => $(g).attr('transform')).toArray();
+  let transforms = groups.map((idx, g) => this.$(g).attr('transform')).toArray();
   let rects = this.chart.rect();
 
   // check existence and positioning of rectangle groups

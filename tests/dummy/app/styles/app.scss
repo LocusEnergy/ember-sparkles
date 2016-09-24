@@ -6,7 +6,10 @@
 
 html,body {
   height: 100%;
-  // font-family: "Roboto", "Arial", sans-serif;
+}
+
+.ember-application > .ember-view {
+  height: 100%;
 }
 
 a {
@@ -35,6 +38,7 @@ button {
 
 .svg-container {
   margin-left: 2%;
+  height: 50%;
 }
 
 
@@ -58,10 +62,6 @@ button {
 
 .graphics {
   height: 100%;
-}
-
-#svg-container {
-  height: 50%;
 }
 
 .axis text, .label {
