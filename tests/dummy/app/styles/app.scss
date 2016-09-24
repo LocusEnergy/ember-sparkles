@@ -6,7 +6,10 @@
 
 html,body {
   height: 100%;
-  // font-family: "Roboto", "Arial", sans-serif;
+}
+
+.ember-application > .ember-view {
+  height: 100%;
 }
 
 a {
