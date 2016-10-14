@@ -81,7 +81,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
     dx=-100
   }}
 
-  {{graph.y-axis
+  {{chart.y-axis
     label='kWh'
     ticks=5
     yGrid=true
