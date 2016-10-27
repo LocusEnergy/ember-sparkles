@@ -17,6 +17,21 @@ This library currently includes the following charts:
 
 Note: This library is still in beta, please use carefully, and file issues as discovered. Pull requests for additional charts always welcome!
 
+## Install
+First install `ember-sparkes` to your application:
+```bash
+ember install ember-sparkes
+```
+Then add default `ember-resize` configuration into `config/environment.js` file:
+```js
+    resizeServiceDefaults: {
+      widthSensitive: true,
+      heightSensitive: true,
+      debounceTimeout: 200,
+      injectionFactories: ['view', 'component']
+    },
+```
+
 ## How to use
 
 This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG container element. D3-based graphs, axes, and legend components are contextually yielded from this component.
