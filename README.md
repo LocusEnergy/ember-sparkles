@@ -18,11 +18,11 @@ This library currently includes the following charts:
 Note: This library is still in beta, please use carefully, and file issues as discovered. Pull requests for additional charts always welcome!
 
 ## Install
-First install `ember-sparkes` to your application:
+First install `ember-sparkles` to your application:
 ```bash
-ember install ember-sparkes
+ember install ember-sparkles
 ```
-Then add default `ember-resize` configuration into `config/environment.js` file:
+Then add default `ember-resize` configuration into `config/environment.js` file, these properties can be changed to suit your needs. For more information, please see the documentation for [ember-resize](https://github.com/mike-north/ember-resize):
 ```js
     resizeServiceDefaults: {
       widthSensitive: true,
