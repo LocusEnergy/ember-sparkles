@@ -1,4 +1,4 @@
-{{#with (hash
+{{#let (hash
   transform=(d3-attr 'transform' (i 'translate(${coords})' coords=(concat dx ',' dy)))
   shapePositioner=(compute (action shapePositioner (or direction 'vertical') (or shape-spacing 20) (hash x=dx y=dy)))
   addShape=(get (hash
@@ -81,4 +81,4 @@
 
   {{/d3-graph}}
 
-{{/with}}
+{{/let}}

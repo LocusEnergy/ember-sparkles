@@ -1,4 +1,4 @@
-{{#with (hash
+{{#let (hash
   enterRect=(pipe
     (d3-append 'rect')
     (d3-attr 'width' 0)
@@ -71,4 +71,4 @@
       )
   )) classNames='ember-sparkles--grouped-bar-chart'}}
 
-{{/with}}
+{{/let}}

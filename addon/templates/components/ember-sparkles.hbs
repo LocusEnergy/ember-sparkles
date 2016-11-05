@@ -1,6 +1,6 @@
 <g transform="translate({{marginLeft}},{{marginTop}})">
 
-  {{#with (hash
+  {{#let (hash
     x-scale=(r (i '${t}-scale' t=(or x-scale-type 'linear'))
       x-domain
       (append 0 innerWidth)
@@ -115,5 +115,5 @@
       transition=options.transition
     )}}
 
-  {{/with}}
+  {{/let}}
 </g>

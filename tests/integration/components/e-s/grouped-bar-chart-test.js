@@ -107,7 +107,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   this.setProperties({ data, xDomain, groupDomain, colorScale });
 
   this.render(hbs`
-    {{#with (band-scale
+    {{#let (band-scale
       xDomain
       (append 0 120)
       round=true
@@ -139,7 +139,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
         }}
       </svg>
 
-    {{/with}}
+    {{/let}}
 
   `);
 

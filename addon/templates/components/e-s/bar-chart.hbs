@@ -1,4 +1,4 @@
-{{#with (hash
+{{#let (hash
   updateRect=(pipe
     (if with-transition (d3-transition transition) (d3-noop))
     (d3-attr 'width' xScale.bandwidth)
@@ -33,4 +33,4 @@
       )
   )) classNames='ember-sparkles--bar-chart'}}
 
-{{/with}}
+{{/let}}

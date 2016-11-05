@@ -1,4 +1,4 @@
-{{#with (hash
+{{#let (hash
   arc=(d3-arc outerRadius=(sub radius 10) innerRadius=0)
   pie=(compute (d3-pie valueFn=outputKey) data)
   centerWidth=(div width 2)
@@ -61,4 +61,4 @@
 
   {{/d3-graph}}
 
-{{/with}}
+{{/let}}
