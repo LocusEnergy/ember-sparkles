@@ -17,6 +17,21 @@ This library currently includes the following charts:
 
 Note: This library is still in beta, please use carefully, and file issues as discovered. Pull requests for additional charts always welcome!
 
+## Install
+First install `ember-sparkles` to your application:
+```bash
+ember install ember-sparkles
+```
+Then add default `ember-resize` configuration into `config/environment.js` file, these properties can be changed to suit your needs. For more information, please see the documentation for [ember-resize](https://github.com/mike-north/ember-resize):
+```js
+    resizeServiceDefaults: {
+      widthSensitive: true,
+      heightSensitive: true,
+      debounceTimeout: 200,
+      injectionFactories: ['view', 'component']
+    },
+```
+
 ## How to use
 
 This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG container element. D3-based graphs, axes, and legend components are contextually yielded from this component.
@@ -81,7 +96,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
     dx=-100
   }}
 
-  {{graph.y-axis
+  {{chart.y-axis
     label='kWh'
     ticks=5
     yGrid=true
