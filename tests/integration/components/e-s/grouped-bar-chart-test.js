@@ -2,12 +2,14 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import GroupedBarChart from 'ember-sparkles/page-objects/grouped-bar-chart';
 import { scaleOrdinal } from 'd3-scale';
+import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
 
 moduleForComponent('ember-sparkles/grouped-bar-chart', 'Integration | Component | ember sparkles/grouped bar chart', {
   integration: true,
-    beforeEach() {
-      this.chart = new GroupedBarChart(this);
-    }
+  beforeEach() {
+    this.chart = new GroupedBarChart(this);
+    LetHelperInitializer.initialize();
+  },
 });
 
 test('it renders', function(assert) {
