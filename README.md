@@ -90,7 +90,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
 ```hbs
 {{#ember-sparkles as |chart|}}
   {{chart.x-axis
-    tick-format=(e-s/time-format-fn '%Y-%m-%d')
+    tick-format=(d3-time-format '%Y-%m-%d')
     label='date'
     dy=100
     dx=-100
@@ -110,7 +110,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
 
 Similar to the `y-axis` example, the `x-axis` contextual component can take a `position` property, set to `top` (by default these are set to `left` and `bottom`), respectively).
 
-For more information on configuring tick formats using the `e-s/format-fn` and `e-s/time-format-fn` helpers, please see 
+For more information on configuring tick formats using the `d3-time-format` and `d3-format` helpers, please see 
 [d3-format](https://github.com/d3/d3-format) and [d3-time-format](https://github.com/d3/d3-time-format), respectively.
 
 ### Legend
