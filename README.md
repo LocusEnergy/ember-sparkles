@@ -99,6 +99,7 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
   {{chart.y-axis
     label='kWh'
     ticks=5
+    tick-format=(d3-format '.2s')
     yGrid=true
     dx=100
     dy=-30

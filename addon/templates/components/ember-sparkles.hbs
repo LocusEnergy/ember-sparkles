@@ -20,7 +20,8 @@
     {{yield (hash
       x-scale=(compute options.x-scale)
       y-scale=(compute options.y-scale)
-      x-axis=(component 'e-s/axis'
+      
+      bottom-axis=(component 'e-s/axis'
         scale=(compute options.x-scale)
         position='bottom'
         height=innerHeight
@@ -28,7 +29,14 @@
         labelAttrs=(pipe (d3-attr 'x' width))
       )
 
-      y-axis=(component 'e-s/axis'
+      top-axis=(component 'e-s/axis'
+        scale=(compute options.x-scale)
+        position='top'
+        transition=options.transition
+        labelAttrs=(pipe (d3-attr 'x' width))
+      )
+
+      left-axis=(component 'e-s/axis'
         scale=(compute options.y-scale)
         position='left'
         width=innerWidth

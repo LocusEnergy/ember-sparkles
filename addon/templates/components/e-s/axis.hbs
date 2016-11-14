@@ -1,12 +1,11 @@
 {{#with (e-s/axis-helper scale
   position=position
   ticks=ticks
-  width=width
-  height=height
   tickFormat=tick-format
   tickValues=tick-values
-  xGrid=xGrid
-  yGrid=yGrid
+  gridlines=gridlines
+  width=width
+  height=height
   ) as |axis|}}
 
   {{#d3-graph classNames="ember-sparkles--axis" as |d3|}}
