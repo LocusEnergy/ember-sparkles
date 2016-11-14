@@ -98,14 +98,17 @@ To render an axis, add `{{chart.y-axis}}` or `{{chart.x-axis}}` to the `{{#ember
 
   {{chart.y-axis
     label='kWh'
+    position='right'
     ticks=5
     tick-format=(d3-format '.2s')
-    yGrid=true
+    gridlines=true
     dx=100
     dy=-30
   }}
 {{/ember-sparkles}}
 ```
+
+Similar to the `y-axis` example, the `x-axis` contextual component can take a `position` property, set to `top` (by default these are set to `left` and `bottom`), respectively).
 
 For more information on configuring tick formats using the `e-s/format-fn` and `e-s/time-format-fn` helpers, please see 
 [d3-format](https://github.com/d3/d3-format) and [d3-time-format](https://github.com/d3/d3-time-format), respectively.

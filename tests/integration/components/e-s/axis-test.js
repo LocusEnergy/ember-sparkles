@@ -1,11 +1,15 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
 
 moduleForComponent('ember-sparkles/axis', 'Integration | Component | ember sparkles/axis', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    LetHelperInitializer.initialize();
+  }
 });
 
-test('accepts a scale argument', function(assert) {
+test('accepts a dynamic scale property', function(assert) {
   this.set('domain', ['2016-03-02', '2016-03-03', '2016-03-04', '2016-03-05']);
 
   this.render(hbs`

@@ -21,27 +21,20 @@
       x-scale=(compute options.x-scale)
       y-scale=(compute options.y-scale)
       
-      bottom-axis=(component 'e-s/axis'
+      x-axis=(component 'e-s/axis'
         scale=(compute options.x-scale)
         position='bottom'
         height=innerHeight
         transition=options.transition
-        labelAttrs=(pipe (d3-attr 'x' width))
+        label-attrs=(pipe (d3-attr 'x' width))
       )
 
-      top-axis=(component 'e-s/axis'
-        scale=(compute options.x-scale)
-        position='top'
-        transition=options.transition
-        labelAttrs=(pipe (d3-attr 'x' width))
-      )
-
-      left-axis=(component 'e-s/axis'
+      y-axis=(component 'e-s/axis'
         scale=(compute options.y-scale)
         position='left'
         width=innerWidth
         transition=options.transition
-        labelAttrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
+        label-attrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
       )
 
       bar-chart=(component 'e-s/bar-chart'

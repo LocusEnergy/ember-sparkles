@@ -17,14 +17,14 @@
   transition-duration=transitionDuration
 as |chart|}}
 
-  {{chart.bottom-axis
+  {{chart.x-axis
     tick-format=(d3-time-format '%Y-%m-%d')
     label='Date (Y-M-D)'
     dy=(add chart.height 30)
     dx=-100
   }}
 
-  {{chart.left-axis
+  {{chart.y-axis
     label='Watts'
     ticks=5
     tick-format=(d3-format '.2s')

@@ -3,25 +3,17 @@ import axis from 'd3-axis';
 
 const { String: { capitalize } } = Ember;
 
-export function emberSparklesAxis([ scale ], { position, ticks, tickFormat=null, tickValues=null, width, height, gridlines=false }) {
-  console.log(position)
-  
+export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tickValues, gridlines=false, gridLength }) {
   let axisFn = axis[`axis${capitalize(position)}`];
-  let result = axisFn().scale(scale);
+  let result = axisFn().scale(scale);  
 
-  
-
+  result.ticks(ticks);
   result.tickFormat(tickFormat);
   result.tickValues(tickValues);
-  result.ticks(ticks);
 
-  // if (yGrid) {
-  //   result.tickSizeInner((-1) * width);
-  // }
-
-  // if (xGrid) {
-  //   result.tickSizeInner((-1) * height);
-  // }
+  if (gridlines) {
+    result.tickSizeInner((-1) * gridLength);
+  }
 
   return result;
 }
