@@ -59,7 +59,7 @@
     "ember-cli-htmlbars": "^1.0.10",
     "ember-composable-helpers": "1.0.0",
     "ember-d3": "^0.3.0",
-    "ember-d3-helpers": "0.5.10",
+    "ember-d3-helpers": "0.5.11",
     "ember-interpolate-helper": "1.0.0",
     "ember-lodash": "0.0.7",
     "ember-math-helpers": "1.2.2",

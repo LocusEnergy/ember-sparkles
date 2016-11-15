@@ -2,25 +2,9 @@
 module.exports = {
   scenarios: [
     {
-      name: 'ember-1.13',
+      name: 'default',
       bower: {
-        dependencies: {
-          'ember': '~1.13.0'
-        },
-        resolutions: {
-          'ember': '~1.13.0'
-        }
-      }
-    },
-    {
-      name: 'ember-lts-2.4',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#lts-2-4'
-        },
-        resolutions: {
-          'ember': 'lts-2-4'
-        }
+        dependencies: { }
       }
     },
     {
