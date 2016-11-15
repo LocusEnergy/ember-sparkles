@@ -1,5 +1,4 @@
-
-import { axisOptions } from 'dummy/helpers/axis-options';
+import { axisOptions } from 'dummy/helpers/e-s/axis-options';
 import { module, test } from 'qunit';
 
 module('Unit | Helper | axis options');
