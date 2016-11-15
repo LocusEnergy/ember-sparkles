@@ -3,7 +3,7 @@ import axis from 'd3-axis';
 
 const { String: { capitalize } } = Ember;
 
-export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tickValues, gridlines=false, gridLength }) {
+export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tickValues, tickSizeInner=6, tickSizeOuter=6, tickPadding=3, gridlines=false, gridLength }) {
   let axisFn = axis[`axis${capitalize(position)}`];
   let result = axisFn().scale(scale);  
 
@@ -11,9 +11,10 @@ export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tick
   result.tickFormat(tickFormat);
   result.tickValues(tickValues);
 
-  if (gridlines) {
-    result.tickSizeInner((-1) * gridLength);
-  }
+  let innerSize = gridlines ? (-1) * gridLength : tickSizeInner;
+  result.tickSizeInner(innerSize);
+  result.tickSizeOuter(tickSizeOuter);
+  result.tickPadding(tickPadding);
 
   return result;
 }
