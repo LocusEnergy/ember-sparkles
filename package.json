@@ -55,6 +55,7 @@
     "htmlbars"
   ],
   "dependencies": {
+    "d3": "^4.2.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.0.10",
     "ember-composable-helpers": "1.0.0",
