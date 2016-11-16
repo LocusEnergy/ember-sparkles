@@ -165,7 +165,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   // check deletion of data
   data.pop();
 
-    this.setProperties({
+  this.setProperties({
     data,
     xDomain: data.map(({ ts }) => ts)
   });

@@ -15,14 +15,13 @@ let generateData = function() {
   let dateRange = moment.range(start, end);
   let series = ['series 1', 'series 2', 'series 3', 'series 4', 'series 5', 'series 6', 'series 7'];
   let valueType = 'W';
-
   let seriesSample = _.sample(series, _.random(2, _.size(series)));
 
   return dateRange.toArray('days').map(d => {
     let seriesData = seriesSample.map(s => {
       return {
         name: s,
-        value: _.random(10, 1050)
+        value: _.random(1000, 10000)
       };
     });
     return {

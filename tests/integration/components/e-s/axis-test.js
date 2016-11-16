@@ -5,7 +5,7 @@ moduleForComponent('ember-sparkles/axis', 'Integration | Component | ember spark
   integration: true
 });
 
-test('accepts a scale argument', function(assert) {
+test('accepts a dynamic scale property', function(assert) {
   this.set('domain', ['2016-03-02', '2016-03-03', '2016-03-04', '2016-03-05']);
 
   this.render(hbs`

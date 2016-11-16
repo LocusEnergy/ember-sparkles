@@ -20,12 +20,13 @@
     {{yield (hash
       x-scale=(compute options.x-scale)
       y-scale=(compute options.y-scale)
+      
       x-axis=(component 'e-s/axis'
         scale=(compute options.x-scale)
         position='bottom'
         height=innerHeight
         transition=options.transition
-        labelAttrs=(pipe (d3-attr 'x' width))
+        label-attrs=(pipe (d3-attr 'x' width))
       )
 
       y-axis=(component 'e-s/axis'
@@ -33,7 +34,7 @@
         position='left'
         width=innerWidth
         transition=options.transition
-        labelAttrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
+        label-attrs=(pipe (d3-attr 'transform' 'rotate(-90)'))
       )
 
       bar-chart=(component 'e-s/bar-chart'

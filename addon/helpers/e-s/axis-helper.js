@@ -1,39 +1,20 @@
 import Ember from 'ember';
 import axis from 'd3-axis';
-import { timeFormat } from 'd3-time-format';
-
-const tickFilter = (tickFormat, skipIdx) => {
-  let formatter = timeFormat(tickFormat);
-  return (d, idx) => {
-    if (idx % skipIdx === 0) {
-      return formatter(d);
-    }
-  };
-};
 
 const { String: { capitalize } } = Ember;
 
-export function emberSparklesAxis([ scale ], { position, tickFormat, ticks, width, height, skipIdx=1, xGrid, yGrid }) {
-  let axisType = `axis${capitalize(position)}`;
-  let axisFn = axis[axisType];
+export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tickValues, tickSizeInner=6, tickSizeOuter=6, tickPadding=3, gridlines=false, gridLength }) {
+  let axisFn = axis[`axis${capitalize(position)}`];
+  let result = axisFn().scale(scale);  
 
-  let result = axisFn().scale(scale);
+  result.ticks(ticks);
+  result.tickFormat(tickFormat);
+  result.tickValues(tickValues);
 
-  if (tickFormat) {
-    result.tickFormat(tickFilter(tickFormat, skipIdx));
-  }
-
-  if (ticks) {
-    result.ticks(ticks);
-  }
-
-  if (yGrid) {
-    result.tickSizeInner((-1)*width);
-  }
-
-  if (xGrid) {
-    result.tickSizeInner((-1)*height);
-  }
+  let innerSize = gridlines ? (-1) * gridLength : tickSizeInner;
+  result.tickSizeInner(innerSize);
+  result.tickSizeOuter(tickSizeOuter);
+  result.tickPadding(tickPadding);
 
   return result;
 }
