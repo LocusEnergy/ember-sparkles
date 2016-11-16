@@ -43,7 +43,7 @@
     "ember-data": "^2.9.0",
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
-    "ember-let": "0.5.3",
+    "ember-let": "0.5.0",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
     "loader.js": "^4.0.10"
@@ -57,7 +57,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.0.10",
-    "ember-composable-helpers": "1.1.2",
+    "ember-composable-helpers": "1.0.0",
     "ember-d3": "^0.3.0",
     "ember-d3-helpers": "0.5.11",
     "ember-interpolate-helper": "1.0.0",
