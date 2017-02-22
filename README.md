@@ -39,7 +39,7 @@ This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG cont
 ### example
 
 ```hbs
-{{#ember-sparkes
+{{#ember-sparkles
   data=your-data
 
   input-key='ts'
@@ -54,7 +54,7 @@ This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG cont
   as |chart|
 }}
   {{!render your charts here}}
-{{/ember-sparkes}}
+{{/ember-sparkles}}
 ```
 
 ### Properties (WIP)
