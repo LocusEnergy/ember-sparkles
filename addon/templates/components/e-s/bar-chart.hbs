@@ -1,11 +1,11 @@
-{{let updateRect (pipe
+{{#let (pipe
   (if with-transition (d3-transition transition) (d3-noop))
-  (d3-attr 'width' xScale.bandwidth)
+  (d3-attr 'width' (e-s/bandwidth xScale))
   (d3-attr 'height' (pipe outputKey yScale (e-s/bar-height height)))
   (d3-attr 'x' (pipe inputKey xScale))
   (d3-attr 'y' (pipe outputKey yScale))
   (d3-style 'opacity' 1)
-)}}
+) as |updateRect|}}
 
 {{d3-graph (pipe
   (d3-select-all 'rect')
@@ -32,3 +32,5 @@
   ))
   classNames='ember-sparkles--bar-chart'
 }}
+
+{{/let}}

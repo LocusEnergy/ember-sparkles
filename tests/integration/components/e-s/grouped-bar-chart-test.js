@@ -2,13 +2,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import GroupedBarChart from 'ember-sparkles/page-objects/grouped-bar-chart';
 import { scaleOrdinal } from 'd3-scale';
-import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
 
 moduleForComponent('ember-sparkles/grouped-bar-chart', 'Integration | Component | ember sparkles/grouped bar chart', {
   integration: true,
   beforeEach() {
     this.chart = new GroupedBarChart(this);
-    LetHelperInitializer.initialize();
   },
 });
 
@@ -20,6 +18,7 @@ test('it renders', function(assert) {
     <svg>
       {{e-s/grouped-bar-chart
         with-transition=false
+        groupScale=(band-scale)
         data=data
         inputKey=(r/param)
         outputKey=(r/param)
@@ -134,7 +133,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
           )
           groupScale=(band-scale
             groupDomain
-            (append 0 (compute (get xScale 'bandwidth')))
+            (append 0 (compute (e-s/bandwidth xScale)))
             padding=0
           )
           colorScale=colorScale

@@ -73,13 +73,7 @@ This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG cont
 
 * `x-scale-type {String}` **optional**
 
-  Type of D3 scale function to use for horizontal axis.
-
-  _default:_ `linear`
-
-* `y-scale-type {String}` **optional**
-
-  Type of D3 scale function to use for vertical axis.
+  Type of D3 scale function to use for horizontal axis (linear or band).
 
   _default:_ `linear`
 

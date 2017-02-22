@@ -5,8 +5,7 @@
   input-key='ts'
   output-key='value'
 
-  x-scale-type='band'
-  y-scale-type='linear'
+  scale-type='band'
   x-domain=(map (r/get 'ts') data)
   y-domain=(append 0 outputMax)
 
