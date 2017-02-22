@@ -1,12 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
 
 moduleForComponent('ember-sparkles/axis', 'Integration | Component | ember sparkles/axis', {
-  integration: true,
-  beforeEach() {
-    LetHelperInitializer.initialize();
-  },
+  integration: true
 });
 
 test('accepts a dynamic scale property', function(assert) {

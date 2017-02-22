@@ -45,7 +45,7 @@ This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG cont
   input-key='ts'
   output-key='value'
 
-  x-scale-type='band'
+  scale-type='band'
   y-scale-type='linear'
   x-domain=(map (r/get 'ts') data)
   y-domain=(append 0 outputMax)
@@ -73,13 +73,7 @@ This addon includes an `{{ember-sparkles}}`, which renders a responsive SVG cont
 
 * `x-scale-type {String}` **optional**
 
-  Type of D3 scale function to use for horizontal axis.
-
-  _default:_ `linear`
-
-* `y-scale-type {String}` **optional**
-
-  Type of D3 scale function to use for vertical axis.
+  Type of D3 scale function to use for horizontal axis (`linear`, `band`, or `time`).
 
   _default:_ `linear`
 

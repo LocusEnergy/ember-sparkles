@@ -7,8 +7,7 @@
   group-key='name'
   value-key='value'
 
-  x-scale-type='band'
-  y-scale-type='linear'
+  scale-type='band'
 
   x-domain=(map (r/get 'ts') barData)
   y-domain=(append 0 outputMax)

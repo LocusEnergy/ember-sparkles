@@ -1,31 +1,33 @@
-{{let enterRect (pipe
-  (d3-append 'rect')
-  (d3-attr 'width' 0)
-  (d3-attr 'height' 0)
-  (d3-attr 'x' (pipe groupKey groupScale))
-  (d3-attr 'y' height)
-  (d3-style 'fill' 'red')
-  (d3-style 'opacity' 0)
-)}}
+{{#let 
+  (pipe
+    (d3-append 'rect')
+    (d3-attr 'width' 0)
+    (d3-attr 'height' 0)
+    (d3-attr 'x' (pipe groupKey groupScale))
+    (d3-attr 'y' height)
+    (d3-style 'fill' 'red')
+    (d3-style 'opacity' 0)
+  )
 
-{{let updateRect (pipe
-  (if with-transition (d3-transition transition) (d3-noop))
-  (d3-attr 'width' groupScale.bandwidth)
-  (d3-attr 'height' (pipe valueKey yScale (e-s/bar-height height)))
-  (d3-attr 'x' (pipe groupKey groupScale))
-  (d3-attr 'y' (pipe valueKey yScale))
-  (d3-style 'fill' (pipe groupKey colorScale))
-  (d3-style 'opacity' 1)
-)}}
+  (pipe
+    (if with-transition (d3-transition transition) (d3-noop))
+    (d3-attr 'width' (e-s/bandwidth groupScale))
+    (d3-attr 'height' (pipe valueKey yScale (e-s/bar-height height)))
+    (d3-attr 'x' (pipe groupKey groupScale))
+    (d3-attr 'y' (pipe valueKey yScale))
+    (d3-style 'fill' (pipe groupKey colorScale))
+    (d3-style 'opacity' 1)
+  ) 
 
-{{let exitRect (pipe
-  (if with-transition (d3-transition transition) (d3-noop))
-  (d3-attr 'y' height)
-  (d3-attr 'height' 0)
-  (d3-style 'fill' 'green')
-  (d3-style 'opacity' 0)
-  (d3-remove)
-)}}
+  (pipe
+    (if with-transition (d3-transition transition) (d3-noop))
+    (d3-attr 'y' height)
+    (d3-attr 'height' 0)
+    (d3-style 'fill' 'green')
+    (d3-style 'opacity' 0)
+    (d3-remove)
+  )
+as |enterRect updateRect exitRect|}}
 
 {{d3-graph (pipe
   (d3-select-all '.rect-group')
@@ -69,3 +71,5 @@
   ))
   classNames='ember-sparkles--grouped-bar-chart'
 }}
+
+{{/let}}

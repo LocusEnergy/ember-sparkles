@@ -1,32 +1,53 @@
 <g transform="translate({{marginLeft}},{{marginTop}})">
 
-  {{let x-scale (r (i '${t}-scale' t=(or x-scale-type 'linear'))
-    x-domain
-    (append 0 innerWidth)
-    round=true
-    padding=0.2
-  )}}
-  {{let y-scale (r (i '${t}-scale' t=(or y-scale-type 'linear'))
-    y-domain
-    (append innerHeight 0)
-  )}}
-  {{let color-scale (cat-color-scale
-    (or color-scale-type '20b')
-    domain=group-domain
-  )}}
-  {{let transition (e-s/transition
-    duration=(or transition-duration 1000)
-    data=data
-  )}}
-  {{let inputKey (r/get (or input-key 0))}}
-  {{let outputKey (r/get (or output-key 1))}}
+  {{#let (e-s/pojo 
+    linear=(linear-scale
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
+    ) 
+    band=(band-scale
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
+    ) 
+    time=(time-scale
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
+    ) 
+  ) as |scales|}}
+  {{#let 
+    (get scales (or scale-type 'linear'))
 
-  {{yield (hash
-    x-scale=(compute x-scale)
-    y-scale=(compute y-scale)
+    (linear-scale
+      y-domain
+      (append innerHeight 0)
+    )
+
+    (cat-color-scale
+      (or color-scale-type '20b')
+      domain=group-domain
+    )
+
+    (e-s/transition
+      duration=(or transition-duration 1000)
+      data=data
+    )
+
+    (r/get (or input-key 0))
+    (r/get (or output-key 1))
+  as |x-scale y-scale color-scale transition inputKey outputKey|}}
+
+  {{yield (e-s/pojo
+    x-scale=x-scale
+    y-scale=y-scale
 
     x-axis=(component 'e-s/axis'
-      scale=(compute x-scale)
+      scale=x-scale
       position='bottom'
       height=innerHeight
       transition=transition
@@ -34,7 +55,7 @@
     )
 
     y-axis=(component 'e-s/axis'
-      scale=(compute y-scale)
+      scale=y-scale
       position='left'
       width=innerWidth
       transition=transition
@@ -43,8 +64,8 @@
 
     bar-chart=(component 'e-s/bar-chart'
       data=data
-      xScale=(compute x-scale)
-      yScale=(compute y-scale)
+      xScale=x-scale
+      yScale=y-scale
 
       inputKey=inputKey
       outputKey=outputKey
@@ -56,12 +77,12 @@
 
     grouped-bar-chart=(component 'e-s/grouped-bar-chart'
       data=data
-      xScale=(compute x-scale)
-      yScale=(compute y-scale)
+      xScale=x-scale
+      yScale=y-scale
       colorScale=color-scale
       groupScale=(band-scale
         group-domain
-        (append 0 (compute (get (compute x-scale) 'bandwidth')))
+        (append 0 (compute (e-s/bandwidth x-scale)))
         padding=(or group-padding 0.05)
       )
 
@@ -77,8 +98,8 @@
 
     line-chart=(component 'e-s/line-chart'
       data=data
-      xScale=(compute x-scale)
-      yScale=(compute y-scale)
+      xScale=x-scale
+      yScale=y-scale
       colorScale=color-scale
 
       inputKey=inputKey
@@ -118,5 +139,8 @@
     height=innerHeight
     transition=transition
   )}}
+
+  {{/let}}
+  {{/let}}
 
 </g>

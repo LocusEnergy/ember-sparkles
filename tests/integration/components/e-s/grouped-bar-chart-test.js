@@ -2,13 +2,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import GroupedBarChart from 'ember-sparkles/page-objects/grouped-bar-chart';
 import { scaleOrdinal } from 'd3-scale';
-import LetHelperInitializer from 'ember-let/initializers/register-let-helper';
 
 moduleForComponent('ember-sparkles/grouped-bar-chart', 'Integration | Component | ember sparkles/grouped bar chart', {
   integration: true,
   beforeEach() {
     this.chart = new GroupedBarChart(this);
-    LetHelperInitializer.initialize();
   },
 });
 
@@ -20,6 +18,7 @@ test('it renders', function(assert) {
     <svg>
       {{e-s/grouped-bar-chart
         with-transition=false
+        groupScale=(band-scale)
         data=data
         inputKey=(r/param)
         outputKey=(r/param)
@@ -134,7 +133,7 @@ test('accepts data and dynamically generates rectangles and legend', function(as
           )
           groupScale=(band-scale
             groupDomain
-            (append 0 (compute (get xScale 'bandwidth')))
+            (append 0 (compute (e-s/bandwidth xScale)))
             padding=0
           )
           colorScale=colorScale
@@ -161,8 +160,9 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['11', '13', '98']], 'each rectangle has correct y-coordinate');
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['89', '87', '2']], 'each rectangle has correct height');
 
-  let colorSequence = ['rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
-  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence], 'each group has a unique fill color that maintains the order given by the color scale\'s specified range');
+  let colorSequence = [ '#ff0000', '#00ff00', '#0000ff' ];
+
+  assert.deepEqual(this.chart.fills(), [colorSequence, colorSequence, colorSequence, colorSequence], 'each group has a unique fill color that maintains the order given by the color scale\'s specified range');
 
   // check deletion of data
   data.pop();
@@ -221,5 +221,5 @@ test('accepts data and dynamically generates rectangles and legend', function(as
   assert.deepEqual(this.chart.rect('attr', 'x'), [xSequence, xSequence, xSequence, xSequence, xSequence], 'each rectangle has correct x-coordinate after update');
   assert.deepEqual(this.chart.rect('attr', 'y'), [['90', '85', '60'], ['66', '22', '88'], ['100', '1', '49'], ['98', '59', '10'], ['10', '30', '87']], 'each rectangle has correct y-coordinate after update');
   assert.deepEqual(this.chart.rect('attr', 'height'), [['10', '15', '40'], ['34', '78', '12'], ['0', '99', '51'], ['2', '41', '90'], ['90', '70', '13']], 'each rectangle has correct height after update');
-  assert.deepEqual(this.chart.rect('css', 'fill'), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');
+  assert.deepEqual(this.chart.fills(), [colorSequence, colorSequence, colorSequence, colorSequence, colorSequence], 'color sequence order is maintained after update');
 });

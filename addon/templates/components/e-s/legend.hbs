@@ -1,26 +1,30 @@
 {{#d3-graph classNames="ember-sparkles--legend" as |d3|}}
 
-  {{let transform (d3-attr 'transform'
-    (i 'translate(${coords})' coords=(concat dx ',' dy))
-  )}}
-  {{let shapePositionerOpt (compute
-    (action shapePositioner
-      (or direction 'vertical')
-      (or shape-spacing 20)
-      (hash x=dx y=dy)
+  {{#let 
+    (d3-attr 'transform'
+      (i 'translate(${coords})' coords=(concat dx ',' dy))
+    ) 
+
+    (compute
+      (action shapePositioner
+        (or direction 'vertical')
+        (or shape-spacing 20)
+        (e-s/pojo x=dx y=dy)
+      )
     )
-  )}}
-  {{let addShape (get (hash
-    rect=(pipe
-      (d3-append 'rect')
-      (d3-attr 'width' (or shape-size 14))
-      (d3-attr 'height' (or shape-size 14))
-    )
-    circle=(pipe
-      (d3-append 'circle')
-      (d3-attr 'r' (or shape-size 8))
-    )
-  ) shape)}}
+
+    (get (e-s/pojo
+      rect=(pipe
+        (d3-append 'rect')
+        (d3-attr 'width' (or shape-size 14))
+        (d3-attr 'height' (or shape-size 14))
+      )
+      circle=(pipe
+        (d3-append 'circle')
+        (d3-attr 'r' (or shape-size 8))
+      )
+    ) shape)
+  as |transform shapePositionerOpt addShape|}}
 
   {{d3.graph (pipe
     (d3-append 'g')
@@ -85,5 +89,7 @@
         (d3-remove)
       )
     ))}}
+
+  {{/let}}
 
 {{/d3-graph}}
