@@ -1,7 +1,7 @@
 {
   "name": "ember-sparkles",
-  "version": "0.4.15",
-  "description": "htmlbarsing D3 library for Ember 2.0+",
+  "version": "0.4.16",
+  "description": "htmlbars D3 library for Ember 2.5+",
   "directories": {
     "doc": "doc",
     "test": "tests"
