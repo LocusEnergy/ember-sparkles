@@ -13,6 +13,12 @@
       round=true
       padding=0.2
     ) 
+    time=(time-scale
+      x-domain
+      (append 0 innerWidth)
+      round=true
+      padding=0.2
+    ) 
   ) as |scales|}}
   {{#let 
     (get scales (or scale-type 'linear'))
