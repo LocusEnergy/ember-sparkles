@@ -14,7 +14,7 @@
   },
   "repository": "https://github.com/LocusEnergy/ember-sparkles",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 0.12.0"
   },
   "author": "zigahertz <zach.zibrat@locusenergy.com>, embersherpa <taras@embersherpa.com>",
   "license": "MIT",
