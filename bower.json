@@ -1,6 +1,0 @@
-{
-  "name": "ember-sparkles",
-  "dependencies": {
-    "moment-range": "^2.2.0"
-  }
-}
