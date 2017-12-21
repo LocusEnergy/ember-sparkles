@@ -7,18 +7,15 @@ sudo: false
 dist: trusty
 
 addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+  chrome: stable
 
 cache:
   directories:
     - $HOME/.npm
 
+# we recommend testing LTS's and latest stable release (bonus points to beta/canary)
 env:
-  # we recommend testing LTS's and latest stable release (bonus points to beta/canary)
+  matrix:
   - EMBER_TRY_SCENARIO=ember-lts-2.12
   - EMBER_TRY_SCENARIO=ember-lts-2.16
   - EMBER_TRY_SCENARIO=ember-release
