@@ -76,6 +76,9 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://locusenergy.github.io/ember-sparkles/"
+    "demoURL": "http://locusenergy.github.io/ember-sparkles/",
+    "versionCompatibility": {
+      "ember": ">=2.16.2 <=3.0.0"
+    }
   }
 }
