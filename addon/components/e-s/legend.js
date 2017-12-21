@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../../templates/components/e-s/legend';
 
 const vector = function(dir, displacement) {
@@ -12,7 +12,7 @@ const vector = function(dir, displacement) {
   }[dir];
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   tagName: '',
   'with-transition': true,

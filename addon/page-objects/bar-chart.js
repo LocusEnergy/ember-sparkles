@@ -1,4 +1,4 @@
-/* global $ */
+import $ from 'jquery';
 
 export default class BarChart {
   constructor(env) {

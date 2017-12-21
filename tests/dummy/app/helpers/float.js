@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 const { pow, round } = Math;
 
 export function float([ value, precision = 0 ]) {
@@ -6,4 +6,4 @@ export function float([ value, precision = 0 ]) {
   return round(value * f) / f;
 }
 
-export default Ember.Helper.helper(float);
+export default helper(float);

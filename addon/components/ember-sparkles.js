@@ -1,13 +1,15 @@
-import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/ember-sparkles';
 
-const { computed } = Ember;
 const { floor } = Math;
 
 const DEFAULT_WIDTH = 960;
 const DEFAULT_HEIGHT = 500;
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   tagName: 'svg',
   attributeBindings: ['fullSize:width', 'fullSize:height'],
@@ -22,10 +24,10 @@ export default Ember.Component.extend({
   marginBottom: 30,
   marginLeft: 40,
 
-  resizeService: Ember.inject.service('resize'),
+  resizeService: service('resize'),
   didInsertElement() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, 'resize');
+    scheduleOnce('afterRender', this, 'resize');
     this.get('resizeService').on('debouncedDidResize', this, this.resize);
   },
   willDestroyElement(){

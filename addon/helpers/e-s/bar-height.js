@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function barHeight([ height ]) {
   return function(d) {
@@ -6,4 +6,4 @@ export function barHeight([ height ]) {
   };
 }
 
-export default Ember.Helper.helper(barHeight);
+export default helper(barHeight);
