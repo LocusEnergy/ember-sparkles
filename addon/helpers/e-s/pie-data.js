@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import { A } from '@ember/array';
 import _ from 'lodash';
 
 export function pieData([ data ], { valueKey, threshold=5, precision=1 }) {
-  let total = _.sum(Ember.A(data).mapBy(valueKey));
+  let total = _.sum(A(data).mapBy(valueKey));
 
   return data.map(d => {
     let ratio = d[valueKey] / total;
@@ -15,4 +16,4 @@ export function pieData([ data ], { valueKey, threshold=5, precision=1 }) {
   })
 }
 
-export default Ember.Helper.helper(pieData);
+export default helper(pieData);

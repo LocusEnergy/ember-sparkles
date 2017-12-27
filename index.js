@@ -10,5 +10,10 @@ module.exports = {
     this.app = app;
 
     this._super.included.apply(this, arguments);
+  },
+  options: {
+    babel: {
+      plugins: ['transform-object-rest-spread']
+    }
   }
 };

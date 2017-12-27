@@ -1,6 +1,6 @@
 import { emberSparklesArcTranslate } from 'dummy/helpers/e-s/arc-translate';
 import { module, test } from 'qunit';
-import { arc  } from 'd3-shape'
+import { arc } from 'd3-shape'
 
 module('Unit | Helper | ember sparkles/arc translate');
 let testArc = arc().innerRadius(10).outerRadius(10);

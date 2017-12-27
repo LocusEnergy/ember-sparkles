@@ -79,7 +79,6 @@
       }}
 
       {{#if labels}}
-
         <g transform="rotate(90)">
           {{#let (d3-arc innerRadius=0 outerRadius=(div radius 2) startAngle=(mult theta -1) endAngle=0) as |arc|}}
           {{d3-element
@@ -127,10 +126,8 @@
     </g>
 
   </g>
-
     {{chart.y-axis x-translate=chart.width ticks=4}}
-    {{chart.line-chart data=(array)}}
-
+    {{!chart.line-chart data=(array)}}
   {{/let}}
   {{/let}}
 

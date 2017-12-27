@@ -2,18 +2,22 @@
 /* global require, module */
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   var app = new EmberAddon(defaults, {
     snippetPaths: ['tests/dummy/snippets'],
     snippetSearchPaths: ['app', 'tests/dummy/app', 'addon'],
     babel: {
-      optional: ['es7.decorators']
+      plugins: ['transform-object-rest-spread', 'transform-decorators-legacy'],
+      blacklist: ['regenerator']
+
     }
   });
 
-
-  app.import('bower_components/moment/moment.js');
-  app.import('bower_components/moment-range/dist/moment-range.js');
+  // app.import('node_modules/moment/moment.js');
+  app.import('node_modules/moment-range/dist/moment-range.js', {
+    exports: {"moment-range": ['default','extendMoment','DataRange']}
+  });
+  app.import('vendor/shims/moment-range.js');
 
   /*
     This build file specifies the options for the dummy test app of this

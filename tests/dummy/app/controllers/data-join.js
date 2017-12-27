@@ -1,9 +1,8 @@
 /*eslint-disable no-constant-condition*/
 
-import Ember from 'ember';
-import _ from 'lodash/lodash';
-
 // BEGIN-SNIPPET data-join-example
+import Controller from '@ember/controller';
+import _ from 'lodash';
 import { task, timeout } from 'ember-concurrency';
 
 const SIZE = 650;
@@ -20,10 +19,10 @@ const generate = function(gridSize=GRID_SIZE, overlap=OVERLAP) {
     const radius = _.random(2, (SIZE * overlap)/gridSize);
     return { radius, idx, ...g };
   });
-  return _.sample(data, _.random(1, data.length));
+  return _.sampleSize(data, _.random(1, data.length));
 };
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   svgDimension: `${SIZE}px`,
 
   enterFill: '#ffe600',

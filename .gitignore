@@ -16,6 +16,7 @@
 npm-debug.log
 testem.log
 
+/.idea
 /.vscode
 .vscodeignore
 jsconfig.json

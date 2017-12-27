@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function emberSparklesArcTranslate([ { centroid } ], { height, width }) {
   return function(d) {
@@ -7,4 +7,4 @@ export function emberSparklesArcTranslate([ { centroid } ], { height, width }) {
   };
 }
 
-export default Ember.Helper.helper(emberSparklesArcTranslate);
+export default helper(emberSparklesArcTranslate);

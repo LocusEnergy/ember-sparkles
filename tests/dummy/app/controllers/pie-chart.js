@@ -1,7 +1,7 @@
 // BEGIN-SNIPPET pie-chart-example
 
-import Ember from 'ember';
-import _ from 'lodash/lodash';
+import Controller from '@ember/controller';
+import _ from 'lodash';
 
 let generateData = function() {
   return _.range(_.random(3, 8)).map((k, idx) => {
@@ -12,8 +12,9 @@ let generateData = function() {
   })
 };
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   init() {
+    this._super(...arguments);
     this.set('pieData', generateData());
   },
   

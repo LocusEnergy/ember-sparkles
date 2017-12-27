@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function axisOptions([ position, width, height, x=0, y=0 ]) {
   let w = position === 'right' ? width : 0;
@@ -15,4 +15,4 @@ export function axisOptions([ position, width, height, x=0, y=0 ]) {
   return { gridLength, translate };
 }
 
-export default Ember.Helper.helper(axisOptions);
+export default helper(axisOptions);

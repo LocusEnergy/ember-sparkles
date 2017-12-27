@@ -1,6 +1,9 @@
 // BEGIN-SNIPPET bar-chart-example
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
+
+import { A } from '@ember/array';
+import Controller from '@ember/controller';
 import dateify from 'dummy/utils/dateify';
 import { timeseriesData } from 'dummy/utils/fixture-data';
 import { max } from 'd3-array';
@@ -10,19 +13,21 @@ let dateified = timeseriesData.map(t => {
   return t;
 });
 
-export default Ember.Controller.extend({
+const barData = new A(dateified);
+
+export default Controller.extend({
   padding: 0.02,
   dataIdx: 1,
-  barData: new Ember.A(dateified),
+  barData: barData,
 
-  data: Ember.computed('barData', 'dataIdx', function() {
+  data: computed('barData', 'dataIdx', function() {
     let b = this.get('barData');
     let idx = this.get('dataIdx');
     let result = b.filterBy('id', idx);
     return result[0].data;
   }),
 
-  outputMax: Ember.computed('data', function() {
+  outputMax: computed('data', function() {
     let data = this.get('data');
     return max(data, ({ value }) => value);
   }),

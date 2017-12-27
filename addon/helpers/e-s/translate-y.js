@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function emberSparklesTranslateY() {
   return function(y) {
@@ -6,4 +6,4 @@ export function emberSparklesTranslateY() {
   };
 }
 
-export default Ember.Helper.helper(emberSparklesTranslateY);
+export default helper(emberSparklesTranslateY);

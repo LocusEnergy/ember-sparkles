@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import { capitalize } from '@ember/string';
 import axis from 'd3-axis';
-
-const { String: { capitalize } } = Ember;
 
 export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tickValues, tickSizeInner=6, tickSizeOuter=6, tickPadding=3, gridlines=false, gridLength }) {
   let axisFn = axis[`axis${capitalize(position)}`];
@@ -19,4 +18,4 @@ export function emberSparklesAxis([ scale ], { position, ticks, tickFormat, tick
   return result;
 }
 
-export default Ember.Helper.helper(emberSparklesAxis);
+export default helper(emberSparklesAxis);

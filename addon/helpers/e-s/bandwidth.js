@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function eSBandwidth([ { bandwidth } ]) {
   return bandwidth;
 }
 
-export default Ember.Helper.helper(eSBandwidth);
+export default helper(eSBandwidth);
