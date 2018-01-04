@@ -60,7 +60,7 @@
   "keywords": ["ember-addon", "d3", "data-visualization", "htmlbars"],
   "dependencies": {
     "ember-cli-babel": "^6.11.0",
-    "ember-cli-htmlbars": "^1.0.10",
+    "ember-cli-htmlbars": "^2.0.3",
     "ember-composable-helpers": "2.0.3",
     "ember-d3": "^0.3.4",
     "ember-d3-helpers": "0.5.17",
